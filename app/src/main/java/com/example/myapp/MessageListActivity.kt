@@ -10,9 +10,9 @@ class MessageListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.messenge_list)
 
-        val login: Button = findViewById(R.id.userConv)
-        login.setOnClickListener{
-            val intent = Intent(this, RegisterActivity2::class.java)
+        val next_btn: Button = findViewById(R.id.userConv)
+        next_btn.setOnClickListener{
+            val intent = Intent(this, MessageActivity::class.java)
             startActivity(intent)
             overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
         }

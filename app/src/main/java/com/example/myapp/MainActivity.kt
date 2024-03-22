@@ -12,8 +12,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.homepage)
 
-        FirebaseApp.initializeApp(this);
-
+        FirebaseApp.initializeApp(this)
         val login: Button = findViewById(R.id.login_btn)
         val register: Button = findViewById(R.id.register_btn)
         login.setOnClickListener{

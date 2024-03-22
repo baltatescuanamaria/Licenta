@@ -29,12 +29,6 @@
         <activity android:name=".RegisterActivity">
 
         </activity>
-        <activity android:name=".RegisterActivity2">
-
-        </activity>
-        <activity android:name=".RegisterActivity3">
-
-        </activity>
         <activity android:name=".RegisterActivity4">
 
         </activity>

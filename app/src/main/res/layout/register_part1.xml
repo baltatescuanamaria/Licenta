@@ -39,13 +39,21 @@
                 android:id="@+id/name_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="150dp"
+                android:layout_marginTop="100dp"
                 android:background="@drawable/round_edge"
                 android:hint="Name"
                 android:inputType="text"
+                android:textColor="@color/fontColour1"
                 android:padding="17dp"
                 android:textColorHint="@color/fontColour2"
                 android:textSize="17dp" />
+
+            <TextView
+                android:id="@+id/nameError"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/redish"
+                android:visibility="gone" />
 
             <EditText
                 android:id="@+id/surname_input"
@@ -55,15 +63,104 @@
                 android:background="@drawable/round_edge"
                 android:hint="Surname"
                 android:inputType="text"
+                android:textColor="@color/fontColour1"
                 android:padding="17dp"
                 android:textColorHint="@color/fontColour2"
                 android:textSize="17dp" />
+
+            <TextView
+                android:id="@+id/surnameError"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/redish"
+                android:visibility="gone" />
+
+            <EditText
+                android:id="@+id/username_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:background="@drawable/round_edge"
+                android:hint="Username"
+                android:inputType="text"
+                android:textColor="@color/fontColour1"
+                android:padding="17dp"
+                android:textColorHint="@color/fontColour2"
+                android:textSize="17dp" />
+
+            <TextView
+                android:id="@+id/usernameError"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/redish"
+                android:visibility="gone" />
+
+            <EditText
+                android:id="@+id/email_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:background="@drawable/round_edge"
+                android:hint="Email"
+                android:inputType="text"
+                android:textColor="@color/fontColour1"
+                android:padding="17dp"
+                android:textColorHint="@color/fontColour2"
+                android:textSize="17dp" />
+
+            <TextView
+                android:id="@+id/emailError"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/redish"
+                android:visibility="gone" />
+
+            <EditText
+                android:id="@+id/password_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:background="@drawable/round_edge"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:textColor="@color/fontColour1"
+                android:padding="17dp"
+                android:textColorHint="@color/fontColour2"
+                android:textSize="17dp" />
+
+            <TextView
+                android:id="@+id/passwordError"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/redish"
+                android:visibility="gone" />
+
+            <EditText
+                android:id="@+id/verify_password_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:background="@drawable/round_edge"
+                android:hint="Verify password"
+                android:inputType="textPassword"
+                android:textColor="@color/fontColour1"
+                android:padding="17dp"
+                android:textColorHint="@color/fontColour2"
+                android:textSize="17dp" />
+
+            <TextView
+                android:id="@+id/verifyPasswordError"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/redish"
+                android:visibility="gone" />
+
 
             <Button
                 android:id="@+id/next_btn"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="100dp"
+                android:layout_marginTop="80dp"
                 android:backgroundTint="@color/accentColour1"
                 android:padding="15dp"
                 android:text="Next"
@@ -80,7 +177,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:text="1/4"
+                    android:text="1/2"
                     android:textColor="@color/fontColour1"
                     android:textSize="20dp"
                     android:textStyle="bold" />

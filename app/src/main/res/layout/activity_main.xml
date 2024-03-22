@@ -32,9 +32,17 @@
             android:background="@drawable/round_edge"
             android:hint="Email"
             android:inputType="text"
+            android:textColor="@color/fontColour1"
             android:padding="17dp"
             android:textColorHint="@color/fontColour2"
             android:textSize="17dp" />
+
+        <TextView
+            android:id="@+id/emailError"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/redish"
+            android:visibility="gone" />
 
         <EditText
             android:id="@+id/password_input"
@@ -44,20 +52,27 @@
             android:background="@drawable/round_edge"
             android:hint="Password"
             android:inputType="textPassword"
+            android:textColor="@color/fontColour1"
             android:padding="17dp"
             android:textColorHint="@color/fontColour2"
             android:textSize="17dp" />
 
         <TextView
+            android:id="@+id/passwordError"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/redish"
+            android:visibility="gone" />
+
+        <Button
             android:id="@+id/forgot_password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:layout_marginTop="20dp"
-            android:clickable="true"
-            android:onClick="forgot_password"
             android:text="Forgot password?"
             android:textColor="@color/fontColour2"
+            android:backgroundTint="@color/background"
             android:textSize="3mm"
             android:padding="2mm"/>
 
@@ -72,15 +87,15 @@
             android:textColor="@color/fontColour2"
             android:textSize="3mm" />
 
-        <TextView
-            android:id="@+id/text_register_member"
+        <Button
+            android:id="@+id/register_member"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
-            android:onClick="registerMember"
             android:padding="3mm"
             android:text="Not a member? Register!"
             android:textColor="@color/fontColour1"
+            android:backgroundTint="@color/background"
             android:textSize="3.5mm"
             android:textStyle="bold"/>
 

@@ -2,7 +2,7 @@
 <resources>
     <color name="background">#FFFFFF</color>
     <color name="fontColour1">#2E4057</color>
-    <color name="fontColour2">#989599</color>
+    <color name="fontColour2">#4C4B4C</color>
     <color name="accentColour1">#4A2678</color>
     <color name="accentColour2">#B389C1</color>
     <color name="inputFieldColor">#F9E2FF</color>

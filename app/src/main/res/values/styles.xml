@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="RedText">
+        <item name="android:textColor">@color/redish</item>
+    </style>
+
+    <style name="NavigationViewTextStyle2">
+        <item name="android:textSize">18sp</item>
+    </style>
+
+
+</resources>

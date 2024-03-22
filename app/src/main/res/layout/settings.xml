@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:padding="30dp"
+    tools:context=".MainActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+            <ImageView
+                android:id="@+id/menu_button"
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/menu_burger">
+            </ImageView>
+            <TextView
+                android:id="@+id/titleSettings"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text="Settings"
+                android:textColor="@color/fontColour1"
+                android:textSize="30dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/separator"
+            android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_height="2dp"
+            android:background="@color/accentColour2" />
+
+        <Button
+            android:id="@+id/accInfo"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginTop="25dp"
+            android:backgroundTint="@color/inputFieldColor"
+            android:hint="Account Information"
+            android:textColorHint="@color/fontColour1"
+            android:textStyle="bold"
+            android:textAlignment="textStart"
+            android:textSize="20dp">
+        </Button>
+
+        <Button
+            android:id="@+id/notifs"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginTop="25dp"
+            android:backgroundTint="@color/inputFieldColor"
+            android:hint="Notifications"
+            android:textColorHint="@color/fontColour1"
+            android:textStyle="bold"
+            android:textAlignment="textStart"
+            android:textSize="20dp">
+        </Button>
+
+        <Button
+            android:id="@+id/blockedAcc"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginTop="25dp"
+            android:backgroundTint="@color/inputFieldColor"
+            android:hint="Blocked Accounts"
+            android:textColorHint="@color/fontColour1"
+            android:textStyle="bold"
+            android:textAlignment="textStart"
+            android:textSize="20dp">
+        </Button>
+
+        <Button
+            android:id="@+id/language"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginTop="25dp"
+            android:backgroundTint="@color/inputFieldColor"
+            android:hint="Language"
+            android:textColorHint="@color/fontColour1"
+            android:textStyle="bold"
+            android:textAlignment="textStart"
+            android:textSize="20dp">
+        </Button>
+
+        <Button
+            android:id="@+id/access"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginTop="25dp"
+            android:backgroundTint="@color/inputFieldColor"
+            android:hint="Accessibility"
+            android:textColorHint="@color/fontColour1"
+            android:textStyle="bold"
+            android:textAlignment="textStart"
+            android:textSize="20dp">
+        </Button>
+
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:padding="30dp"
+    tools:context=".MainActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+            <ImageView
+                android:id="@+id/menu_button"
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/menu_burger">
+            </ImageView>
+            <TextView
+                android:id="@+id/titleMessages"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text="Your wishlist"
+                android:textColor="@color/fontColour1"
+                android:textSize="30dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+        <View
+            android:id="@+id/separator"
+            android:layout_width="match_parent"
+            android:layout_marginTop="5dp"
+            android:layout_height="2dp"
+            android:background="@color/accentColour2"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+            <FrameLayout
+                android:id="@+id/cardView"
+                android:layout_width="match_parent"
+                android:layout_height="170dp"
+                android:background="@drawable/list_element"
+                android:backgroundTint="@color/inputFieldColor"
+                android:layout_marginTop="30dp"
+                app:cardCornerRadius="8dp">
+                <TextView
+                    android:id="@+id/name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="140dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Name: "
+                    android:textColor="@color/fontColour1"
+                    android:textSize="20dp"
+                    android:textStyle="bold">
+                </TextView>
+                <TextView
+                    android:id="@+id/location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginLeft="140dp"
+                    android:text="Location: "
+                    android:textColor="@color/fontColour1"
+                    android:textSize="20dp"
+                    android:textStyle="bold">
+                </TextView>
+                <TextView
+                    android:id="@+id/rating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="70dp"
+                    android:layout_marginLeft="140dp"
+                    android:text="Rating: "
+                    android:textColor="@color/fontColour1"
+                    android:textSize="20dp"
+                    android:textStyle="bold">
+                </TextView>
+                <TextView
+                    android:id="@+id/seller"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="100dp"
+                    android:layout_marginLeft="140dp"
+                    android:text="Seller: "
+                    android:textColor="@color/fontColour1"
+                    android:textSize="20dp"
+                    android:textStyle="bold">
+                </TextView>
+                <TextView
+                    android:id="@+id/delete"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="130dp"
+                    android:layout_marginLeft="230dp"
+                    android:text="Delete item"
+                    android:textColor="@color/redish"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp">
+                </ImageView>
+            </FrameLayout>
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

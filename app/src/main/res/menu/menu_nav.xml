@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" tools:showIn = "navigation_view">
+
+<group
+    android:checkableBehavior="single">
+    <item
+        android:id="@+id/profile"
+        android:icon="@drawable/user"
+        android:title="Profile"
+        android:iconTint="@color/redish">
+    </item>
+    <item
+        android:id="@+id/messages"
+        android:icon="@drawable/envelope"
+        android:title="Messages">
+    </item>
+    <item
+        android:id="@+id/cart"
+        android:icon="@drawable/shopping_cart"
+        android:title="Your cart">
+    </item>
+    <item
+        android:id="@+id/products"
+        android:icon="@drawable/loading"
+        android:title="Products">
+    </item>
+    <item
+        android:id="@+id/wishlist"
+        android:icon="@drawable/heart"
+        android:title="Wishlist">
+    </item>
+
+</group>
+<item
+    android:title="">
+    <menu>
+        <item
+            android:id="@+id/settings"
+            android:icon="@drawable/settings"
+            android:title="Settings">
+        </item>
+        <item
+            android:id="@+id/logout"
+            android:title="Log Out">
+        </item>
+    </menu>
+</item>
+
+</menu>

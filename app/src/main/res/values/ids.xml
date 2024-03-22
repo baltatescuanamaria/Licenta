@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="name_input" type="id" />
+    <item name="city" type="id" />
+    <item name="country" type="id" />
+    <item name="address" type="id" />
+    <item name="phoneNumber" type="id" />
+    <item name="text_login_member" type="id" />
+</resources>

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="30dp"
+    android:background="@color/background"
+    tools:context=".MainActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="30dp"
+            android:orientation="horizontal">
+            <ImageView
+                android:id="@+id/menu_button"
+                android:layout_width="40dp"
+                android:layout_height="42dp"
+                android:src="@drawable/menu_burger">
+            </ImageView>
+        </LinearLayout>
+        <FrameLayout
+            android:id="@+id/cardView"
+            android:layout_width="match_parent"
+            android:layout_height="740dp"
+            android:background="@color/inputFieldColor"
+            android:layout_marginTop="80dp"
+            android:elevation="10dp">
+            <TextView
+                android:id="@+id/changePicture"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Change Picture"
+                android:textAlignment="center"
+                android:textColor="@color/fontColour1"
+                android:textSize="20dp"
+                android:textStyle="bold">
+            </TextView>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:layout_marginTop="30dp"
+                android:padding="20dp">
+            <EditText
+                android:id="@+id/changeUsername"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="70dp"
+                android:background="@drawable/list_element"
+                android:hint="Old username"
+                android:inputType="text"
+                android:padding="17dp"
+                android:textColorHint="@color/fontColour1"
+                android:textSize="17dp" />
+
+            <EditText
+                android:id="@+id/changeEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:background="@drawable/list_element"
+                android:hint="Old email"
+                android:inputType="text"
+                android:padding="17dp"
+                android:textColorHint="@color/fontColour1"
+                android:textSize="17dp" />
+
+                <EditText
+                    android:id="@+id/changePhoneNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:background="@drawable/list_element"
+                    android:hint="Old phone number"
+                    android:inputType="number"
+                    android:padding="17dp"
+                    android:textColorHint="@color/fontColour1"
+                    android:textSize="17dp" />
+                <EditText
+                    android:id="@+id/changeCity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:background="@drawable/list_element"
+                    android:hint="Old city"
+                    android:inputType="text"
+                    android:padding="17dp"
+                    android:textColorHint="@color/fontColour1"
+                    android:textSize="17dp" />
+                <EditText
+                    android:id="@+id/changeCountry"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:background="@drawable/list_element"
+                    android:hint="Old country"
+                    android:inputType="text"
+                    android:padding="17dp"
+                    android:textColorHint="@color/fontColour1"
+                    android:textSize="17dp" />
+
+                <LinearLayout
+                    android:layout_width="382dp"
+                    android:layout_height="157dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+                    <Button
+                        android:id="@+id/save"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:backgroundTint="@color/accentColour1"
+                        android:text="Save"
+                        android:textColor="@color/fontColour2"
+                        android:textSize="23sp" />
+                </LinearLayout>
+        </LinearLayout>
+        </FrameLayout>
+
+    </LinearLayout>
+</RelativeLayout>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="background">#FFFFFF</color>
+    <color name="fontColour1">#2E4057</color>
+    <color name="fontColour2">#989599</color>
+    <color name="accentColour1">#4A2678</color>
+    <color name="accentColour2">#B389C1</color>
+    <color name="inputFieldColor">#F9E2FF</color>
+    <color name="redish">#DA4167</color>
+</resources>

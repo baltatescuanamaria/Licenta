@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:padding="30dp"
+    tools:context=".MainActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+            <ImageView
+                android:id="@+id/menu_button"
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/menu_burger">
+            </ImageView>
+            <TextView
+                android:id="@+id/titleMessages"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text="Messages"
+                android:textColor="@color/fontColour1"
+                android:textSize="30dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+        <View
+                android:id="@+id/separator"
+                android:layout_width="match_parent"
+                android:layout_marginTop="5dp"
+                android:layout_height="2dp"
+                android:background="@color/accentColour2" />
+        <Button
+            android:id="@+id/userConv"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginTop="25dp"
+            android:backgroundTint="@color/accentColour2"
+            android:hint="*Username*"
+            android:textColorHint="@color/fontColour1"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:textSize="17dp">
+        </Button>
+
+        <Button
+            android:id="@+id/userConv2"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginTop="25dp"
+            android:backgroundTint="@color/accentColour2"
+            android:hint="*Username*"
+            android:textColorHint="@color/fontColour1"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:textSize="17dp">
+        </Button>
+
+        <Button
+            android:id="@+id/userConv3"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginTop="25dp"
+            android:backgroundTint="@color/accentColour2"
+            android:hint="*Username*"
+            android:textColorHint="@color/fontColour1"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:textSize="17dp">
+        </Button>
+    </LinearLayout>
+
+</RelativeLayout>

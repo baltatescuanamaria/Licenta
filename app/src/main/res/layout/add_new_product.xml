@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:padding="30dp"
+    tools:context=".MainActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ImageView
+                android:id="@+id/menu_button"
+                android:layout_width="40dp"
+                android:layout_height="42dp"
+                android:src="@drawable/menu_burger">
+            </ImageView>
+        </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="*to add pictures*"
+            android:padding="90dp"
+            android:textSize="20dp">
+        </TextView>
+        <EditText
+            android:id="@+id/nameProduct"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/round_edge"
+            android:hint="Name"
+            android:inputType="text"
+            android:padding="17dp"
+            android:textColorHint="@color/fontColour2"
+            android:textSize="17dp" />
+
+        <EditText
+            android:id="@+id/price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/round_edge"
+            android:hint="Price"
+            android:inputType="number"
+            android:padding="17dp"
+            android:textColorHint="@color/fontColour2"
+            android:textSize="17dp" />
+
+        <EditText
+            android:id="@+id/description"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/round_edge"
+            android:hint="Description"
+            android:inputType="text"
+            android:textAlignment="textStart"
+            android:padding="17dp"
+            android:textColorHint="@color/fontColour2"
+            android:textSize="17dp" />
+
+        <EditText
+            android:id="@+id/quantity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/round_edge"
+            android:hint="Available quantity"
+            android:inputType="number"
+            android:padding="17dp"
+            android:textColorHint="@color/fontColour2"
+            android:textSize="17dp" />
+
+        <Button
+            android:id="@+id/addItem"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:backgroundTint="@color/accentColour1"
+            android:padding="15dp"
+            android:text="Add Item"
+            android:textColor="@color/fontColour2"
+            android:textSize="20sp" />
+
+
+    </LinearLayout>
+</RelativeLayout>

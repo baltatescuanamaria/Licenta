@@ -26,12 +26,12 @@ class RegisterActivity : AppCompatActivity() {
         val emailField: EditText = findViewById(R.id.email_input)
         val passwordField: EditText = findViewById(R.id.password_input)
         val verifyPasswordField: EditText = findViewById(R.id.verify_password_input)
-        val nameError: TextView = findViewById(R.id.nameError)
+        /*val nameError: TextView = findViewById(R.id.nameError)
         val surnameError: TextView = findViewById(R.id.surnameError)
         val usernameError: TextView = findViewById(R.id.usernameError)
         val emailError: TextView = findViewById(R.id.emailError)
         val passwordError: TextView = findViewById(R.id.passwordError)
-        val verifyPasswordError: TextView = findViewById(R.id.verifyPasswordError)
+        val verifyPasswordError: TextView = findViewById(R.id.verifyPasswordError)*/
 
         nextButton.setOnClickListener{
             val nameValue = nameField.text.toString()
@@ -41,58 +41,96 @@ class RegisterActivity : AppCompatActivity() {
             val passwordValue = passwordField.text.toString()
             val verifyPasswordValue = verifyPasswordField.text.toString()
 
-            if (nameValue.isEmpty()){
-                nameError.visibility = View.VISIBLE
-                nameError.text = "Acest camp este obligatoriu"
-            } else{
-                nameError.visibility = View.GONE
+            var hasError = false
+
+            val name =  Regex("^[a-zA-Z\\- ']{2,50}$")
+            if (!name.matches(nameValue)){
+                nameField.setError("Numele nu este valid")
+                hasError = true
             }
 
-            if (surnameValue.isEmpty()){
-                surnameError.visibility = View.VISIBLE
-                surnameError.text = "Acest camp este obligatoriu"
-            } else{
-                surnameError.visibility = View.GONE
+            if (nameValue.isEmpty()) {
+                nameField.setError("Acest camp este obligatoriu")
+                hasError = true
             }
 
-            if (usernameValue.isEmpty()){
-                usernameError.visibility = View.VISIBLE
-                usernameError.text = "Acest camp este obligatoriu"
-            } else{
-                usernameError.visibility = View.GONE
+            if (!name.matches(surnameValue)){
+                nameField.setError("Prenumele nu este valid")
+                hasError = true
+            }
+
+            if (surnameValue.isEmpty()) {
+                surnameField.setError("Acest camp este obligatoriu")
+                hasError = true
+            }
+            //TODO: de verificat ca nu username nu este deja in uz (sa vad cum sa salvez datele in Firebase)
+            if (usernameValue.isEmpty()) {
+                usernameField.setError("Acest camp este obligatoriu")
+                hasError = true
             }
 
             if (emailValue.isEmpty()){
-                emailError.visibility = View.VISIBLE
-                emailError.text = "Acest camp este obligatoriu"
-            } else{
-                emailError.visibility = View.GONE
+                emailField.setError("Acest camp este obligatoriu")
+                hasError = true
             }
 
-            if (passwordValue.isEmpty()){
-                passwordError.visibility = View.VISIBLE
-                passwordError.text = "Acest camp este obligatoriu"
-            } else{
-                passwordError.visibility = View.GONE
+            val email = Regex("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}")
+
+            if(!email.matches(emailValue)){
+                emailField.setError("Adresa de mail nu este valida")
+                hasError = true
             }
 
-            if (verifyPasswordValue.isEmpty()){
-                verifyPasswordError.visibility = View.VISIBLE
-                verifyPasswordError.text = "Acest camp este obligatoriu"
-            } else{
-                verifyPasswordError.visibility = View.GONE
+            FirebaseAuth.getInstance().fetchSignInMethodsForEmail(emailValue)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        val result = task.result?.signInMethods
+                        if (!result.isNullOrEmpty()) {
+                            emailField.setError("Adresa de mail este deja in uz")
+                            hasError = true
+                        }
+                    } else {
+                        println("Error")
+                    }
+                }
+
+            if (passwordValue.isEmpty()) {
+                passwordField.setError("Acest camp este obligatoriu")
+                hasError = true
             }
 
-            if (surnameValue.isNotEmpty() && nameValue.isNotEmpty() && usernameValue.isNotEmpty() && emailValue.isNotEmpty() && passwordValue.isNotEmpty() && verifyPasswordValue.isNotEmpty()) {
+            if(passwordValue.length < 6) {
+                passwordField.setError("Parola trebuie sa aiba cel putin 6 caractere")
+                hasError = true
+            }
+
+            val uppercase = Regex("[A-Z]").findAll(passwordValue).count()
+            val digits = Regex("[0-9]").findAll(passwordValue).count()
+            val symbols = Regex("[^a-zA-Z0-9]").findAll(passwordValue).count()
+
+            if (uppercase == 0 && (digits == 0 || symbols == 0)) {
+                passwordField.setError("Parola trebuie sa contina cel putin o litera uppercase, un simbol sau o cifra")
+                hasError = true
+            }
+
+            if (verifyPasswordValue.isEmpty()) {
+                verifyPasswordField.setError("Acest camp este obligatoriu")
+                hasError = true
+            }
+
+            if(verifyPasswordValue != passwordValue){
+                verifyPasswordField.setError("Parolele nu coincid")
+                hasError = true
+            }
+
+            if(!hasError) {
                 registerUser(nameValue, surnameValue, usernameValue, emailValue, passwordValue)
             }
+
         }
     }
 
     private fun registerUser(nameValue:String, surnameValue: String, usernameValue:String, emailValue: String, passwordValue:String){
-        auth.createUserWithEmailAndPassword(emailValue, passwordValue)
-            .addOnCompleteListener(this) {action ->
-                if (action.isSuccessful) {
                     val intent = Intent(this, RegisterActivity4::class.java)
                     intent.putExtra("NAME_KEY", nameValue)
                     intent.putExtra("SURNAME_KEY", surnameValue)
@@ -101,9 +139,5 @@ class RegisterActivity : AppCompatActivity() {
                     intent.putExtra("PASSWORD_KEY", passwordValue)
                     startActivity(intent)
                     finish()
-                } else {
-                    Toast.makeText(this, "Pas 2 esec", Toast.LENGTH_SHORT).show()
-                }
             }
     }
-}

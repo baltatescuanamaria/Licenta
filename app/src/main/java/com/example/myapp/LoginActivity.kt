@@ -21,28 +21,25 @@ class LoginActivity : AppCompatActivity() {
         val loginButton: Button = findViewById(R.id.login_btn)
         val passwordField: EditText = findViewById(R.id.password_input)
         val emailField: EditText = findViewById(R.id.email_input)
-        val emailError: TextView = findViewById(R.id.emailError)
-        val passwordError: TextView = findViewById(R.id.passwordError)
+        /*val emailError: TextView = findViewById(R.id.emailError)
+        val passwordError: TextView = findViewById(R.id.passwordError)*/
 
         loginButton.setOnClickListener{
             val emailValue = emailField.text.toString()
             val passwordValue = passwordField.text.toString()
 
+            var hasError = false
             if (emailValue.isEmpty()){
-                emailError.visibility = View.VISIBLE
-                emailError.text = "Acest camp este obligatoriu"
-            } else{
-                emailError.visibility = View.GONE
+                emailField.setError("Acest camp este obligatoriu")
+                hasError = true
             }
 
             if (passwordValue.isEmpty()){
-                passwordError.visibility = View.VISIBLE
-                passwordError.text = "Acest camp este obligatoriu"
-            } else{
-                passwordError.visibility = View.GONE
+                passwordField.setError("Acest camp este obligatoriu")
+                hasError = true
             }
 
-            if (emailValue.isNotEmpty() && passwordValue.isNotEmpty()) {
+            if (!hasError) {
                 loginUser(emailValue, passwordValue)
             }
         }
@@ -53,18 +50,34 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
             overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
         }
+
+        val forgotPasswordButton: Button = findViewById(R.id.forgot_password)
+        forgotPasswordButton.setOnClickListener {
+            setContentView(R.layout.forgot_password)
+            val emailValue: EditText = findViewById(R.id.email_input)
+            val email = emailValue.text.toString()
+            FirebaseAuth.getInstance().sendPasswordResetEmail(email)
+                .addOnSuccessListener {
+                    Toast.makeText(this, "Email sent", Toast.LENGTH_SHORT).show()
+                    setContentView(R.layout.activity_main)
+                }
+                .addOnFailureListener { exception ->
+                    println("Error")
+                }
+
+        }
     }
 
     private fun loginUser(emailValue:String, passwordValue: String){
         auth.signInWithEmailAndPassword(emailValue, passwordValue)
             .addOnCompleteListener(this) {action ->
                 if (action.isSuccessful) {
-                    Toast.makeText(this, "Autentificare reușită", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Autentificare reusita", Toast.LENGTH_SHORT).show()
                     val intent = Intent(this, HomescreenActivity::class.java)
                     startActivity(intent)
                     finish()
                 } else {
-                    Toast.makeText(this, "Autentificare eșuată", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Datele nu sunt corecte", Toast.LENGTH_SHORT).show()
                 }
             }
     }

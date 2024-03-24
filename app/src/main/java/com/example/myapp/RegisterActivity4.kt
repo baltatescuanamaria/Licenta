@@ -38,63 +38,61 @@ class RegisterActivity4 : AppCompatActivity() {
             val streetValue = streetField.text.toString()
             val numberValue = numberField.text.toString()
 
+            var hasError = false
             if (phoneNumberValue.isEmpty()){
-                phoneError.visibility = View.VISIBLE
-                phoneError.text = "Acest camp este obligatoriu"
-            } else{
-                phoneError.visibility = View.GONE
+                phoneNumberField.setError("Acest camp este obligatoriu")
+                hasError = true
             }
 
             if (cityValue.isEmpty()){
-                cityError.visibility = View.VISIBLE
-                cityError.text = "Acest camp este obligatoriu"
-            } else {
-                cityError.visibility = View.GONE
+                cityField.setError("Acest camp este obligatoriu")
+                hasError = true
             }
 
             if (countryValue.isEmpty()){
-                countryError.visibility = View.VISIBLE
-                countryError.text = "Acest camp este obligatoriu"
-            } else {
-                countryError.visibility = View.GONE
+                countryField.setError("Acest acmp este obligatoriu")
+                hasError = true
             }
 
             if (streetValue.isEmpty()){
-                streetError.visibility = View.VISIBLE
-                streetError.text = "Acest camp este obligatoriu"
-            } else{
-                streetError.visibility = View.GONE
+                streetField.setError("Acest camp este obligatoriu")
+                hasError = true
             }
 
+            val regexModel = Regex("^\\+?4?0?[1-9][0-9]{8}\\\$")
+
+            if(!regexModel.matches(numberValue)) {
+                    numberField.setError("Numarul de telefon nu este valid")
+                    hasError = true
+            }
             if (numberValue.isEmpty()){
-                noError.visibility = View.VISIBLE
-                noError.text = "Acest camp este obligatoriu"
-            } else{
-                noError.visibility = View.GONE
+                numberField.setError("Acest camp este obligatoriu")
+                hasError = true
             }
 
-            if (phoneNumberValue.isNotEmpty() && cityValue.isNotEmpty() && countryValue.isNotEmpty() && streetValue.isNotEmpty() && numberValue.isNotEmpty()) {
+            if (!hasError) {
                 registerUser(phoneNumberValue, cityValue, countryValue, streetValue, numberValue)
             }
         }
     }
 
     private fun registerUser(phoneNumberValue: String, cityValue: String, countryValue: String, streetValue: String, numberValue: String) {
+        val intent = intent
         val emailValue = intent.getStringExtra("EMAIL_KEY")
         val passwordValue = intent.getStringExtra("PASSWORD_KEY")
-
         if (passwordValue != null && emailValue != null) {
             auth.createUserWithEmailAndPassword(emailValue, passwordValue)
                 .addOnCompleteListener(this) { action ->
                     if (action.isSuccessful) {
                         Toast.makeText(this, "Register completed", Toast.LENGTH_SHORT).show()
                         val newIntent = Intent(this, HomescreenActivity::class.java)
-                        newIntent.putExtras(intent)
+                        /*newIntent.putExtras(intent)
                         newIntent.putExtra("PHONE_KEY", phoneNumberValue)
                         newIntent.putExtra("CITY_KEY", cityValue)
                         newIntent.putExtra("COUNTRY_KEY", countryValue)
                         newIntent.putExtra("STREET_KEY", streetValue)
-                        newIntent.putExtra("NUMBER_KEY", numberValue)
+                        newIntent.putExtra("NUMBER_KEY", numberValue)*/
+                        //TODO: de adaugat un mod in care sa valaidez adresa de email
                         startActivity(newIntent)
                         finish()
                     } else {

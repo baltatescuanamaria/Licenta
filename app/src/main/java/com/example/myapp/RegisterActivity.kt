@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -31,7 +32,14 @@ class RegisterActivity : AppCompatActivity() {
         val usernameError: TextView = findViewById(R.id.usernameError)
         val emailError: TextView = findViewById(R.id.emailError)
         val passwordError: TextView = findViewById(R.id.passwordError)
-        val verifyPasswordError: TextView = findViewById(R.id.verifyPasswordError)*/
+        val verifyPasswordError: TextView = findViewById(R.id.verifyPasswordError)
+
+        val backButton: ImageButton = findViewById(R.id.back_button)
+        backButton.setOnClickListener{
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish()
+        }*/
 
         nextButton.setOnClickListener{
             val nameValue = nameField.text.toString()
@@ -72,27 +80,29 @@ class RegisterActivity : AppCompatActivity() {
             if (emailValue.isEmpty()){
                 emailField.setError("Acest camp este obligatoriu")
                 hasError = true
-            }
+            } else {
 
-            val email = Regex("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}")
+                val email = Regex("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}")
 
-            if(!email.matches(emailValue)){
-                emailField.setError("Adresa de mail nu este valida")
-                hasError = true
-            }
+                if (!email.matches(emailValue)) {
+                    emailField.setError("Adresa de mail nu este valida")
+                    hasError = true
+                } else {
 
-            FirebaseAuth.getInstance().fetchSignInMethodsForEmail(emailValue)
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        val result = task.result?.signInMethods
-                        if (!result.isNullOrEmpty()) {
-                            emailField.setError("Adresa de mail este deja in uz")
-                            hasError = true
+                    FirebaseAuth.getInstance().fetchSignInMethodsForEmail(emailValue)
+                        .addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                val result = task.result?.signInMethods
+                                if (!result.isNullOrEmpty()) {
+                                    emailField.setError("Adresa de mail este deja in uz")
+                                    hasError = true
+                                }
+                            } else {
+                                println("Error")
+                            }
                         }
-                    } else {
-                        println("Error")
-                    }
                 }
+            }
 
             if (passwordValue.isEmpty()) {
                 passwordField.setError("Acest camp este obligatoriu")
@@ -130,14 +140,14 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
-    private fun registerUser(nameValue:String, surnameValue: String, usernameValue:String, emailValue: String, passwordValue:String){
-                    val intent = Intent(this, RegisterActivity4::class.java)
-                    intent.putExtra("NAME_KEY", nameValue)
-                    intent.putExtra("SURNAME_KEY", surnameValue)
-                    intent.putExtra("USERNAME_KEY", usernameValue)
-                    intent.putExtra("EMAIL_KEY", emailValue)
-                    intent.putExtra("PASSWORD_KEY", passwordValue)
-                    startActivity(intent)
-                    finish()
-            }
+    private fun registerUser(nameValue:String, surnameValue: String, usernameValue:String, emailValue: String, passwordValue:String) {
+            val intent = Intent(this, RegisterActivity4::class.java)
+            intent.putExtra("NAME_KEY", nameValue)
+            intent.putExtra("SURNAME_KEY", surnameValue)
+            intent.putExtra("USERNAME_KEY", usernameValue)
+            intent.putExtra("EMAIL_KEY", emailValue)
+            intent.putExtra("PASSWORD_KEY", passwordValue)
+            startActivity(intent)
+            finish()
     }
+}

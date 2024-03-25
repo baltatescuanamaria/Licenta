@@ -5,8 +5,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    android:padding="30dp"
+    android:paddingEnd="30dp"
+    android:paddingStart="30dp"
     tools:context=".MainActivity">
+
+    <ImageButton
+        android:id="@+id/back_button"
+        android:contentDescription="Back"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/arrow_small_left"
+        android:background="@null"
+        android:onClick="backButtonClick"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="-15dp">
+    </ImageButton>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,7 +31,7 @@
             android:id="@+id/Greeting"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="128dp"
+            android:layout_marginTop="150dp"
             android:text="Welcome back!"
             android:textColor="@color/fontColour1"
             android:textSize="30dp"
@@ -32,8 +45,8 @@
             android:background="@drawable/round_edge"
             android:hint="Email"
             android:inputType="text"
-            android:textColor="@color/fontColour1"
             android:padding="17dp"
+            android:textColor="@color/fontColour1"
             android:textColorHint="@color/fontColour2"
             android:textSize="17dp" />
 
@@ -52,8 +65,8 @@
             android:background="@drawable/round_edge"
             android:hint="Password"
             android:inputType="textPassword"
-            android:textColor="@color/fontColour1"
             android:padding="17dp"
+            android:textColor="@color/fontColour1"
             android:textColorHint="@color/fontColour2"
             android:textSize="17dp" />
 
@@ -70,34 +83,34 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:layout_marginTop="20dp"
+            android:backgroundTint="@color/background"
+            android:padding="2mm"
             android:text="Forgot password?"
             android:textColor="@color/fontColour2"
-            android:backgroundTint="@color/background"
-            android:textSize="3mm"
-            android:padding="2mm"/>
+            android:textSize="3mm" />
 
         <Button
             android:id="@+id/login_btn"
-            android:layout_width="match_parent"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="150dp"
             android:backgroundTint="@color/accentColour1"
             android:padding="15dp"
             android:text="Login"
-            android:textColor="@color/fontColour2"
-            android:textSize="3mm" />
+            android:textColor="@color/accentColour2"
+            android:textSize="25dp" />
 
         <Button
             android:id="@+id/register_member"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
+            android:backgroundTint="@color/background"
             android:padding="3mm"
             android:text="Not a member? Register!"
             android:textColor="@color/fontColour1"
-            android:backgroundTint="@color/background"
             android:textSize="3.5mm"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
     </LinearLayout>
 

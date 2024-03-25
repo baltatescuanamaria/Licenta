@@ -44,7 +44,7 @@
             android:backgroundTint="@color/accentColour1"
             android:padding="15dp"
             android:text="Register"
-            android:textColor="@color/fontColour2"
+            android:textColor="@color/inputFieldColor"
             android:textSize="20sp" />
 
 

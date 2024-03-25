@@ -28,16 +28,11 @@ class RegisterActivity4 : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
         val nextButton: Button = findViewById(R.id.register_btn)
-        val phoneNumberField: EditText = findViewById(R.id.phoneNumber)
-        val cityField: EditText = findViewById(R.id.city)
-        val countryField: EditText = findViewById(R.id.country)
-        val streetField: EditText = findViewById(R.id.address_street)
-        val numberField: EditText = findViewById(R.id.address_number)
-        val phoneError: TextView = findViewById(R.id.phoneError)
-        val cityError: TextView = findViewById(R.id.cityError)
-        val countryError: TextView = findViewById(R.id.countryError)
-        val streetError: TextView = findViewById(R.id.streetError)
-        val noError: TextView = findViewById(R.id.noError)
+        val phoneNumberField: EditText = findViewById(R.id.phone_number_input)
+        val cityField: EditText = findViewById(R.id.city_input)
+        val countryField: EditText = findViewById(R.id.country_input)
+        val streetField: EditText = findViewById(R.id.street_input)
+        val numberField: EditText = findViewById(R.id.address_number_input)
 
         nextButton.setOnClickListener{
             val phoneNumberValue = phoneNumberField.text.toString()
@@ -50,7 +45,14 @@ class RegisterActivity4 : AppCompatActivity() {
             if (phoneNumberValue.isEmpty()){
                 phoneNumberField.setError("Acest camp este obligatoriu")
                 hasError = true
+            }/* else {
+                val regexPhoneNumber = Regex("^07\\d{8}\$\n")
+                if(!regexPhoneNumber.matches(phoneNumberValue)) {
+                    phoneNumberField.setError("Numarul de telefon nu este valid")
+                    hasError = true
+                }
             }
+            */
 
             if (cityValue.isEmpty()){
                 cityField.setError("Acest camp este obligatoriu")
@@ -67,12 +69,6 @@ class RegisterActivity4 : AppCompatActivity() {
                 hasError = true
             }
 
-            val regexModel = Regex("^\\+?4?0?[1-9][0-9]{8}\\\$")
-
-            if(!regexModel.matches(numberValue)) {
-                    numberField.setError("Numarul de telefon nu este valid")
-                    hasError = true
-            }
             if (numberValue.isEmpty()){
                 numberField.setError("Acest camp este obligatoriu")
                 hasError = true
@@ -92,7 +88,17 @@ class RegisterActivity4 : AppCompatActivity() {
             auth.createUserWithEmailAndPassword(emailValue, passwordValue)
                 .addOnCompleteListener(this) { action ->
                     if (action.isSuccessful) {
-                        Toast.makeText(this, "Register completed", Toast.LENGTH_SHORT).show()
+
+                        //TODO: cum sa verific confirmarea inregistrarii contului
+                        val user = FirebaseAuth.getInstance().currentUser
+                        user?.sendEmailVerification()
+                            ?.addOnCompleteListener { task ->
+                                if (task.isSuccessful) {
+                                    Toast.makeText(this, "Sent the confirmation mail", Toast.LENGTH_SHORT).show()
+                                } else {
+                                    Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
+                                }
+                            }
                         val newIntent = Intent(this, HomescreenActivity::class.java)
                         /*newIntent.putExtras(intent)
                         newIntent.putExtra("PHONE_KEY", phoneNumberValue)
@@ -100,7 +106,7 @@ class RegisterActivity4 : AppCompatActivity() {
                         newIntent.putExtra("COUNTRY_KEY", countryValue)
                         newIntent.putExtra("STREET_KEY", streetValue)
                         newIntent.putExtra("NUMBER_KEY", numberValue)*/
-                        //TODO: de adaugat un mod in care sa valaidez adresa de email
+                        //TODO: de adaugat un mod in care sa validez adresa de email
                         startActivity(newIntent)
                         finish()
                     } else {

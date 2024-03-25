@@ -25,5 +25,47 @@ class ForgotPasswordActivity: AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+
+        auth = FirebaseAuth.getInstance()
+        val sendEmail: Button = findViewById(R.id.sendEmail_btn)
+        val emailField: EditText = findViewById(R.id.email_input)
+
+        sendEmail.setOnClickListener {
+            var hasError = false
+            val email = emailField.text.toString()
+
+            if (email.isEmpty()) {
+                emailField.setError("Acest camp este obligatoriu")
+                hasError = true
+            } else {
+
+                val emailRegex = Regex("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}")
+
+                if (!emailRegex.matches(email)) {
+                    emailField.setError("Adresa de mail nu este valida")
+                    hasError = true
+                } else {
+                    auth.sendPasswordResetEmail(email)
+                        .addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                Toast.makeText(
+                                    this,
+                                    "Un e-mail de resetare a parolei a fost trimis la $email",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                val intent = Intent(this, LoginActivity::class.java)
+                                startActivity(intent)
+                                finish()
+                            } else {
+                                Toast.makeText(
+                                    this,
+                                    "Eroare la trimiterea e-mailului de resetare a parolei: ${task.exception?.message}",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        }
+                }
+            }
+        }
     }
 }

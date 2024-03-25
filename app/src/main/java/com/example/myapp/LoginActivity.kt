@@ -2,6 +2,7 @@ package com.example.myapp
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.method.PasswordTransformationMethod
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -9,6 +10,7 @@ import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 
@@ -51,6 +53,22 @@ class LoginActivity : AppCompatActivity() {
                 loginUser(emailValue, passwordValue)
             }
         }
+
+        val passwordInputLayout: TextInputLayout = findViewById(R.id.password_text_input_layout)
+
+        passwordInputLayout.setEndIconOnClickListener {
+            val passwordEditText = passwordInputLayout.editText
+            if (passwordEditText != null) {
+                val currentVisibility = passwordEditText.transformationMethod
+                val newVisibility = if (currentVisibility == null) {
+                    PasswordTransformationMethod.getInstance()
+                } else {
+                    null
+                }
+                passwordEditText.transformationMethod = newVisibility
+            }
+        }
+
 
         val registerButton: Button = findViewById(R.id.register_member)
         registerButton.setOnClickListener{

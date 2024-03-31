@@ -1,17 +1,13 @@
 package com.example.myapp
 
-import android.annotation.SuppressLint
+
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import android.widget.Button
 import android.widget.EditText
-import android.widget.ImageButton
-import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
+
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
@@ -147,6 +143,7 @@ class RegisterActivity : AppCompatActivity() {
             intent.putExtra("USERNAME_KEY", usernameValue)
             intent.putExtra("EMAIL_KEY", emailValue)
             intent.putExtra("PASSWORD_KEY", passwordValue)
+
             startActivity(intent)
             finish()
     }

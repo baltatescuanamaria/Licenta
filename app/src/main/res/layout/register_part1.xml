@@ -17,7 +17,6 @@
             android:layout_height="wrap_content"
             android:src="@drawable/arrow_small_left"
             android:background="@null"
-            android:onClick="backButtonClick"
             android:layout_marginTop="25dp"
             android:layout_marginStart="-15dp">
     </ImageButton>
@@ -28,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:layout_marginLeft="75dp"
-            android:text="Register"
+            android:text="@string/register"
             android:textColor="@color/fontColour1"
             android:textSize="30dp"
             android:textStyle="bold" />
@@ -243,7 +242,7 @@
             android:layout_marginTop="50dp"
             android:backgroundTint="@color/accentColour1"
             android:padding="15dp"
-            android:text="Next"
+            android:text="@string/next"
             android:textColor="@color/inputFieldColor"
             android:textSize="20sp" />
 

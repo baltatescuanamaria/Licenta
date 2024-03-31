@@ -1,17 +1,17 @@
 package com.example.myapp
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.inappmessaging.internal.Logging.TAG
+import java.util.UUID
 
 class RegisterActivity4 : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
@@ -84,11 +84,41 @@ class RegisterActivity4 : AppCompatActivity() {
         val intent = intent
         val emailValue = intent.getStringExtra("EMAIL_KEY")
         val passwordValue = intent.getStringExtra("PASSWORD_KEY")
+        val nameValue = intent.getStringExtra("NAME_KEY")
+        val surnameValue = intent.getStringExtra("SURNAME_KEY")
+        val usernameValue = intent.getStringExtra("USERNAME_KEY")
+
         if (passwordValue != null && emailValue != null) {
             auth.createUserWithEmailAndPassword(emailValue, passwordValue)
                 .addOnCompleteListener(this) { action ->
                     if (action.isSuccessful) {
+                        val database = FirebaseFirestore.getInstance()
+                        val userInput = hashMapOf(
+                            "name" to nameValue,
+                            "username" to usernameValue,
+                            "surname" to surnameValue,
+                            "phoneNumber" to phoneNumberValue,
+                            "city" to cityValue,
+                            "country" to countryValue,
+                            "street" to streetValue,
+                            "number" to numberValue,
+                            "userId" to auth.currentUser?.uid
+                        )
 
+                        val documentName = "user_${usernameValue}"
+                        database.collection("users")
+                            .document(documentName)
+                            .set(userInput)
+                            .addOnSuccessListener {
+                                Log.d(TAG, "added with ID: $documentName")
+                                val newIntent = Intent(this, AddImageActivity::class.java)
+                                startActivity(newIntent)
+                                finish()
+                            }
+                            .addOnFailureListener { e ->
+                                Log.w(TAG, "Error adding document", e)
+                                Toast.makeText(this, "An error occurred while registering the information :(", Toast.LENGTH_SHORT).show()
+                            }
                         //TODO: cum sa verific confirmarea inregistrarii contului
                         val user = FirebaseAuth.getInstance().currentUser
                         user?.sendEmailVerification()
@@ -99,7 +129,7 @@ class RegisterActivity4 : AppCompatActivity() {
                                     Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
                                 }
                             }
-                        val newIntent = Intent(this, HomescreenActivity::class.java)
+                        val newIntent = Intent(this, AddImageActivity::class.java)
                         /*newIntent.putExtras(intent)
                         newIntent.putExtra("PHONE_KEY", phoneNumberValue)
                         newIntent.putExtra("CITY_KEY", cityValue)

@@ -1,6 +1,23 @@
 <resources>
-    <string name="app_name">MyApp</string>
-    <!-- TODO: Remove or change this placeholder text -->
+    <string name="app_name">GreenMarket</string>
+
+    <!--btn names -->
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="search">Search</string>
+    <string name="contact">Contact</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="save">Save</string>
+    <string name="next">Next</string>
+    <string name="acc_info">Account Information</string>
+    <string name="notifs">Notifications</string>
+    <string name="blocked_acc">Blocked Accounts</string>
+    <string name="language">Language</string>
+    <string name="access">Accessibility</string>
+    <string name="add_pic">Add a Picture</string>
+    <string name="skip">Skip</string>
+
+    <!-- field names -->
     <string name="password">Password</string>
     <string name="email">Email</string>
     <string name="name">Name</string>
@@ -14,4 +31,9 @@
     <string name="address">Address</string>
     <string name="address_number">Address Number</string>
     <string name="street">Address Information</string>
+
+    <!--various text-->
+    <string name="text_beginning">Buy and Sell Fresh Products Faster with  GreenMarket</string>
+    <string name="add_pic_title">Add a Picture</string>
+    <string name="title_activity_add_image">AddImageActivity</string>
 </resources>

@@ -14,13 +14,16 @@
         android:gravity="center"
         android:orientation="vertical">
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="350dp"
+            android:src="@drawable/homescreen" />
         <TextView
             android:id="@+id/Greeting"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="300dp"
             android:textAlignment="center"
-            android:text="Buy and Sell Fresh Products Faster with  *nume*"
+            android:text="@string/text_beginning"
             android:textColor="@color/fontColour1"
             android:textSize="25dp"
             android:textStyle="bold" />
@@ -32,7 +35,7 @@
             android:layout_marginTop="100dp"
             android:backgroundTint="@color/accentColour2"
             android:padding="15dp"
-            android:text="Login"
+            android:text="@string/login"
             android:textColor="@color/fontColour1"
             android:textSize="20sp" />
 
@@ -43,7 +46,7 @@
             android:layout_marginTop="15dp"
             android:backgroundTint="@color/accentColour1"
             android:padding="15dp"
-            android:text="Register"
+            android:text="@string/register"
             android:textColor="@color/inputFieldColor"
             android:textSize="20sp" />
 

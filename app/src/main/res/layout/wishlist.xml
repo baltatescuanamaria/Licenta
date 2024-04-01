@@ -118,9 +118,11 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="70dp"
         android:layout_alignParentBottom="true"
         android:orientation="horizontal"
+        android:paddingLeft="7dp"
+        android:paddingRight="5dp"
         android:background="@color/accentColour1">
 
         <ImageButton
@@ -130,7 +132,7 @@
             android:layout_height="wrap_content"
             android:backgroundTint="@color/accentColour1"
             android:src="@drawable/home"
-            android:padding="30dp">
+            android:padding="25dp">
         </ImageButton>
 
         <ImageButton
@@ -140,7 +142,7 @@
             android:layout_height="wrap_content"
             android:backgroundTint="@color/accentColour1"
             android:src="@drawable/envelope"
-            android:padding="30dp">
+            android:padding="25dp">
         </ImageButton>
 
         <ImageButton
@@ -150,7 +152,7 @@
             android:layout_height="wrap_content"
             android:backgroundTint="@color/accentColour1"
             android:src="@drawable/loading"
-            android:padding="30dp">
+            android:padding="25dp">
         </ImageButton>
 
         <ImageButton
@@ -160,7 +162,7 @@
             android:layout_height="wrap_content"
             android:backgroundTint="@color/accentColour1"
             android:src="@drawable/heart"
-            android:padding="30dp">
+            android:padding="25dp">
         </ImageButton>
 
         <ImageButton
@@ -170,7 +172,7 @@
             android:layout_height="wrap_content"
             android:backgroundTint="@color/accentColour1"
             android:src="@drawable/user"
-            android:padding="30dp">
+            android:padding="25dp">
         </ImageButton>
     </LinearLayout>
 </RelativeLayout>

@@ -38,6 +38,28 @@
 
         </activity>
         <activity android:name=".AddImageActivity">
+
+        </activity>
+        <activity android:name=".MessageActivity">
+
+        </activity>
+        <activity android:name=".MessageListActivity">
+
+        </activity>
+        <activity android:name=".ProductsActivity">
+
+        </activity>
+        <activity android:name=".WishlistActivity">
+
+        </activity>
+        <activity android:name=".CheckoutActivity">
+
+        </activity>
+        <activity android:name=".EditProfileActivity">
+
+        </activity>
+        <activity android:name=".ProfileActivity">
+
         </activity>
     </application>
 

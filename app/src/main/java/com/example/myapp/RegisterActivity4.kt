@@ -130,12 +130,17 @@ class RegisterActivity4 : AppCompatActivity() {
                                 }
                             }
                         val newIntent = Intent(this, AddImageActivity::class.java)
-                        /*newIntent.putExtras(intent)
+                        newIntent.putExtras(intent)
+                        newIntent.putExtra("EMAIL_KEY", emailValue)
+                        newIntent.putExtra("PASSWORD_KEY", passwordValue)
+                        newIntent.putExtra("NAME_KEY", nameValue)
+                        newIntent.putExtra("SURNAME_KEY", surnameValue)
+                        newIntent.putExtra("USERNAME_KEY", usernameValue)
                         newIntent.putExtra("PHONE_KEY", phoneNumberValue)
                         newIntent.putExtra("CITY_KEY", cityValue)
                         newIntent.putExtra("COUNTRY_KEY", countryValue)
                         newIntent.putExtra("STREET_KEY", streetValue)
-                        newIntent.putExtra("NUMBER_KEY", numberValue)*/
+                        newIntent.putExtra("NUMBER_KEY", numberValue)
                         //TODO: de adaugat un mod in care sa validez adresa de email
                         startActivity(newIntent)
                         finish()

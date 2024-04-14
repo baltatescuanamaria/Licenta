@@ -10,10 +10,24 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
-import com.example.myapp.HomescreenActivity
-import com.example.myapp.R
-import com.example.myapp.RegisterActivity4
 import com.google.firebase.auth.FirebaseAuth
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
+import android.util.Log
+import com.google.android.gms.tasks.OnFailureListener
+import com.google.firebase.Firebase
+import com.google.firebase.initialize
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageException
+import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.component1
+import com.google.firebase.storage.component2
+import com.google.firebase.storage.component3
+import com.google.firebase.storage.storage
+import com.google.firebase.storage.storageMetadata
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileInputStream
 
 class AddImageActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
@@ -55,7 +69,7 @@ class AddImageActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
 
         val imagePlace : ImageView = findViewById(R.id.picturePlace)
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null) {
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null) {
             val selectedImage: Uri? = data.data
             selectedImage?.let {
                 val inputStream = contentResolver.openInputStream(selectedImage)

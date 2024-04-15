@@ -10,6 +10,7 @@ import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.inappmessaging.internal.Logging
@@ -27,9 +28,9 @@ class EditProfileActivity : AppCompatActivity() {
         val cityField: EditText = findViewById(R.id.changeCity)
         val countryField: EditText = findViewById(R.id.changeCountry)
 
-            val userId = "user_ana0maria"
-            val db = Firebase.firestore
-            val userDocRef = db.collection("users").document(userId)
+        val db = FirebaseFirestore.getInstance()
+        val userId = FirebaseAuth.getInstance().currentUser?.uid
+        val userDocRef = db.collection("users").document("user_{$userId}")
 
             userDocRef.get().addOnSuccessListener { document->
                 if (document != null && document.exists()) {
@@ -78,7 +79,7 @@ class EditProfileActivity : AppCompatActivity() {
                 updateInfo["country"] = countryValue
             }
 
-            val doc = database.collection("users").document("user_ana0maria")
+            val doc = database.collection("users").document("user_{$userId}")
 
             doc.update(updateInfo)
                 .addOnSuccessListener {

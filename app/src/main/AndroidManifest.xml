@@ -61,6 +61,12 @@
         <activity android:name=".ProfileActivity">
 
         </activity>
+        <activity android:name=".AddProductActivity">
+
+        </activity>
+        <activity android:name=".EditProductActivity">
+
+        </activity>
     </application>
 
 </manifest>

@@ -105,7 +105,8 @@ class RegisterActivity4 : AppCompatActivity() {
                             "userId" to auth.currentUser?.uid
                         )
 
-                        val documentName = "user_${usernameValue}"
+                        val userId = FirebaseAuth.getInstance().currentUser?.uid
+                        val documentName = "user_${userId}"
                         database.collection("users")
                             .document(documentName)
                             .set(userInput)

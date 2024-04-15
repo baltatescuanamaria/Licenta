@@ -3,6 +3,7 @@ package com.example.myapp;
 import android.app.Activity;
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
 import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 
@@ -16,6 +17,20 @@ class ProductsActivity : AppCompatActivity() {
         val productsBtn: ImageButton = findViewById(R.id.products)
         val wishlistBtn: ImageButton = findViewById(R.id.wishlist)
         val profileBtn: ImageButton = findViewById(R.id.profile)
+        val addItemBtn: Button = findViewById(R.id.addItem)
+        val selectBtn: Button = findViewById(R.id.cardView)
+
+        addItemBtn.setOnClickListener {
+        val intent = Intent(this, AddProductActivity::class.java)
+        startActivity(intent)
+        finish()
+        }
+
+        selectBtn.setOnClickListener {
+        val intent = Intent(this, EditProductActivity::class.java)
+        startActivity(intent)
+        finish()
+        }
 
         homeBtn.setOnClickListener{
         val intent = Intent(this, HomescreenActivity::class.java)

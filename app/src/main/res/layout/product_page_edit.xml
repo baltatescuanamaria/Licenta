@@ -5,151 +5,123 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-
     tools:context=".MainActivity">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:padding="30dp"
+        android:layout_marginTop="35dp"
         android:orientation="vertical">
-        <TextView
+
+        <ImageView
+            android:id="@+id/picturePlace"
+            android:layout_width="300dp"
+            android:layout_height="250dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:background="@color/accentColour2"
+            android:scaleType="centerCrop" />
+
+        <Button
+            android:id="@+id/selectImageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/picturePlace"
+            android:layout_marginTop="20dp"
+            android:layout_centerHorizontal="true"
+            android:backgroundTint="@color/redish"
+            android:text="@string/add_pic" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/name_text_input_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="*to add pictures*"
-            android:padding="90dp"
-            android:textSize="20dp">
-        </TextView>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:layout_marginTop="25dp">
-            <TextView
+            android:hint="@string/name"
+            android:textColorHint="@color/fontColour1"
+            android:layout_marginTop="10dp">
+
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/changeName"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/fontColour2"
-                android:text="*nume produs*"
-                android:textSize="25dp"
-                android:textStyle="bold">
-            </TextView>
-            <TextView
-                android:id="@+id/location"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="*location*"
-                android:layout_marginLeft="75dp"
-                android:padding="3dp"
-                android:textSize="20dp"
-                android:textStyle="bold">
-            </TextView>
-        </LinearLayout>
+                android:inputType="text"
+                android:background="@drawable/round_edge"
+                android:textColor="@color/fontColour1"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_gravity="left">
-            <TextView
-                android:id="@+id/priceEdit"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:textColor="@color/fontColour2"
-                android:text="*pret*"
-                android:layout_marginTop="10dp"
-                android:textSize="25dp"
-                android:textStyle="bold">
-            </TextView>
-            <FrameLayout
-                android:id="@+id/cardView"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@drawable/list_element"
-                android:backgroundTint="@color/inputFieldColor"
-                android:layout_marginTop="20dp"
-                app:cardCornerRadius="8dp">
-                <LinearLayout
+            android:orientation="horizontal">
+
+            <!-- Price TextInputLayout -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/price_text_input_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginRight="15dp"
+                android:hint="@string/price"
+                android:textColorHint="@color/fontColour1"
+                android:layout_marginTop="10dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/changePrice"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="*nume vanzator*"
-                        android:layout_marginLeft="10dp"
-                        android:textSize="20dp"
-                        android:padding="10dp"
-                        android:textStyle="bold"
-                        android:textColor="@color/fontColour1">
-                    </TextView>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Contact"
-                        android:layout_marginLeft="50dp"
-                        android:textColor="@color/fontColour1"
-                        android:textSize="20dp"
-                        android:textStyle="bold">
-                    </TextView>
-                </LinearLayout>
-            </FrameLayout>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="25dp"
-                android:text="Descriere"
-                android:layout_marginTop="15dp"
-                android:textStyle="bold">
-            </TextView>
-            <TextView
-                android:id="@+id/description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/fontColour2"
-                android:textSize="20dp"
-                android:text="*descriere*"
-                android:layout_marginTop="15dp"
-                android:textStyle="normal">
-            </TextView>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="65dp">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Cantitate disponibila:"
-                    android:textSize="25dp"
-                    android:textStyle="bold">
-                </TextView>
-                <EditText
-                    android:id="@+id/quantityWanted"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:inputType="text"
                     android:background="@drawable/round_edge"
-                    android:backgroundTint="@color/inputFieldColor"
-                    android:layout_marginLeft="25dp"
-                    >
-                </EditText>
-            </LinearLayout>
+                    android:textColor="@color/fontColour1"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/quantity_text_input_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="@string/quantity"
+                android:textColorHint="@color/fontColour1"
+                android:layout_marginTop="10dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/changeQuantity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:background="@drawable/round_edge"
+                    android:textColor="@color/fontColour1"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
-        <LinearLayout
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/description_text_input_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:layout_marginTop="45dp">
-            <Button
-                android:id="@+id/save"
-                android:layout_width="160dp"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/accentColour1"
-                android:padding="7dp"
-                android:text="Save"
-                android:textColor="@color/inputFieldColor"
-                android:textSize="20sp" />
-        </LinearLayout>
+            android:hint="@string/description"
+            android:textColorHint="@color/fontColour1"
+            android:layout_marginTop="10dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/changeDescription"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:inputType="text"
+                android:background="@drawable/round_edge"
+                android:textColor="@color/fontColour1"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+        <Button
+            android:id="@+id/save"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="@color/accentColour1"
+            android:padding="15dp"
+            android:text="@string/save"
+            android:textColor="@color/accentColour2"
+            android:textSize="20sp" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"

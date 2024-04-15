@@ -16,6 +16,10 @@ import android.graphics.drawable.BitmapDrawable
 import android.util.Log
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.firebase.Firebase
+import com.google.firebase.firestore.SetOptions
+import com.google.firebase.firestore.firestore
+import com.google.firebase.inappmessaging.inAppMessaging
+import com.google.firebase.inappmessaging.internal.Logging.TAG
 import com.google.firebase.initialize
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageException
@@ -76,8 +80,26 @@ class AddImageActivity : AppCompatActivity() {
                 val bitmap = BitmapFactory.decodeStream(inputStream)
                 imagePlace.setImageBitmap(bitmap)
 
+                val usersCollection = Firebase.firestore.collection("pictures")
+                val currentUserId = FirebaseAuth.getInstance().currentUser?.uid
+                val imageName = "profile_pic"
 
-                //TODO: de adaugat imaginea in baza de date (atunci cand o sa o fac)
+                val imageInfo = hashMapOf(
+                    "url" to selectedImage,
+                    "name" to imageName
+                    )
+
+                currentUserId?.let { userId ->
+                    usersCollection.document("pictures_$userId")
+                        .set(imageInfo, SetOptions.merge())
+                        .addOnSuccessListener {
+                            Log.d(TAG, "Imaginea a fost salvată cu succes în subcolecție")
+                        }
+                        .addOnFailureListener { e ->
+                            Log.e(TAG, "Eroare la salvarea imaginii în subcolecție", e)
+                        }
+                }
+
             }
         }
     }

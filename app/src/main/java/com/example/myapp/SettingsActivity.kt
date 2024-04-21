@@ -5,23 +5,19 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.auth.FirebaseAuth
 
-class MessageListActivity : AppCompatActivity() {
+class SettingsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.messenge_list)
+        setContentView(R.layout.settings)
 
-        val userBtn: Button = findViewById(R.id.userConv)
-        userBtn.setOnClickListener{
-            val intent = Intent(this, MessageActivity::class.java)
-            startActivity(intent)
-            overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
-        }
         val homeBtn: ImageButton = findViewById(R.id.home)
         val messagesBtn: ImageButton = findViewById(R.id.message)
         val productsBtn: ImageButton = findViewById(R.id.products)
         val wishlistBtn: ImageButton = findViewById(R.id.wishlist)
         val profileBtn: ImageButton = findViewById(R.id.profile)
+        val logoutButton: Button = findViewById(R.id.logout)
         val backButton: ImageButton = findViewById(R.id.back_button)
 
         backButton.setOnClickListener{
@@ -30,6 +26,15 @@ class MessageListActivity : AppCompatActivity() {
             finish()
             overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
         }
+        logoutButton.setOnClickListener {
+            FirebaseAuth.getInstance().signOut()
+            val intent = Intent(this, MainActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+            finish()
+            overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
+        }
+
         homeBtn.setOnClickListener{
             val intent = Intent(this, HomescreenActivity::class.java)
             startActivity(intent)
@@ -45,7 +50,7 @@ class MessageListActivity : AppCompatActivity() {
         }
 
         productsBtn.setOnClickListener {
-            val intent = Intent(this, HomescreenActivity::class.java)
+            val intent = Intent(this, ProductsActivity::class.java)
             startActivity(intent)
             finish()
             overridePendingTransition(R.anim.slide_in, R.anim.slide_out)

@@ -54,7 +54,7 @@
             android:id="@+id/name_text_input_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/name"
+            android:hint="Name"
             android:textColorHint="@color/fontColour1"
             android:layout_marginTop="10dp">
 
@@ -72,7 +72,7 @@
             android:id="@+id/surname_text_input_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/surname"
+            android:hint="Surname"
             android:textColorHint="@color/fontColour1"
             android:layout_marginTop="10dp">
 
@@ -116,7 +116,7 @@
             android:id="@+id/username_text_input_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/username"
+            android:hint="Username"
             android:textColorHint="@color/fontColour1"
             android:layout_marginTop="10dp">
 
@@ -149,7 +149,7 @@
             android:id="@+id/password_text_input_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/city"
+            android:hint="City"
             android:textColorHint="@color/fontColour1"
             android:layout_marginTop="10dp">
 
@@ -181,7 +181,7 @@
             android:id="@+id/verify_password_text_input_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/country"
+            android:hint="Country"
             android:textColorHint="@color/fontColour1"
             android:layout_marginTop="10dp">
 

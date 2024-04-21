@@ -30,16 +30,15 @@ class EditProfileActivity : AppCompatActivity() {
 
         val db = FirebaseFirestore.getInstance()
         val userId = FirebaseAuth.getInstance().currentUser?.uid
-        val userDocRef = db.collection("users").document("user_{$userId}")
-
-            userDocRef.get().addOnSuccessListener { document->
+        val documentName = "user_${userId}"
+        val userDocRef = db.collection("users").document(documentName)
+        userDocRef.get().addOnSuccessListener { document->
                 if (document != null && document.exists()) {
                     val name = document.getString("name")
                     val surname = document.getString("surname")
                     val username = document.getString("username")
                     val city = document.getString("city")
                     val country = document.getString("country")
-
                     nameField.setText(name)
                     surnameField.setText(surname)
                     usernameField.setText(username)
@@ -78,8 +77,8 @@ class EditProfileActivity : AppCompatActivity() {
             if (countryValue.isNotEmpty()) {
                 updateInfo["country"] = countryValue
             }
-
-            val doc = database.collection("users").document("user_{$userId}")
+            val documentName = "user_${userId}"
+            val doc = database.collection("users").document(documentName)
 
             doc.update(updateInfo)
                 .addOnSuccessListener {
@@ -102,30 +101,35 @@ class EditProfileActivity : AppCompatActivity() {
             val intent = Intent(this, HomescreenActivity::class.java)
             startActivity(intent)
             finish()
+            overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
         }
 
         messagesBtn.setOnClickListener {
             val intent = Intent(this, MessageListActivity::class.java)
             startActivity(intent)
             finish()
+            overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
         }
 
         productsBtn.setOnClickListener {
             val intent = Intent(this, ProductsActivity::class.java)
             startActivity(intent)
             finish()
+            overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
         }
 
         wishlistBtn.setOnClickListener {
             val intent = Intent(this, WishlistActivity::class.java)
             startActivity(intent)
             finish()
+            overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
         }
 
         profileBtn.setOnClickListener {
             val intent = Intent(this, ProfileActivity::class.java)
             startActivity(intent)
             finish()
+            overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
         }
     }
 }

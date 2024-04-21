@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-
     tools:context=".MainActivity">
     <LinearLayout
         android:layout_width="match_parent"
@@ -96,6 +95,18 @@
             android:backgroundTint="@color/inputFieldColor"
             android:hint="@string/access"
             android:textColorHint="@color/fontColour1"
+            android:textStyle="bold"
+            android:textAlignment="textStart"
+            android:textSize="20dp">
+        </Button>
+        <Button
+            android:id="@+id/logout"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginTop="25dp"
+            android:backgroundTint="@color/background"
+            android:hint="Logout"
+            android:textColorHint="@color/redish"
             android:textStyle="bold"
             android:textAlignment="textStart"
             android:textSize="20dp">

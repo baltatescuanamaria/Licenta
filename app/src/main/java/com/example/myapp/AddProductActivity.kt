@@ -1,5 +1,6 @@
 package com.example.myapp;
 
+import android.annotation.SuppressLint
 import android.app.Activity;
 import android.content.Intent
 import android.graphics.BitmapFactory
@@ -23,6 +24,7 @@ import com.google.firebase.inappmessaging.internal.Logging.TAG
 
 class AddProductActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
+    private var imageUrl: String? = null
     companion object {
         const val PICK_IMAGE_REQUEST = 1
     }
@@ -39,11 +41,20 @@ class AddProductActivity : AppCompatActivity() {
         val profileBtn: ImageButton = findViewById(R.id.profile)
         val selectImageButton : Button = findViewById(R.id.selectImageButton)
         val addItemBtn : Button = findViewById(R.id.addItem)
+        val backButton: ImageButton = findViewById(R.id.back_button)
 
         val nameField: EditText = findViewById(R.id.nameProduct)
         val priceField: EditText = findViewById(R.id.price)
         val quantityField: EditText = findViewById(R.id.quantity)
         val descriptionField: EditText = findViewById(R.id.description)
+
+
+        backButton.setOnClickListener{
+            val intent = Intent(this, ProductsActivity::class.java)
+            startActivity(intent)
+            finish()
+            overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
+        }
 
         selectImageButton.setOnClickListener {
             openGallery()
@@ -80,30 +91,35 @@ class AddProductActivity : AppCompatActivity() {
             val intent = Intent(this, HomescreenActivity::class.java)
             startActivity(intent)
             finish()
+            overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
         }
 
         messagesBtn.setOnClickListener {
             val intent = Intent(this, MessageActivity::class.java)
             startActivity(intent)
             finish()
+            overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
         }
 
         productsBtn.setOnClickListener {
             val intent = Intent(this, ProductsActivity::class.java)
             startActivity(intent)
             finish()
+            overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
         }
 
         wishlistBtn.setOnClickListener {
             val intent = Intent(this, WishlistActivity::class.java)
             startActivity(intent)
             finish()
+            overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
         }
 
         profileBtn.setOnClickListener {
             val intent = Intent(this, ProfileActivity::class.java)
             startActivity(intent)
             finish()
+            overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
         }
 
 
@@ -116,13 +132,14 @@ class AddProductActivity : AppCompatActivity() {
             "price" to priceValue,
             "quantity" to quantityValue,
             "description" to descriptionValue,
+            "image_url" to imageUrl,
             "userId" to auth.currentUser?.uid
         )
 
         val userId = FirebaseAuth.getInstance().currentUser?.uid
-        val documentName = "products_${userId}"
-        db.collection("products")
-            .document(documentName)
+        val documentName = "user_${userId}"
+        db.collection("users")
+            .document(documentName).collection("products").document("product_${nameValue}")
             .set(productInput)
             .addOnSuccessListener {
                 Log.d(TAG, "Added with success")
@@ -130,6 +147,7 @@ class AddProductActivity : AppCompatActivity() {
                 val newIntent = Intent(this, ProductsActivity::class.java)
                 startActivity(newIntent)
                 finish()
+                overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
             }
             .addOnFailureListener { e ->
                 Log.w(TAG, "Error adding document", e)
@@ -152,10 +170,11 @@ class AddProductActivity : AppCompatActivity() {
                 val inputStream = contentResolver.openInputStream(selectedImage)
                 val bitmap = BitmapFactory.decodeStream(inputStream)
                 imagePlace.setImageBitmap(bitmap)
+                imageUrl = selectedImage.toString()
 
-                /*val usersCollection = Firebase.firestore.collection("pictures")
+                val usersCollection = Firebase.firestore.collection("products")
                 val currentUserId = FirebaseAuth.getInstance().currentUser?.uid
-                val imageName = "profile_pic"
+                val imageName = "product_pic"
 
                 val imageInfo = hashMapOf(
                     "url" to selectedImage,
@@ -163,7 +182,7 @@ class AddProductActivity : AppCompatActivity() {
                 )
 
                 currentUserId?.let { userId ->
-                    usersCollection.document("pictures_$userId")
+                    usersCollection.document("products_$userId")
                         .set(imageInfo, SetOptions.merge())
                         .addOnSuccessListener {
                             Log.d(Logging.TAG, "Imaginea a fost salvată cu succes în subcolecție")
@@ -171,7 +190,7 @@ class AddProductActivity : AppCompatActivity() {
                         .addOnFailureListener { e ->
                             Log.e(Logging.TAG, "Eroare la salvarea imaginii în subcolecție", e)
                         }
-                }*/
+                }
 
             }
         }

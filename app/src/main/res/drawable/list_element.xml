@@ -1,5 +1,5 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <corners android:radius="12dp" />
+    <corners android:radius="20dp" />
     <padding
         android:left="1dp"
         android:right="1dp"
@@ -7,8 +7,8 @@
         android:bottom="1dp" />
     <gradient
         android:startColor="#B56EC8"
-        android:centerColor="#B56EC8"
-        android:endColor="#B389C1"
+        android:centerColor="@color/inputFieldColor"
+        android:endColor="@color/inputFieldColor"
         android:angle="10" />
     <stroke
         android:width="1dp"

@@ -115,6 +115,7 @@ class RegisterActivity4 : AppCompatActivity() {
                                 val newIntent = Intent(this, AddImageActivity::class.java)
                                 startActivity(newIntent)
                                 finish()
+                                overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
                             }
                             .addOnFailureListener { e ->
                                 Log.w(TAG, "Error adding document", e)
@@ -145,6 +146,7 @@ class RegisterActivity4 : AppCompatActivity() {
                         //TODO: de adaugat un mod in care sa validez adresa de email
                         startActivity(newIntent)
                         finish()
+                        overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
                     } else {
                         Toast.makeText(this, ":(", Toast.LENGTH_SHORT).show()
                     }

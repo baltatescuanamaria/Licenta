@@ -16,6 +16,7 @@ class MessageActivity : AppCompatActivity() {
             val intent = Intent(this, MessageListActivity::class.java)
             startActivity(intent)
             finish()
+            overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
         }
     }
 }

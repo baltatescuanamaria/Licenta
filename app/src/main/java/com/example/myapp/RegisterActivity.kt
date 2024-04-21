@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 
@@ -29,13 +30,13 @@ class RegisterActivity : AppCompatActivity() {
         val emailError: TextView = findViewById(R.id.emailError)
         val passwordError: TextView = findViewById(R.id.passwordError)
         val verifyPasswordError: TextView = findViewById(R.id.verifyPasswordError)
-
+        */
         val backButton: ImageButton = findViewById(R.id.back_button)
         backButton.setOnClickListener{
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()
-        }*/
+        }
 
         nextButton.setOnClickListener{
             val nameValue = nameField.text.toString()
@@ -146,5 +147,6 @@ class RegisterActivity : AppCompatActivity() {
 
             startActivity(intent)
             finish()
+            overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
     }
 }

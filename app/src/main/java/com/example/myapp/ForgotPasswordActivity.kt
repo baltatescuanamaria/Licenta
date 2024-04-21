@@ -24,6 +24,7 @@ class ForgotPasswordActivity: AppCompatActivity() {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
             finish()
+            overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
         }
 
         auth = FirebaseAuth.getInstance()
@@ -56,6 +57,7 @@ class ForgotPasswordActivity: AppCompatActivity() {
                                 val intent = Intent(this, LoginActivity::class.java)
                                 startActivity(intent)
                                 finish()
+                                overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
                             } else {
                                 Toast.makeText(
                                     this,

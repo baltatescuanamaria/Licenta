@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/buttonProduct"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/list_element"
+            android:drawablePadding="8dp"
+            android:text="Product name"
+            android:textSize="20dp"
+            android:textAlignment="textStart"
+            android:textColor="@color/accentColour2"
+            android:contentDescription="Button Product" />
+
+        <ImageView
+            android:id="@+id/picturePlace"
+            android:layout_width="150dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginLeft="170dp"
+            android:background="@color/inputFieldColor" />
+    </RelativeLayout>

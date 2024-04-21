@@ -25,6 +25,7 @@ class LoginActivity : AppCompatActivity() {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()
+            overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
         }
 
         auth = FirebaseAuth.getInstance()
@@ -93,6 +94,7 @@ class LoginActivity : AppCompatActivity() {
                     val intent = Intent(this, HomescreenActivity::class.java)
                     startActivity(intent)
                     finish()
+                    overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
                 } else {
                     Toast.makeText(this, "Datele nu sunt corecte", Toast.LENGTH_SHORT).show()
                 }

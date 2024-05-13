@@ -32,7 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="150dp"
-            android:text="Welcome back!"
+            android:text="@string/welcome"
             android:textColor="@color/fontColour1"
             android:textSize="30dp"
             android:textStyle="bold" />
@@ -91,7 +91,7 @@
             android:layout_marginTop="20dp"
             android:backgroundTint="@color/background"
             android:padding="2mm"
-            android:text="Forgot password?"
+            android:text="@string/forgotPassword"
             android:textColor="@color/fontColour2"
             android:textSize="3mm" />
 
@@ -102,7 +102,7 @@
             android:layout_marginTop="150dp"
             android:backgroundTint="@color/accentColour1"
             android:padding="15dp"
-            android:text="Login"
+            android:text="@string/login"
             android:textColor="@color/accentColour2"
             android:textSize="25dp" />
 
@@ -113,7 +113,7 @@
             android:layout_marginTop="40dp"
             android:backgroundTint="@color/background"
             android:padding="3mm"
-            android:text="Not a member? Register!"
+            android:text="@string/notAMember"
             android:textColor="@color/fontColour1"
             android:textSize="3.5mm"
             android:textStyle="bold" />

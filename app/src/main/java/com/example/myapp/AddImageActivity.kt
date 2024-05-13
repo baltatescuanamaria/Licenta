@@ -11,27 +11,12 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
-import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
 import android.util.Log
-import com.google.android.gms.tasks.OnFailureListener
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.firestore
-import com.google.firebase.inappmessaging.inAppMessaging
 import com.google.firebase.inappmessaging.internal.Logging.TAG
-import com.google.firebase.initialize
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageException
-import com.google.firebase.storage.StorageReference
-import com.google.firebase.storage.component1
-import com.google.firebase.storage.component2
-import com.google.firebase.storage.component3
-import com.google.firebase.storage.storage
-import com.google.firebase.storage.storageMetadata
-import java.io.ByteArrayOutputStream
-import java.io.File
-import java.io.FileInputStream
+
 
 class AddImageActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth

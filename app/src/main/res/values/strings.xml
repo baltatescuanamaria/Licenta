@@ -16,6 +16,7 @@
     <string name="access">Accessibility</string>
     <string name="add_pic">Add a Picture</string>
     <string name="skip">Skip</string>
+    <string name="remove">Remove</string>
 
     <!-- field names -->
     <string name="password">Password</string>
@@ -39,4 +40,67 @@
     <string name="text_beginning">Buy and Sell Fresh Products Faster with  GreenMarket</string>
     <string name="add_pic_title">Add a Picture</string>
     <string name="title_activity_add_image">AddImageActivity</string>
+    <string name="welcome">Welcome back!</string>
+    <string name="forgotPassword">Forgot password?</string>
+    <string name="notAMember">Not a member? Register!</string>
+    <string name="newProduct">New Product</string>
+    <string name="addItem">Add Item</string>
+    <string name="sendEmail">Send mail</string>
+    <string name="writeEmail">Enter your email</string>
+    <string name="categories">Categories</string>
+    <string name="alsoLiked">You might also like</string>
+
+    <string name="fruits">Fruits</string>
+    <string name="veggies">Vegetables</string>
+    <string name="animal">Animal Products</string>
+    <string name="beekeeping">Beekeeping</string>
+    <string name="viticulture">Viticulture</string>
+    <string name="preservedFood"> Preserved Food</string>
+
+
+    <string name="select">Type of produce</string>
+    <string name="home">home</string>
+    <string name="messages">messages</string>
+    <string name="products">products</string>
+    <string name="wishlist">wishlist</string>
+    <string name="Wishlist">Wishlist</string>
+    <string name="your_profile">your profile</string>
+    <string name="settings">settings</string>
+    <string name="fruits_image">Fruits Image</string>
+    <string name="vegetable_image">Vegetable Image</string>
+    <string name="preserved_goods_image">Preserved Goods Image</string>
+    <string name="back">Back</string>
+    <string name="nume_produs">nume produs</string>
+    <string name="location">location</string>
+    <string name="pret">pret</string>
+    <string name="descriere">Description</string>
+    <string name="add_to_cart">Add to cart</string>
+    <string name="place_for_a_picture">Place for a Picture</string>
+    <string name="button_product">Button Product</string>
+    <string name="back_button">Back button</string>
+    <string name="edit_product">Edit product</string>
+    <string name="delete">Delete</string>
+    <string name="your_products">Your products</string>
+    <string name="your_wishlist">Your wishlist</string>
+    <string name="_2_2">2/2</string>
+    <string name="_1_2">1/2</string>
+    <string name="recently_added_near_you">Recently added near you</string>
+    <string name="popular_in_this_category">Popular in this category</string>
+    <string name="added_recently_in_this_category">Added recently in this category</string>
+    <string name="dropdown_categories">dropdown-categories</string>
+    <string name="details_about_your_product">Details about your product</string>
+    <string name="modify_your_contact_details">Modify your contact details</string>
+    <string name="your_product_s_image">Your product\'s image</string>
+    <string name="type_of_packaging">Type of packaging</string>
+    <string name="your_cart">Your Cart</string>
+    <string name="checkout">Checkout</string>
+    <string name="total_price">Total price:</string>
+    <string name="remove_from_cart">Remove from cart</string>
+    <string name="details_about_the_receiver">Details about the receiver*</string>
+    <string name="details_about_your_address">Details about your address*</string>
+    <string name="place_order">Place order</string>
+    <string name="enter_your_desired_quantity">Enter your desired quantity* (only the number)</string>
+    <string name="available_quantity">Available quantity</string>
+    <string name="settings_button">settings button</string>
+
 </resources>

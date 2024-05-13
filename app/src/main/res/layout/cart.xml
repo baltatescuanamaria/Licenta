@@ -7,6 +7,20 @@
     android:background="@color/background"
     tools:context=".MainActivity">
 
+
+    <ImageButton
+        android:id="@+id/back_button"
+        android:contentDescription="@string/back"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/arrow_small_left"
+        android:background="@null"
+        android:layout_marginTop="25dp">
+    </ImageButton>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/back_button">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,52 +30,77 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <ImageView
-                android:id="@+id/back_button"
-                android:layout_width="40dp"
-                android:layout_height="42dp"
-                android:src="@drawable/arrow_small_left">
-            </ImageView>
+            android:orientation="vertical"
+            android:layout_marginTop="10dp">
             <TextView
-                android:id="@+id/titleCheckout"
+                android:id="@+id/checkbox_newAddr"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:text="Checkout"
-                android:textColor="@color/fontColour1"
-                android:textSize="30dp"
-                android:textStyle="bold" />
+                android:text="@string/details_about_the_receiver"
+                android:textSize="23sp"
+                android:textStyle="bold"
+                android:textColor="@color/fontColour1"/>
         </LinearLayout>
-        <View
-            android:id="@+id/separator"
+        <EditText
+            android:id="@+id/name_input"
             android:layout_width="match_parent"
-            android:layout_marginTop="10dp"
-            android:layout_height="2dp"
-            android:background="@color/accentColour2" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/round_edge"
+            android:hint="@string/name"
+            android:inputType="text"
+            android:padding="17dp"
+            android:textColorHint="@color/fontColour2"
+            android:textSize="17sp" />
+        <EditText
+            android:id="@+id/surname_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/round_edge"
+            android:hint="@string/surname"
+            android:inputType="text"
+            android:padding="17dp"
+            android:textColorHint="@color/fontColour2"
+            android:textSize="17sp" />
+        <EditText
+            android:id="@+id/phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/round_edge"
+            android:hint="@string/phone_number"
+            android:inputType="phone"
+            android:padding="17dp"
+            android:textColorHint="@color/fontColour2"
+            android:textSize="17sp" />
+        <EditText
+            android:id="@+id/email_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/round_edge"
+            android:hint="@string/email"
+            android:inputType="textEmailAddress"
+            android:padding="17dp"
+            android:textColorHint="@color/fontColour2"
+            android:textSize="17sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginTop="25dp">
-            <CheckBox
-                android:id="@+id/checkbox_sameAddr"
+            android:layout_marginTop="40dp">
+            <TextView
+                android:id="@+id/adressDetails"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Same Address?"
-                android:textSize="23dp"
-                android:textStyle="bold"
-                android:textColor="@color/fontColour1"/>
-            <CheckBox
-                android:id="@+id/checkbox_newAddr"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="New Address"
-                android:textSize="23dp"
+                android:text="@string/details_about_your_address"
+                android:textSize="23sp"
                 android:textStyle="bold"
                 android:textColor="@color/fontColour1"/>
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -96,18 +135,31 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:background="@drawable/round_edge"
-            android:hint="Address"
+            android:hint="@string/address"
             android:inputType="text"
             android:padding="17dp"
             android:textColorHint="@color/fontColour2"
             android:textSize="17dp" />
 
-        <LinearLayout
+        <EditText
+            android:id="@+id/details"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/round_edge"
+            android:hint="Other details"
+            android:inputType="text"
+            android:padding="17dp"
+            android:textColorHint="@color/fontColour2"
+            android:textSize="17sp" />
+
+        <RadioGroup
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="25dp">
-            <CheckBox
+            android:layout_marginTop="25dp">
+
+            <RadioButton
                 android:id="@+id/useCard"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -115,7 +167,8 @@
                 android:textSize="23dp"
                 android:textStyle="bold"
                 android:textColor="@color/fontColour1"/>
-            <CheckBox
+
+            <RadioButton
                 android:id="@+id/useCash"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -123,7 +176,7 @@
                 android:textSize="23dp"
                 android:textStyle="bold"
                 android:textColor="@color/fontColour1"/>
-        </LinearLayout>
+        </RadioGroup>
 
         <View
             android:id="@+id/separator2"
@@ -131,17 +184,29 @@
             android:layout_marginTop="20dp"
             android:layout_height="2dp"
             android:background="@color/accentColour2" />
-
-        <TextView
-            android:id="@+id/total"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="Total: "
-            android:textColor="@color/fontColour1"
-            android:textSize="30dp"
-            android:textStyle="bold" />
-
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/total"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Total: "
+                android:textColor="@color/fontColour1"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+            <TextView
+                    android:id="@+id/price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/price"
+                    android:textColor="@color/fontColour1"
+                    android:textSize="30sp"
+                    android:textStyle="bold" />
+        </LinearLayout>
         <Button
             android:id="@+id/placeOrder"
             android:layout_width="200dp"
@@ -149,19 +214,19 @@
             android:layout_marginTop="20dp"
             android:backgroundTint="@color/accentColour1"
             android:padding="15dp"
-            android:text="Place order"
+            android:text="@string/place_order"
             android:textColor="@color/fontColour2"
             android:textSize="23sp" />
 
     </LinearLayout>
-
+    </ScrollView>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_alignParentBottom="true"
         android:orientation="horizontal"
-        android:paddingLeft="7dp"
-        android:paddingRight="5dp"
+        android:paddingStart="7dp"
+        android:paddingEnd="5dp"
         android:background="@color/accentColour1">
 
         <ImageButton

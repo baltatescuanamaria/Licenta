@@ -8,7 +8,7 @@
     tools:context=".MainActivity">
     <ImageButton
         android:id="@+id/back_button"
-        android:contentDescription="@string/back"
+        android:contentDescription="@string/back_button"
         android:layout_width="70dp"
         android:layout_height="wrap_content"
         android:src="@drawable/arrow_small_left"
@@ -18,8 +18,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/back_button"
-        android:layout_marginBottom="70dp">
+        android:layout_below="@id/back_button">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -29,7 +28,6 @@
         android:orientation="vertical">
 
         <ImageView
-            android:contentDescription="@string/place_for_a_picture"
             android:id="@+id/picturePlace"
             android:layout_width="300dp"
             android:layout_height="230dp"
@@ -77,6 +75,7 @@
                 android:textSize="30sp"
                 android:textStyle="italic">
             </TextView>
+
 
         </LinearLayout>
         <LinearLayout
@@ -152,96 +151,39 @@
                 android:paddingStart="10dp"
                 android:textStyle="normal">
             </TextView>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <TextView
-                    android:id="@+id/quantityAvailableTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/available_quantity"
-                    android:textColor="@color/accentColour1"
-                    android:textSize="20sp"
-                    android:gravity="center"
-                    android:layout_marginTop="30dp" />
-                <TextView
-                    android:id="@+id/titleAvailableQuantity"
-                    android:layout_width="120dp"
-                    android:layout_height="60dp"
-                    android:inputType="number"
-                    android:hint="@string/quantity"
-                    android:textColorHint="@color/fontColour2"
-                    android:textSize="15dp"
-                    android:layout_marginTop="5dp"
-                    android:padding="20dp"
-                    android:layout_marginStart="10dp"
-                    android:autofillHints="name"
-                    android:layout_gravity="center"
-                    android:background="@color/background"
-                    android:textColor="@color/fontColour1">
-                </TextView>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <TextView
-                    android:id="@+id/quantityTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/enter_your_desired_quantity"
-                    android:textColor="@color/accentColour1"
-                    android:textSize="20sp"
-                    android:gravity="center"
-                    android:layout_marginTop="30dp" />
-                <EditText
-                    android:id="@+id/wantedQuantity"
-                    android:layout_width="120dp"
-                    android:layout_height="60dp"
-                    android:inputType="number"
-                    android:hint="@string/quantity"
-                    android:textColorHint="@color/fontColour2"
-                    android:layout_marginTop="5dp"
-                    android:padding="10dp"
-                    android:autofillHints="name"
-                    android:layout_gravity="center"
-                    android:background="@color/inputFieldColor"
-                    android:textColor="@color/fontColour1">
-                </EditText>
-            </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginTop="10dp"
                 android:padding="10dp">
-            <Button
-                android:id="@+id/addItem"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:backgroundTint="@color/accentColour1"
-                android:padding="15dp"
-                android:layout_marginBottom="10dp"
-                android:text="@string/add_to_cart"
-                android:layout_gravity="center"
-                android:textColor="@color/accentColour2"
-                android:textSize="20sp" />
-            <Button
-                android:id="@+id/addToWishlist"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginBottom="10dp"
-                android:backgroundTint="@color/redish"
-                android:padding="15dp"
-                android:text="@string/Wishlist"
-                android:layout_gravity="center"
-                android:textColor="@color/accentColour1"
-                android:textSize="20sp" />
-        </LinearLayout>
+                <Button
+                    android:id="@+id/addItem"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:backgroundTint="@color/accentColour1"
+                    android:padding="15dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="@string/add_to_cart"
+                    android:layout_gravity="center"
+                    android:textColor="@color/accentColour2"
+                    android:textSize="20sp" />
+                <Button
+                    android:id="@+id/removeToWishlist"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:backgroundTint="@color/redish"
+                    android:padding="15dp"
+                    android:text="@string/remove"
+                    android:layout_gravity="center"
+                    android:textColor="@color/accentColour1"
+                    android:textSize="20sp" />
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
     </ScrollView>
@@ -255,7 +197,7 @@
         android:background="@color/accentColour1">
         <ImageButton
             android:id="@+id/home"
-            android:contentDescription="@string/home"
+            android:contentDescription="home"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/accentColour1"
@@ -264,7 +206,7 @@
         </ImageButton>
         <ImageButton
             android:id="@+id/message"
-            android:contentDescription="@string/messages"
+            android:contentDescription="messages"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/accentColour1"
@@ -273,7 +215,7 @@
         </ImageButton>
         <ImageButton
             android:id="@+id/products"
-            android:contentDescription="@string/products"
+            android:contentDescription="products"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/accentColour1"
@@ -282,7 +224,7 @@
         </ImageButton>
         <ImageButton
             android:id="@+id/wishlist"
-            android:contentDescription="@string/wishlist"
+            android:contentDescription="wishlist"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/accentColour1"
@@ -291,7 +233,7 @@
         </ImageButton>
         <ImageButton
             android:id="@+id/profile"
-            android:contentDescription="@string/your_profile"
+            android:contentDescription="your profile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/accentColour1"

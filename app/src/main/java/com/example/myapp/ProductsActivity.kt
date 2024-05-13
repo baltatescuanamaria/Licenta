@@ -1,5 +1,4 @@
 package com.example.myapp;
-
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -9,6 +8,7 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -32,30 +32,43 @@ class ProductsActivity : AppCompatActivity() {
         val db = FirebaseFirestore.getInstance()
         val userId = FirebaseAuth.getInstance().currentUser?.uid
         val documentName = "user_${userId}"
+        val maximumLength = 15
         val userDocRef = db.collection("users").document(documentName).collection("products")
         userDocRef.get().addOnSuccessListener { documents ->
                 for (document in documents) {
                         val productName = document.getString("product_name")
-                        /*val price  = document.getString("price")
-                        val quantity = document.getString("quantity")
+                        val price  = document.getString("price")
+                        /*val quantity = document.getString("quantity")
                         val description = document.getString("description")
                         val picture = document.getString("imageUrl")*/
 
+
                         val layoutInflater = LayoutInflater.from(this)
                         val productLayout = layoutInflater.inflate(R.layout.product_layout, null)
-                        val productNameButton: Button = productLayout.findViewById(R.id.buttonProduct)
-                        productNameButton.text = productName
-                        mainPage.addView(productLayout)
+                        val productNameButton: LinearLayout = productLayout.findViewById(R.id.product)
+                        val productNameSpace: TextView = productLayout.findViewById(R.id.numeProdus)
+                        val priceText: TextView = productLayout.findViewById(R.id.price)
 
-                        //selectBtn.text = name
-                        productNameButton.setOnClickListener {
-                                val intent = Intent(this, EditProductActivity::class.java)
-                                intent.putExtra("PRODUCT_NAME", productName)
-                                startActivity(intent)
-                                finish()
-                                overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
+                        if (productName != null) {
+                                if (productName.length > maximumLength) {
+                                        productNameSpace.text =
+                                                productName.substring(0, maximumLength) + "..."
+                                } else {
+                                        productNameSpace.text = productName
+                                }
+                                        priceText.text = "$price lei"
+                                        mainPage.addView(productLayout)
+
+                                        //selectBtn.text = name
+                                        productNameButton.setOnClickListener {
+                                                val intent = Intent(this, EditProductActivity::class.java)
+                                                intent.putExtra("PRODUCT_NAME", productName)
+                                                startActivity(intent)
+                                                finish()
+                                                overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
+                                        }
+                                }
                         }
-                }
         }
         val backButton: ImageButton = findViewById(R.id.back_button)
         backButton.setOnClickListener{
@@ -81,7 +94,7 @@ class ProductsActivity : AppCompatActivity() {
         }
 
         messagesBtn.setOnClickListener {
-        val intent = Intent(this, MessageActivity::class.java)
+        val intent = Intent(this, MessageListActivity::class.java)
         startActivity(intent)
         finish()
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out)

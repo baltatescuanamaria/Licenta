@@ -7,51 +7,308 @@
     android:background="@color/background"
     tools:context=".MainActivity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingRight="30dp"
-        android:paddingLeft="30dp">
         <LinearLayout
+            android:id="@+id/search_part"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="70dp">
+            android:padding="30dp">
+
             <EditText
                 android:id="@+id/search"
-                android:layout_width="250dp"
+                android:layout_width="290dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/button"
                 android:hint="@string/search"
                 android:inputType="text"
                 android:padding="17dp"
+                android:layout_marginTop="10dp"
                 android:textColorHint="@color/fontColour2"
-                android:textSize="17dp"
-                android:textStyle="bold" />
+                android:textSize="17sp"
+                android:textStyle="bold"
+                android:autofillHints="" />
+
             <ImageButton
-                android:id="@+id/settings"
+                android:id="@+id/cart"
+                android:contentDescription="@string/your_cart"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:src="@drawable/settings"
+                android:src="@drawable/cart_minus_9784373"
                 android:backgroundTint="@color/background"
-                android:layout_marginLeft="15dp">
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dp">
             </ImageButton>
         </LinearLayout>
-        <View
-            android:id="@+id/separator"
-            android:layout_width="match_parent"
-            android:layout_marginTop="5dp"
-            android:layout_height="2dp"
-            android:background="@color/accentColour2"/>
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_below="@id/search_part"
+            android:paddingBottom="80dp">
             <LinearLayout
                 android:id="@+id/mainLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/categories"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/categories"
+                        android:textSize="25sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/accentColour1"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginStart="15dp"
+                        android:padding="15dp">
+                    </TextView>
+                    <HorizontalScrollView
+                        android:id="@+id/horizontalScroll"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="1dp"
+                        android:layout_marginTop="1dp"
+                        android:layout_marginEnd="1dp"
+                        android:layout_marginBottom="1dp"
+                        android:foregroundGravity="center_vertical">
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:foregroundGravity="center"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="10dp"
+                            android:layout_marginStart="20dp">
+
+                            <ImageButton
+                                android:contentDescription="@string/fruits_image"
+                                android:id="@+id/fruits"
+                                android:layout_width="150dp"
+                                android:layout_height="150dp"
+                                android:background="@drawable/fruits" />
+
+                            <TextView
+                                android:id="@+id/fruitsTitle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_marginTop="10dp"
+                                android:text="@string/fruits"
+                                android:textSize="20sp"
+                                android:textColor="@color/accentColour1"
+                                android:layout_gravity="center">
+                            </TextView>
+                        </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:padding="10dp"
+                                android:layout_marginStart="20dp">
+
+                                <ImageButton
+                                    android:contentDescription="@string/vegetable_image"
+                                    android:id="@+id/veggies"
+                                    android:layout_width="150dp"
+                                    android:layout_height="150dp"
+                                    android:background="@drawable/veggies" />
+
+                                <TextView
+                                    android:contentDescription="@string/veggies"
+                                    android:id="@+id/veggiesTitle"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="10dp"
+                                    android:text="@string/veggies"
+                                    android:textSize="20sp"
+                                    android:textColor="@color/accentColour1"
+                                    android:layout_gravity="center">
+                                </TextView>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:padding="10dp"
+                                android:layout_marginStart="20dp">
+
+                                <ImageButton
+                                    android:contentDescription="@string/animal"
+                                    android:id="@+id/animal"
+                                    android:layout_width="150dp"
+                                    android:layout_height="150dp"
+                                    android:background="@drawable/animal" />
+
+                                <TextView
+                                    android:id="@+id/animalTitle"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="10dp"
+                                    android:text="@string/animal"
+                                    android:textSize="20sp"
+                                    android:textColor="@color/accentColour1"
+                                    android:layout_gravity="center">
+                                </TextView>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:padding="10dp"
+                                android:layout_marginStart="20dp">
+
+                                <ImageButton
+                                    android:contentDescription="@string/beekeeping"
+                                    android:id="@+id/beekeeping"
+                                    android:layout_width="150dp"
+                                    android:layout_height="150dp"
+                                    android:background="@drawable/honey" />
+
+                                <TextView
+                                    android:id="@+id/beekeepingTitle"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="10dp"
+                                    android:text="@string/beekeeping"
+                                    android:textSize="20sp"
+                                    android:textColor="@color/accentColour1"
+                                    android:layout_gravity="center">
+                                </TextView>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:padding="10dp"
+                                android:layout_marginStart="20dp">
+
+                                <ImageButton
+                                    android:contentDescription="@string/viticulture"
+                                    android:id="@+id/viticulture"
+                                    android:layout_width="150dp"
+                                    android:layout_height="150dp"
+                                    android:background="@drawable/viticulture" />
+
+                                <TextView
+                                    android:id="@+id/viticultureTitle"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="10dp"
+                                    android:text="@string/viticulture"
+                                    android:textSize="20sp"
+                                    android:textColor="@color/accentColour1"
+                                    android:layout_gravity="center">
+                                </TextView>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:padding="10dp"
+                                android:layout_marginStart="20dp">
+
+                                <ImageButton
+                                    android:contentDescription="@string/preserved_goods_image"
+                                    android:id="@+id/foodPers"
+                                    android:layout_width="150dp"
+                                    android:layout_height="150dp"
+                                    android:background="@drawable/pers" />
+
+                                <TextView
+                                    android:id="@+id/foodPersTitle"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="10dp"
+                                    android:text="@string/preservedFood"
+                                    android:textSize="20sp"
+                                    android:textColor="@color/accentColour1"
+                                    android:layout_gravity="center">
+                                </TextView>
+                            </LinearLayout>
+
+
+
+
+                        </LinearLayout>
+                    </HorizontalScrollView>
+                </LinearLayout>
+                <TextView
+                    android:id="@+id/reccs"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/alsoLiked"
+                    android:textSize="25sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/accentColour1"
+                    android:padding="15dp"
+                    android:layout_marginStart="15dp">
+                </TextView>
+                <HorizontalScrollView
+                android:id="@+id/horizontalScrollProducts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="1dp"
+                android:layout_marginTop="1dp"
+                android:layout_marginEnd="1dp"
+                android:layout_marginBottom="1dp"
+                android:foregroundGravity="center_vertical">
+
+                <LinearLayout
+                    android:id="@+id/arrayProducts"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:foregroundGravity="center"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp">
+
+                </LinearLayout>
+            </HorizontalScrollView>
+                <TextView
+                    android:id="@+id/recAdded"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/recently_added_near_you"
+                    android:textSize="25sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/accentColour1"
+                    android:padding="15dp"
+                    android:layout_marginStart="15dp">
+                </TextView>
+                <HorizontalScrollView
+                    android:id="@+id/horizontalScrollRecAdded"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="1dp"
+                    android:layout_marginTop="1dp"
+                    android:layout_marginEnd="1dp"
+                    android:layout_marginBottom="1dp"
+                    android:foregroundGravity="center_vertical">
+
+                    <LinearLayout
+                        android:id="@+id/arrayProductsRecAdded"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:foregroundGravity="center"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="20dp">
+
+                    </LinearLayout>
+                </HorizontalScrollView>
                 <!-- <Button
                       android:id="@+id/buttonProduct"
                       android:layout_width="match_parent"
@@ -72,22 +329,21 @@
                       android:layout_marginTop="40dp"
                       android:layout_marginLeft="170dp"
                       android:background="@color/inputFieldColor" />-->
+
             </LinearLayout>
         </ScrollView>
-
-    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_alignParentBottom="true"
         android:orientation="horizontal"
-        android:paddingLeft="7dp"
-        android:paddingRight="5dp"
+        android:paddingStart="7dp"
+        android:paddingEnd="5dp"
         android:background="@color/accentColour1">
 
         <ImageButton
             android:id="@+id/home"
-            android:contentDescription="home"
+            android:contentDescription="@string/home"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/accentColour1"
@@ -97,7 +353,7 @@
 
         <ImageButton
             android:id="@+id/message"
-            android:contentDescription="messages"
+            android:contentDescription="@string/messages"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/accentColour1"
@@ -107,7 +363,7 @@
 
         <ImageButton
             android:id="@+id/products"
-            android:contentDescription="products"
+            android:contentDescription="@string/products"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/accentColour1"
@@ -117,7 +373,7 @@
 
         <ImageButton
             android:id="@+id/wishlist"
-            android:contentDescription="wishlist"
+            android:contentDescription="@string/wishlist"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/accentColour1"
@@ -127,7 +383,7 @@
 
         <ImageButton
             android:id="@+id/profile"
-            android:contentDescription="your profile"
+            android:contentDescription="@string/your_profile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/accentColour1"

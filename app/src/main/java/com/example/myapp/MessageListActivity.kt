@@ -1,5 +1,4 @@
 package com.example.myapp
-
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
@@ -25,7 +24,7 @@ class MessageListActivity : AppCompatActivity() {
         val backButton: ImageButton = findViewById(R.id.back_button)
 
         backButton.setOnClickListener{
-            val intent = Intent(this, ProductsActivity::class.java)
+            val intent = Intent(this, HomescreenActivity::class.java)
             startActivity(intent)
             finish()
             overridePendingTransition(R.anim.slide_in, R.anim.slide_out)

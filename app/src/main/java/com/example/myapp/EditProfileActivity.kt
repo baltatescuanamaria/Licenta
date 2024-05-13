@@ -96,6 +96,13 @@ class EditProfileActivity : AppCompatActivity() {
         val productsBtn: ImageButton = findViewById(R.id.products)
         val wishlistBtn: ImageButton = findViewById(R.id.wishlist)
         val profileBtn: ImageButton = findViewById(R.id.profile)
+        val backButton: ImageButton = findViewById(R.id.back_button)
+        backButton.setOnClickListener {
+            val intent = Intent(this, ProfileActivity::class.java)
+            startActivity(intent)
+            finish()
+            overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
+        }
 
         homeBtn.setOnClickListener{
             val intent = Intent(this, HomescreenActivity::class.java)

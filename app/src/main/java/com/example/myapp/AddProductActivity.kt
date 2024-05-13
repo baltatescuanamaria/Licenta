@@ -8,6 +8,10 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.widget.Adapter
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
@@ -28,11 +32,34 @@ class AddProductActivity : AppCompatActivity() {
     companion object {
         const val PICK_IMAGE_REQUEST = 1
     }
+
+    private var selectedItem: String? = null
+    private var selectedItemPrice: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.add_new_product)
 
         auth = FirebaseAuth.getInstance()
+
+        //dropdown
+        val listDropdown = listOf("Fruits", "Vegetables", "Animal Product", "Viticulture", "Beekeeping", "Preserved Food")
+        val listDropdownPrice = listOf("Bottle", "Piece", "Kilogram", "Jar", "Grams")
+        val autoComplete : AutoCompleteTextView = findViewById(R.id.options)
+        val adapter = ArrayAdapter(this, R.layout.dropdown_item, listDropdown)
+        val autoCompletePrice : AutoCompleteTextView = findViewById(R.id.optionsPrice)
+        val adapterPrice = ArrayAdapter(this, R.layout.dropdown_item, listDropdownPrice)
+
+        autoComplete.setAdapter(adapter)
+        autoComplete.onItemClickListener = AdapterView.OnItemClickListener {
+                adapterView, view, i, l ->
+            selectedItem = adapterView.getItemAtPosition(i).toString()
+        }
+
+        autoCompletePrice.setAdapter(adapterPrice)
+        autoCompletePrice.onItemClickListener = AdapterView.OnItemClickListener {
+                adapterView, view, i, l ->
+            selectedItemPrice = adapterView.getItemAtPosition(i).toString()
+        }
 
         val homeBtn: ImageButton = findViewById(R.id.home)
         val messagesBtn: ImageButton = findViewById(R.id.message)
@@ -45,8 +72,7 @@ class AddProductActivity : AppCompatActivity() {
 
         val nameField: EditText = findViewById(R.id.nameProduct)
         val priceField: EditText = findViewById(R.id.price)
-        val quantityField: EditText = findViewById(R.id.quantity)
-        val descriptionField: EditText = findViewById(R.id.description)
+        val descriptionField: EditText = findViewById(R.id.description_text_input)
 
 
         backButton.setOnClickListener{
@@ -63,28 +89,33 @@ class AddProductActivity : AppCompatActivity() {
         addItemBtn.setOnClickListener {
             val nameValue = nameField.text.toString()
             val priceValue = priceField.text.toString()
-            val quantityValue = quantityField.text.toString()
             val descriptionValue = descriptionField.text.toString()
+
 
             var hasError = false
             if (nameValue.isEmpty()){
                 nameField.setError("Acest camp este obligatoriu")
                 hasError = true
             }
+
             if (priceValue.isEmpty()){
                 priceField.setError("Acest camp este obligatoriu")
-                hasError = true
-            }
-            if (quantityValue.isEmpty()){
-                quantityField.setError("Acest camp este obligatoriu")
                 hasError = true
             }
             if (descriptionValue.isEmpty()){
                 descriptionField.setError("Acest camp este obligatoriu")
                 hasError = true
             }
+            if (selectedItem?.isEmpty() == true){
+                Toast.makeText(this, "Selectați o categorie", Toast.LENGTH_SHORT).show()
+                hasError = true
+            }
+            if (selectedItemPrice?.isEmpty() == true){
+                Toast.makeText(this, "Selectați o categorie", Toast.LENGTH_SHORT).show()
+                hasError = true
+            }
             if (!hasError) {
-                addItem(nameValue, priceValue, quantityValue, descriptionValue)
+                addItem(nameValue, priceValue, descriptionValue)
             }
         }
         homeBtn.setOnClickListener{
@@ -95,7 +126,7 @@ class AddProductActivity : AppCompatActivity() {
         }
 
         messagesBtn.setOnClickListener {
-            val intent = Intent(this, MessageActivity::class.java)
+            val intent = Intent(this, MessageListActivity::class.java)
             startActivity(intent)
             finish()
             overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
@@ -125,13 +156,14 @@ class AddProductActivity : AppCompatActivity() {
 
     }
 
-    private fun addItem(nameValue: String, priceValue: String, quantityValue: String, descriptionValue: String){
+    private fun addItem(nameValue: String, priceValue: String, descriptionValue: String){
         val db = FirebaseFirestore.getInstance()
         val productInput = hashMapOf(
             "product_name" to nameValue,
             "price" to priceValue,
-            "quantity" to quantityValue,
             "description" to descriptionValue,
+            "category" to selectedItem,
+            "package" to selectedItemPrice,
             "image_url" to imageUrl,
             "userId" to auth.currentUser?.uid
         )
@@ -144,11 +176,16 @@ class AddProductActivity : AppCompatActivity() {
             .addOnSuccessListener {
                 Log.d(TAG, "Added with success")
                 Toast.makeText(this, "Product added with success", Toast.LENGTH_SHORT).show()
-                val newIntent = Intent(this, ProductsActivity::class.java)
-                startActivity(newIntent)
-                finish()
-                overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
             }
+            .addOnFailureListener { e ->
+                Log.w(TAG, "Error adding document", e)
+            }
+        db.collection("products").document(nameValue).set(productInput).addOnSuccessListener {
+            val newIntent = Intent(this, ProductsActivity::class.java)
+            startActivity(newIntent)
+            finish()
+            overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
+        }
             .addOnFailureListener { e ->
                 Log.w(TAG, "Error adding document", e)
                 Toast.makeText(this, "An error occurred while registering the information :(", Toast.LENGTH_SHORT).show()
@@ -196,3 +233,5 @@ class AddProductActivity : AppCompatActivity() {
         }
     }
 }
+
+

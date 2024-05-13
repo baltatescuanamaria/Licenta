@@ -1,36 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
     tools:context=".MainActivity">
 
-    <ImageButton
-        android:id="@+id/back_button"
-        android:contentDescription="Back"
-        android:layout_width="70dp"
+    <LinearLayout
+        android:id="@+id/title"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/arrow_small_left"
-        android:background="@null"
-        android:layout_marginTop="25dp">
-    </ImageButton>
+        android:paddingStart="30dp"
+        android:paddingTop="30dp"
+        android:orientation="horizontal"
+        tools:ignore="RtlSymmetry">
+        <ImageButton
+            android:id="@+id/back_button"
+            android:contentDescription="@string/back_button"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/arrow_small_left"
+            android:background="@color/background">
+        </ImageButton>
+        <TextView
+            android:id="@+id/titleMessages"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:text="@string/edit_product"
+            android:textColor="@color/fontColour2"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title"
+        android:paddingBottom="10dp">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:paddingLeft="30dp"
         android:paddingRight="30dp"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="20dp"
         android:orientation="vertical">
 
         <ImageView
+            android:contentDescription="@string/place_for_a_picture"
             android:id="@+id/picturePlace"
             android:layout_width="300dp"
             android:layout_height="230dp"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
             android:background="@color/accentColour2"
             android:scaleType="centerCrop" />
 
@@ -38,9 +58,7 @@
             android:id="@+id/selectImageButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/picturePlace"
             android:layout_marginTop="20dp"
-            android:layout_centerHorizontal="true"
             android:backgroundTint="@color/redish"
             android:text="@string/add_pic" />
 
@@ -61,50 +79,7 @@
                 android:textColor="@color/fontColour1"/>
 
         </com.google.android.material.textfield.TextInputLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/price_text_input_layout"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginRight="15dp"
-                android:hint="@string/price"
-                android:textColorHint="@color/fontColour1"
-                android:layout_marginTop="10dp">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/changePrice"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:background="@drawable/round_edge"
-                    android:textColor="@color/fontColour1"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/quantity_text_input_layout"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="@string/quantity"
-                android:textColorHint="@color/fontColour1"
-                android:layout_marginTop="10dp">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/changeQuantity"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:background="@drawable/round_edge"
-                    android:textColor="@color/fontColour1"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
-        </LinearLayout>
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/description_text_input_layout"
             android:layout_width="match_parent"
@@ -122,6 +97,26 @@
                 android:textColor="@color/fontColour1"/>
 
         </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/price_text_input_layout"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:hint="@string/price"
+            android:textColorHint="@color/fontColour1"
+            android:layout_marginTop="10dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/changePrice"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:background="@drawable/round_edge"
+                android:textColor="@color/fontColour1"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -131,7 +126,7 @@
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:layout_marginRight="30dp"
+                android:layout_marginEnd="30dp"
                 android:backgroundTint="@color/accentColour1"
                 android:padding="15dp"
                 android:text="@string/save"
@@ -144,63 +139,59 @@
                 android:layout_marginTop="20dp"
                 android:backgroundTint="@color/redish"
                 android:padding="15dp"
-                android:text="Delete"
+                android:text="@string/delete"
                 android:textColor="@color/accentColour2"
                 android:textSize="20sp" />
         </LinearLayout>
     </LinearLayout>
+    </ScrollView>
     <LinearLayout
+        android:id="@+id/nav"
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_alignParentBottom="true"
         android:orientation="horizontal"
-        android:paddingLeft="7dp"
-        android:paddingRight="5dp"
+        android:padding = "10dp"
         android:background="@color/accentColour1">
-
         <ImageButton
             android:id="@+id/home"
-            android:contentDescription="home"
+            android:contentDescription="@string/home"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/accentColour1"
             android:src="@drawable/home"
             android:padding="25dp">
         </ImageButton>
-
         <ImageButton
             android:id="@+id/message"
-            android:contentDescription="messages"
+            android:contentDescription="@string/messages"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/accentColour1"
             android:src="@drawable/envelope"
             android:padding="25dp">
         </ImageButton>
-
         <ImageButton
             android:id="@+id/products"
-            android:contentDescription="products"
+            android:contentDescription="@string/products"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/accentColour1"
             android:src="@drawable/loading"
             android:padding="25dp">
         </ImageButton>
-
         <ImageButton
             android:id="@+id/wishlist"
-            android:contentDescription="wishlist"
+            android:contentDescription="@string/wishlist"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/accentColour1"
             android:src="@drawable/heart"
             android:padding="25dp">
         </ImageButton>
-
         <ImageButton
             android:id="@+id/profile"
-            android:contentDescription="your profile"
+            android:contentDescription="@string/your_profile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/accentColour1"

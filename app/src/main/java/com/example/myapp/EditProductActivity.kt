@@ -28,7 +28,6 @@ class EditProductActivity : AppCompatActivity() {
 
         val nameField: EditText = findViewById(R.id.changeName)
         val priceField: EditText = findViewById(R.id.changePrice)
-        val quantityField: EditText = findViewById(R.id.changeQuantity)
         val descriptionField: EditText = findViewById(R.id.changeDescription)
         val productImage: ImageView = findViewById(R.id.picturePlace)
 
@@ -41,13 +40,11 @@ class EditProductActivity : AppCompatActivity() {
             if (document != null && document.exists()) {
                 val name = document.getString("product_name")
                 val price  = document.getString("price")
-                val quantity = document.getString("quantity")
                 val description = document.getString("description")
                 val imageUrl = document.getString("image_url")
 
                 nameField.setText(name)
                 priceField.setText(price)
-                quantityField.setText(quantity)
                 descriptionField.setText(description)
                 imageUrl?.let {
                     Glide.with(this)
@@ -64,7 +61,6 @@ class EditProductActivity : AppCompatActivity() {
 
         val nameValue = nameField.text.toString()
         val priceValue = priceField.text.toString()
-        val quantityValue = quantityField.text.toString()
         val descriptionValue = descriptionField.text.toString()
 
         val database = Firebase.firestore
@@ -75,9 +71,6 @@ class EditProductActivity : AppCompatActivity() {
         }
         if (priceValue.isNotEmpty()) {
             updateInfo["price"] = priceValue
-        }
-        if (quantityValue.isNotEmpty()) {
-            updateInfo["quantity"] = quantityValue
         }
         if (descriptionValue.isNotEmpty()) {
             updateInfo["description"] = descriptionValue

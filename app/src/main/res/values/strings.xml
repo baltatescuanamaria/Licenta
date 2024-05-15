@@ -102,5 +102,7 @@
     <string name="enter_your_desired_quantity">Enter your desired quantity* (only the number)</string>
     <string name="available_quantity">Available quantity</string>
     <string name="settings_button">settings button</string>
+    <string name="your_order_was_received_successfully">Your order was received successfully</string>
+    <string name="go_back">Go back</string>
 
 </resources>

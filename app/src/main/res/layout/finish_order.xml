@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:padding="30dp"
+        android:orientation="vertical">
+        <ImageView
+            android:layout_width="250dp"
+            android:layout_height="220dp"
+            android:src="@drawable/check">
+        </ImageView>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/your_order_was_received_successfully"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:textColor="@color/accentColour1"
+            android:padding="25dp">
+        </TextView>
+        <Button
+            android:id="@+id/goBack"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="45dp"
+            android:backgroundTint="@color/accentColour1"
+            android:padding="15dp"
+            android:text="@string/go_back"
+            android:textColor="@color/fontColour2"
+            android:textSize="23sp" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:paddingStart="7dp"
+        android:paddingEnd="5dp"
+        android:background="@color/accentColour1">
+
+        <ImageButton
+            android:id="@+id/home"
+            android:contentDescription="home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/accentColour1"
+            android:src="@drawable/home"
+            android:padding="25dp">
+        </ImageButton>
+
+        <ImageButton
+            android:id="@+id/message"
+            android:contentDescription="messages"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/accentColour1"
+            android:src="@drawable/envelope"
+            android:padding="25dp">
+        </ImageButton>
+
+        <ImageButton
+            android:id="@+id/products"
+            android:contentDescription="products"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/accentColour1"
+            android:src="@drawable/loading"
+            android:padding="25dp">
+        </ImageButton>
+
+        <ImageButton
+            android:id="@+id/wishlist"
+            android:contentDescription="wishlist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/accentColour1"
+            android:src="@drawable/heart"
+            android:padding="25dp">
+        </ImageButton>
+
+        <ImageButton
+            android:id="@+id/profile"
+            android:contentDescription="your profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/accentColour1"
+            android:src="@drawable/user"
+            android:padding="25dp">
+        </ImageButton>
+    </LinearLayout>
+</RelativeLayout>

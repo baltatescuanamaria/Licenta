@@ -20,6 +20,8 @@ class ProductActivity : AppCompatActivity() {
     var name:String = ""
     var price:String = ""
     var quantity:String=""
+    var locationCity: String=""
+    var locationCountry: String=""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.product_page)
@@ -44,7 +46,6 @@ class ProductActivity : AppCompatActivity() {
         val nameProduct  = intent.getStringExtra("PRODUCT_NAME")
         val userId = intent.getStringExtra("USERID")
         val db = FirebaseFirestore.getInstance()
-        //val userId = FirebaseAuth.getInstance().currentUser?.uid
         val documentName = "user_${userId}"
         val userDocRef = db.collection("users").document(documentName).collection("products").document("product_${nameProduct}")
         userDocRef.get().addOnSuccessListener { document ->
@@ -67,8 +68,8 @@ class ProductActivity : AppCompatActivity() {
         val userDocRef2 = db.collection("users").document(documentName)
         userDocRef2.get().addOnSuccessListener { document->
             if (document != null && document.exists()) {
-                val locationCity = document.getString("city")
-                val locationCountry = document.getString("country")
+                locationCity = document.getString("city").toString()
+                locationCountry = document.getString("country").toString()
                 val sellerName = document.getString("name")
                 val sellerSurname = document.getString("surname")
                 idSeller = document.getString("userId").toString()
@@ -94,7 +95,7 @@ class ProductActivity : AppCompatActivity() {
                 val nameValue = name
                 val sellerValue = sellerField.text.toString()
                 val priceValue = price
-                addItemToCart(nameValue, sellerValue, priceValue, q)
+                addItemToCart(nameValue, sellerValue, priceValue, q, idSeller, locationCity, locationCountry)
             }
         }
 
@@ -180,13 +181,16 @@ class ProductActivity : AppCompatActivity() {
                 Toast.makeText(this, "An error occurred while registering the information :(", Toast.LENGTH_SHORT).show()
             }
     }
-    private fun addItemToCart(nameValue: String, sellerValue: String, priceValue: String, quantity:String){
+    private fun addItemToCart(nameValue: String, sellerValue: String, priceValue: String, idSeller: String, quantity:String, locationCity: String, locationCountry: String){
         val db = FirebaseFirestore.getInstance()
         val productInput = hashMapOf(
             "product_name" to nameValue,
             "seller" to sellerValue,
             "price" to priceValue,
-            "quantity" to quantity
+            "quantity" to quantity,
+            "idSeller" to idSeller,
+            "city" to locationCity,
+            "country" to locationCountry
         )
 
         val userId = FirebaseAuth.getInstance().currentUser?.uid

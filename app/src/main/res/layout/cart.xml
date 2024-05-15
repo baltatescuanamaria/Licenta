@@ -42,7 +42,7 @@
                 android:textColor="@color/fontColour1"/>
         </LinearLayout>
         <EditText
-            android:id="@+id/name_input"
+            android:id="@+id/name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
@@ -53,7 +53,7 @@
             android:textColorHint="@color/fontColour2"
             android:textSize="17sp" />
         <EditText
-            android:id="@+id/surname_input"
+            android:id="@+id/surname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
@@ -75,7 +75,7 @@
             android:textColorHint="@color/fontColour2"
             android:textSize="17sp" />
         <EditText
-            android:id="@+id/email_input"
+            android:id="@+id/email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"

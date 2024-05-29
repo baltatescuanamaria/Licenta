@@ -7,29 +7,23 @@ import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.example.myapp.AnimalListActivity
-import com.example.myapp.BeekeepingListActivity
-import com.example.myapp.CheckoutActivity
-import com.example.myapp.FruitsListActivity
-import com.example.myapp.MessageListActivity
-import com.example.myapp.PreservedListActivity
-import com.example.myapp.ProductActivity
-import com.example.myapp.ProductsActivity
-import com.example.myapp.ProfileActivity
-import com.example.myapp.R
-import com.example.myapp.VeggieListActivity
-import com.example.myapp.ViticultureListActivity
-import com.example.myapp.WishlistActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 class HomescreenActivity : AppCompatActivity() {
+    val categoriesList = mutableSetOf<String>()
+    private lateinit var idSeller:String
+    var name:String = ""
+    var price:String = ""
+    var quantity:String=""
+    var locationCity: String=""
+    var locationCountry: String=""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.homescreen)
 
         val homeBtn: ImageButton = findViewById(R.id.home)
-        val messagesBtn: ImageButton = findViewById(R.id.message)
         val productsBtn: ImageButton = findViewById(R.id.products)
         val wishlistBtn: ImageButton = findViewById(R.id.wishlist)
         val profileBtn: ImageButton = findViewById(R.id.profile)
@@ -46,51 +40,108 @@ class HomescreenActivity : AppCompatActivity() {
         val db = FirebaseFirestore.getInstance()
         val currentUser = FirebaseAuth.getInstance().currentUser
         val currentUserId = currentUser?.uid
-        db.collection("users").get().addOnSuccessListener { users ->
-            for (user in users) {
-                val userId = user.id
-                val city  = user.getString("city")
-                val country  = user.getString("country")
-                val location = "$city, $country"
-                val userProductsRef = db.collection("users").document(userId).collection("products")
-                userProductsRef.get().addOnSuccessListener { documents ->
-                    for (document in documents) {
-                        val productName = document.getString("product_name")
-                        val userIdOwner = document.getString("userId")
-                        val category = document.getString("category")
-                        /*val quantity = document.getString("quantity")
-                        val description = document.getString("description")
-                        val picture = document.getString("imageUrl")*/
-                        if (userIdOwner != currentUserId) {
-                            val layoutInflater = LayoutInflater.from(this)
-                            val productLayout =
-                                layoutInflater.inflate(R.layout.homescreen_product_layout, null)
-                            val productButton: LinearLayout =
-                                productLayout.findViewById(R.id.product)
-                            val productNameSpace: TextView =
-                                productLayout.findViewById(R.id.numeProdus)
-                            val locationText: TextView = productLayout.findViewById(R.id.location)
-                            productNameSpace.text = productName
-                            locationText.text = location
-                            mainPage.addView(productLayout)
-                            //selectBtn.text = name
-                            productButton.setOnClickListener {
-                                val intent = Intent(this, ProductActivity::class.java)
-                                intent.putExtra("PRODUCT_NAME", productName)
-                                intent.putExtra("USERID", userIdOwner)
-                                startActivity(intent)
-                                finish()
-                                overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
-                            }
+
+        val userProductsRef = currentUserId?.let {
+            db.collection("users").document("user_$currentUserId")
+                .collection("wishlist").get().addOnSuccessListener { documents->
+                for (document in documents) {
+                    val category = document.getString("category")
+                    if (category != null) {
+                        categoriesList.add(category)
+                    }
+                }
+                }
+        }
+        db.collection("products")
+            .get()
+            .addOnSuccessListener { documents ->
+                for(document in documents){
+                    val name = document.getString("product_name").toString()
+                    val price = document.getString("price").toString()
+                    val locationCity = document.getString("city").toString()
+                    val locationCountry = document.getString("country").toString()
+                    val idSeller = document.getString("userId").toString()
+                    val category = document.getString("category")
+                    if (idSeller != currentUserId && category != null && categoriesList.contains(category)) {
+                        val layoutInflater = LayoutInflater.from(this)
+                        val productLayout =
+                            layoutInflater.inflate(R.layout.homescreen_product_layout, null)
+                        val productButton: LinearLayout =
+                            productLayout.findViewById(R.id.product)
+                        val productNameSpace: TextView =
+                            productLayout.findViewById(R.id.numeProdus)
+                        val locationText: TextView = productLayout.findViewById(R.id.location)
+                        productNameSpace.text = name
+                        locationText.text = "$locationCountry, $locationCity"
+                        mainPage.addView(productLayout)
+                        //selectBtn.text = name
+                        productButton.setOnClickListener {
+                            val intent = Intent(this, ProductActivity::class.java)
+                            intent.putExtra("PRODUCT_NAME", name)
+                            intent.putExtra("USERID", idSeller)
+                            startActivity(intent)
+                            finish()
+                            overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
                         }
-                            }
-                        }.addOnFailureListener { exception ->
+                    }
+                    }
+                }
+                        .addOnFailureListener { exception ->
                     Log.e("Firestore", "Error getting products", exception)
+                }
+
+        val secondPage: LinearLayout = findViewById(R.id.arrayProductsRecAdded)
+        var city = ""
+        var country = ""
+
+        val userProductsRef2 = currentUserId?.let {
+            db.collection("users").document("user_$currentUserId").get().addOnSuccessListener { data->
+                        country = data.getString("country").toString()
+                        city = data.getString("city").toString()
+                    }
+                }
+
+        val userDocRef = db.collection("products")
+        userDocRef.get().addOnSuccessListener { documents ->
+            for (document in documents) {
+                var productCount = 0
+                val name = document.getString("product_name").toString()
+                val price = document.getString("price").toString()
+                val locationCity = document.getString("city").toString()
+                val locationCountry = document.getString("country").toString()
+                val idSeller = document.getString("userId").toString()
+                val category = document.getString("category")
+
+                if (idSeller != currentUserId && locationCity == city && productCount < 15) {
+                    Log.d("Firestore", "Adding product: $name")
+                    val layoutInflater = LayoutInflater.from(this)
+                    val productLayout =
+                        layoutInflater.inflate(R.layout.homescreen_product_layout, null)
+                    val productButton: LinearLayout =
+                        productLayout.findViewById(R.id.product)
+                    val productNameSpace: TextView =
+                        productLayout.findViewById(R.id.numeProdus)
+                    val locationText: TextView = productLayout.findViewById(R.id.location)
+                    productNameSpace.text = name
+                    locationText.text = "$locationCountry, $locationCity"
+                    secondPage.addView(productLayout)
+
+                    //selectBtn.text = name
+                    productButton.setOnClickListener {
+                        val intent = Intent(this, ProductActivity::class.java)
+                        intent.putExtra("PRODUCT_NAME", name)
+                        intent.putExtra("USERID", idSeller)
+                        startActivity(intent)
+                        finish()
+                        overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
+                    }
+                    productCount++
                 }
             }
         }.addOnFailureListener { exception ->
-            Log.e("Firestore", "Error getting users", exception)
+            Log.e("Firestore", "Error getting products", exception)
         }
+
 
         fruitsBtn.setOnClickListener{
             val intent = Intent(this, FruitsListActivity::class.java)
@@ -136,13 +187,6 @@ class HomescreenActivity : AppCompatActivity() {
 
         homeBtn.setOnClickListener{
             val intent = Intent(this, HomescreenActivity::class.java)
-            startActivity(intent)
-            finish()
-            overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
-        }
-
-        messagesBtn.setOnClickListener {
-            val intent = Intent(this, MessageListActivity::class.java)
             startActivity(intent)
             finish()
             overridePendingTransition(R.anim.slide_in, R.anim.slide_out)

@@ -13,7 +13,6 @@ class SettingsActivity : AppCompatActivity() {
         setContentView(R.layout.settings)
 
         val homeBtn: ImageButton = findViewById(R.id.home)
-        val messagesBtn: ImageButton = findViewById(R.id.message)
         val productsBtn: ImageButton = findViewById(R.id.products)
         val wishlistBtn: ImageButton = findViewById(R.id.wishlist)
         val profileBtn: ImageButton = findViewById(R.id.profile)
@@ -42,12 +41,6 @@ class SettingsActivity : AppCompatActivity() {
             overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
         }
 
-        messagesBtn.setOnClickListener {
-            val intent = Intent(this, MessageListActivity::class.java)
-            startActivity(intent)
-            finish()
-            overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
-        }
 
         productsBtn.setOnClickListener {
             val intent = Intent(this, ProductsActivity::class.java)

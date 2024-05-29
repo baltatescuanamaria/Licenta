@@ -35,6 +35,7 @@ class RegisterActivity : AppCompatActivity() {
         backButton.setOnClickListener{
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
             finish()
         }
 

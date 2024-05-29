@@ -33,20 +33,52 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:text="@string/viticulture"
-                android:textColor="@color/accentColour2"
+                android:textColor="@color/accentColour1"
                 android:textSize="30sp"
                 android:textStyle="bold" />
         </LinearLayout>
-        <TextView
-            android:id="@+id/recAdded"
+        <!--<TextView
+            android:id="@+id/reccs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/popular_in_this_category"
+            android:text="@string/alsoLiked"
             android:textSize="25sp"
             android:textStyle="bold"
             android:textColor="@color/accentColour1"
             android:padding="15dp"
-            android:layout_marginTop="25dp"
+            android:layout_marginStart="15dp">
+        </TextView> -->
+        <HorizontalScrollView
+            android:id="@+id/horizontalScrollProducts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="1dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginEnd="1dp"
+            android:layout_marginBottom="1dp"
+            android:foregroundGravity="center_vertical">
+
+            <LinearLayout
+                android:id="@+id/arrayProducts"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:foregroundGravity="center"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp">
+
+            </LinearLayout>
+        </HorizontalScrollView>
+        <TextView
+            android:id="@+id/recAdded"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/recently_added_in_this_category"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:textColor="@color/accentColour1"
+            android:padding="15dp"
             android:layout_marginStart="15dp">
         </TextView>
         <HorizontalScrollView
@@ -71,29 +103,6 @@
 
             </LinearLayout>
         </HorizontalScrollView>
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <LinearLayout
-                android:id="@+id/addedRecently"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <TextView
-                    android:id="@+id/allProd"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/added_recently_in_this_category"
-                    android:textSize="25sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/accentColour1"
-                    android:padding="15dp"
-                    android:layout_marginTop="25dp"
-                    android:layout_marginStart="15dp">
-                </TextView>
-            </LinearLayout>
-
-        </ScrollView>
         <!-- <Button
               android:id="@+id/buttonProduct"
               android:layout_width="match_parent"
@@ -115,58 +124,55 @@
               android:layout_marginLeft="170dp"
               android:background="@color/inputFieldColor" />-->
     </LinearLayout>
+
     <LinearLayout
-        android:id="@+id/nav"
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_alignParentBottom="true"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/round_edge_color"
         android:orientation="horizontal"
-        android:padding = "10dp"
-        android:background="@color/accentColour1">
+        android:gravity="center"
+        android:elevation="8dp"
+        android:padding="7dp">
+
         <ImageButton
             android:id="@+id/home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/accentColour1"
             android:contentDescription="@string/home"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/accentColour1"
-            android:src="@drawable/home"
-            android:padding="25dp">
-        </ImageButton>
-        <ImageButton
-            android:id="@+id/message"
-            android:contentDescription="@string/messages"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/accentColour1"
-            android:src="@drawable/envelope"
-            android:padding="25dp">
-        </ImageButton>
+            android:padding="25dp"
+            android:src="@drawable/home"></ImageButton>
+
         <ImageButton
             android:id="@+id/products"
-            android:contentDescription="@string/products"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/accentColour1"
-            android:src="@drawable/loading"
-            android:padding="25dp">
-        </ImageButton>
+            android:contentDescription="@string/products"
+            android:padding="25dp"
+            android:src="@drawable/loading"></ImageButton>
+
         <ImageButton
             android:id="@+id/wishlist"
-            android:contentDescription="@string/wishlist"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/accentColour1"
-            android:src="@drawable/heart"
-            android:padding="25dp">
-        </ImageButton>
+            android:contentDescription="@string/wishlist"
+            android:padding="25dp"
+            android:src="@drawable/heart"></ImageButton>
+
         <ImageButton
             android:id="@+id/profile"
-            android:contentDescription="@string/your_profile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/accentColour1"
-            android:src="@drawable/user"
-            android:padding="25dp">
-        </ImageButton>
+            android:contentDescription="@string/your_profile"
+            android:padding="25dp"
+            android:src="@drawable/user"></ImageButton>
     </LinearLayout>
 </RelativeLayout>

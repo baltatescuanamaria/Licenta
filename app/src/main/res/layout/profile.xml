@@ -28,15 +28,16 @@
             android:layout_height="0dp"
             android:layout_weight="1" />
 
-        <ImageButton
-            android:id="@+id/settings"
-            android:contentDescription="@string/settings_button"
+        <Button
+            android:id="@+id/logout"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/settings"
-            android:background="@color/background"
-            android:padding="20dp">
-        </ImageButton>
+            android:layout_height="70dp"
+            android:backgroundTint="@color/background"
+            android:hint="Logout"
+            android:textColorHint="@color/redish"
+            android:textStyle="bold"
+            android:textSize="20dp">
+        </Button>
 
     </LinearLayout>
 
@@ -50,9 +51,9 @@
         <FrameLayout
             android:id="@+id/cardView"
             android:layout_width="match_parent"
-            android:layout_height="740dp"
+            android:layout_height="790dp"
             android:background="@color/inputFieldColor"
-            android:layout_marginTop="80dp"
+            android:layout_marginTop="150dp"
             android:elevation="10dp">
             <TextView
                 android:id="@+id/name"
@@ -83,7 +84,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:gravity="center"
                 android:layout_marginTop="100dp">
             <Button
@@ -91,10 +92,63 @@
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
+                android:layout_marginBottom="15dp"
                 android:backgroundTint="@color/accentColour1"
                 android:text="@string/edit_profile"
                 android:textColor="@color/background"
                 android:textSize="23sp" />
+
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:padding="15dp"
+                android:text="@string/your_description"
+                android:background="@drawable/round_edge_background"
+                android:layout_margin="20dp"
+                android:textSize="20dp"
+                android:textColor="@color/fontColour1">
+            </TextView>
+            <TextView
+                android:id="@+id/ContactInfoTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="Contact Info"
+                android:layout_margin="15dp"
+                android:textSize="25dp"
+                android:textStyle="bold"
+                android:textColor="@color/fontColour1">
+            </TextView>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="10dp"
+                            android:paddingBottom="10dp"
+                            android:text="@string/phone_number"
+                            android:layout_marginLeft="10dp"
+                            android:textSize="20dp"
+                            android:textStyle="bold"
+                            android:textColor="@color/accentColour1">
+                        </TextView>
+                        <TextView
+                            android:id="@+id/PhoneNumber"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="10dp"
+                            android:paddingBottom="10dp"
+                            android:text="@string/phone_number"
+                            android:layout_marginLeft="10dp"
+                            android:textSize="20dp"
+                            android:textStyle="bold"
+                            android:textColor="@color/fontColour1">
+                        </TextView>
+                </LinearLayout>
             </LinearLayout>
 
         </FrameLayout>
@@ -102,57 +156,53 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/nav"
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_alignParentBottom="true"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/round_edge_color"
         android:orientation="horizontal"
-        android:padding = "10dp"
-        android:background="@color/accentColour1">
+        android:gravity="center"
+        android:elevation="8dp"
+        android:padding="7dp">
+
         <ImageButton
             android:id="@+id/home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/accentColour1"
             android:contentDescription="@string/home"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/accentColour1"
-            android:src="@drawable/home"
-            android:padding="25dp">
-        </ImageButton>
-        <ImageButton
-            android:id="@+id/message"
-            android:contentDescription="@string/messages"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/accentColour1"
-            android:src="@drawable/envelope"
-            android:padding="25dp">
-        </ImageButton>
+            android:padding="25dp"
+            android:src="@drawable/home"></ImageButton>
+
         <ImageButton
             android:id="@+id/products"
-            android:contentDescription="@string/products"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/accentColour1"
-            android:src="@drawable/loading"
-            android:padding="25dp">
-        </ImageButton>
+            android:contentDescription="@string/products"
+            android:padding="25dp"
+            android:src="@drawable/loading"></ImageButton>
+
         <ImageButton
             android:id="@+id/wishlist"
-            android:contentDescription="@string/wishlist"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/accentColour1"
-            android:src="@drawable/heart"
-            android:padding="25dp">
-        </ImageButton>
+            android:contentDescription="@string/wishlist"
+            android:padding="25dp"
+            android:src="@drawable/heart"></ImageButton>
+
         <ImageButton
             android:id="@+id/profile"
-            android:contentDescription="@string/your_profile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/accentColour1"
-            android:src="@drawable/user"
-            android:padding="25dp">
-        </ImageButton>
+            android:contentDescription="@string/your_profile"
+            android:padding="25dp"
+            android:src="@drawable/user"></ImageButton>
     </LinearLayout>
 </RelativeLayout>

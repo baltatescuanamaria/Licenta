@@ -12,11 +12,11 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 class VeggieListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        var location: String = ""
         super.onCreate(savedInstanceState)
         setContentView(R.layout.veggie_list)
 
         val homeBtn: ImageButton = findViewById(R.id.home)
-        val messagesBtn: ImageButton = findViewById(R.id.message)
         val productsBtn: ImageButton = findViewById(R.id.products)
         val wishlistBtn: ImageButton = findViewById(R.id.wishlist)
         val profileBtn: ImageButton = findViewById(R.id.profile)
@@ -29,16 +29,19 @@ class VeggieListActivity : AppCompatActivity() {
         val userDocRef = db.collection("products")
         userDocRef.get().addOnSuccessListener { documents ->
             for (document in documents) {
+                var productCount = 0
                 val productName = document.getString("product_name")
                 val userIdOwner = document.getString("userId")
-                val location = document.getString("location")
+                val locationCity = document.getString("city")
+                val locationCountry = document.getString("country")
+                location = "$locationCountry, $locationCity"
                 val category = document.getString("category")
                 /*val price  = document.getString("price")
                 val quantity = document.getString("quantity")
                 val description = document.getString("description")
                 val picture = document.getString("imageUrl")*/
 
-                if (userIdOwner != currentUserId && category == "Vegetables") {
+                if (userIdOwner != currentUserId && category == "Vegetable" && productCount <15) {
                     val layoutInflater = LayoutInflater.from(this)
                     val productLayout =
                         layoutInflater.inflate(R.layout.homescreen_product_layout, null)
@@ -60,6 +63,7 @@ class VeggieListActivity : AppCompatActivity() {
                         finish()
                         overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
                     }
+                    productCount++
                 }
             }
         }.addOnFailureListener { exception ->
@@ -80,12 +84,6 @@ class VeggieListActivity : AppCompatActivity() {
             overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
         }
 
-        messagesBtn.setOnClickListener {
-            val intent = Intent(this, MessageListActivity::class.java)
-            startActivity(intent)
-            finish()
-            overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
-        }
 
         productsBtn.setOnClickListener {
             val intent = Intent(this, ProductsActivity::class.java)

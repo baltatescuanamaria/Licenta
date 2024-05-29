@@ -12,12 +12,18 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 class ViticultureListActivity : AppCompatActivity() {
+    private lateinit var idSeller:String
+    val categoriesList = mutableSetOf<String>()
+    var name:String = ""
+    var price:String = ""
+    var quantity:String=""
+    var locationCity: String=""
+    var locationCountry: String=""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.viticulture_list)
 
         val homeBtn: ImageButton = findViewById(R.id.home)
-        val messagesBtn: ImageButton = findViewById(R.id.message)
         val productsBtn: ImageButton = findViewById(R.id.products)
         val wishlistBtn: ImageButton = findViewById(R.id.wishlist)
         val profileBtn: ImageButton = findViewById(R.id.profile)
@@ -30,16 +36,16 @@ class ViticultureListActivity : AppCompatActivity() {
         val userDocRef = db.collection("products")
         userDocRef.get().addOnSuccessListener { documents ->
             for (document in documents) {
-                val productName = document.getString("product_name")
-                val userIdOwner = document.getString("userId")
-                val location = document.getString("location")
+                var productCount = 0
+                val name = document.getString("product_name").toString()
+                val price = document.getString("price").toString()
+                val locationCity = document.getString("city").toString()
+                val locationCountry = document.getString("country").toString()
+                val idSeller = document.getString("userId").toString()
                 val category = document.getString("category")
-                /*val price  = document.getString("price")
-                val quantity = document.getString("quantity")
-                val description = document.getString("description")
-                val picture = document.getString("imageUrl")*/
 
-                if (userIdOwner != currentUserId && category == "Viticulture") {
+                if (idSeller != currentUserId && category == "Viticulture" && productCount < 15) {
+                    Log.d("Firestore", "Adding product: $name")
                     val layoutInflater = LayoutInflater.from(this)
                     val productLayout =
                         layoutInflater.inflate(R.layout.homescreen_product_layout, null)
@@ -48,19 +54,20 @@ class ViticultureListActivity : AppCompatActivity() {
                     val productNameSpace: TextView =
                         productLayout.findViewById(R.id.numeProdus)
                     val locationText: TextView = productLayout.findViewById(R.id.location)
-                    productNameSpace.text = productName
-                    locationText.text = location
+                    productNameSpace.text = name
+                    locationText.text = "$locationCountry, $locationCity"
                     mainPage.addView(productLayout)
 
                     //selectBtn.text = name
                     productButton.setOnClickListener {
                         val intent = Intent(this, ProductActivity::class.java)
-                        intent.putExtra("PRODUCT_NAME", productName)
-                        intent.putExtra("USERID", userIdOwner)
+                        intent.putExtra("PRODUCT_NAME", name)
+                        intent.putExtra("USERID", idSeller)
                         startActivity(intent)
                         finish()
                         overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
                     }
+                    productCount++
                 }
             }
         }.addOnFailureListener { exception ->
@@ -76,13 +83,6 @@ class ViticultureListActivity : AppCompatActivity() {
 
         homeBtn.setOnClickListener{
             val intent = Intent(this, HomescreenActivity::class.java)
-            startActivity(intent)
-            finish()
-            overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
-        }
-
-        messagesBtn.setOnClickListener {
-            val intent = Intent(this, MessageListActivity::class.java)
             startActivity(intent)
             finish()
             overridePendingTransition(R.anim.slide_in, R.anim.slide_out)

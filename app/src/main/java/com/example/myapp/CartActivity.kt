@@ -1,14 +1,12 @@
 package com.example.myapp
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.provider.MediaStore.Audio.Radio
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
-import android.widget.RadioButton
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
@@ -17,6 +15,7 @@ import com.google.firebase.inappmessaging.internal.Logging
 
 class CartActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.cart)
@@ -32,91 +31,152 @@ class CartActivity : AppCompatActivity() {
         val addressField: EditText = findViewById(R.id.address)
         val detailsField: EditText = findViewById(R.id.details)
 
+        val db = FirebaseFirestore.getInstance()
+        val userId = FirebaseAuth.getInstance().currentUser?.uid
+        val documentName = "user_${userId}"
+        val userDocRef = db.collection("users").document(documentName)
+        userDocRef.get().addOnSuccessListener { document->
+            if (document != null && document.exists()) {
+                val name = document.getString("name")
+                val surname = document.getString("surname")
+                val city = document.getString("city")
+                val country = document.getString("country")
+                val addressStreet = document.getString("street")
+                val addressNumber = document.getString("number")
+                val phoneNumber = document.getString("phoneNumber")
+                //val email = document.getString("email")
+
+                nameField.setText(name)
+                surnameField.setText(surname)
+                cityField.setText(city)
+                countryField.setText(country)
+                addressField.setText("$addressStreet, nr. $addressNumber")
+                phoneNumberField.setText(phoneNumber)
+            } else {
+                Log.d(Logging.TAG, "Document does not exist")
+            }
+        }
+
+        val priceTotal: TextView = findViewById(R.id.price)
+
+        val total = intent.getIntExtra("TOTAL", 0)
+        priceTotal.text = "$total lei"
 
         val placeOrder: Button = findViewById(R.id.placeOrder)
-        placeOrder.setOnClickListener{
+        placeOrder.setOnClickListener {
 
-            /*val address = addressField.text.toString()
-            val city = cityField.text.toString()
-            val country = countryField.text.toString()
-            val phoneNumber = phoneNumberField.text.toString()
-            val name_user = nameField.text.toString()
-            val surname_user = surnameField.text.toString()
-            val methodPaying =*/
+            val nameValue = nameField.text.toString()
+            val surnameValue = surnameField.text.toString()
+            val phoneNumberValue = phoneNumberField.text.toString()
+            val emailValue = emailField.text.toString()
 
-            val intent = Intent(this, FinishOrderActivity::class.java)
-            startActivity(intent)
-            overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
-            //sendToSeller(address, city, country, phoneNumber, product, quantity, name_user, surname_user, methodPaying, userId)
-        }
+            val cityValue = cityField.text.toString()
+            val countryValue = countryField.text.toString()
+            val addressValue = addressField.text.toString()
+            val detailsValue = detailsField.text.toString()
 
-        val homeBtn: ImageButton = findViewById(R.id.home)
-        val messagesBtn: ImageButton = findViewById(R.id.message)
-        val productsBtn: ImageButton = findViewById(R.id.products)
-        val wishlistBtn: ImageButton = findViewById(R.id.wishlist)
-        val profileBtn: ImageButton = findViewById(R.id.profile)
+            var hasError = false
+            if (nameValue.isEmpty()){
+                nameField.setError("One field is empty")
+                hasError = true
+            }
 
-        homeBtn.setOnClickListener{
-            val intent = Intent(this, HomescreenActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
+            if (surnameValue.isEmpty()){
+                surnameField.setError("One field is empty")
+                hasError = true
+            }
 
-        messagesBtn.setOnClickListener {
-            val intent = Intent(this, MessageListActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
+            if (phoneNumberValue.isEmpty()){
+                phoneNumberField.setError("One field is empty")
+                hasError = true
+            }
 
-        productsBtn.setOnClickListener {
-            val intent = Intent(this, ProductsActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
+            if (emailValue.isEmpty()){
+                emailField.setError("One field is empty")
+                hasError = true
+            }
 
-        wishlistBtn.setOnClickListener {
-            val intent = Intent(this, WishlistActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
+            if (cityValue.isEmpty()){
+                cityField.setError("One field is empty")
+                hasError = true
+            }
 
-        profileBtn.setOnClickListener {
-            val intent = Intent(this, ProfileActivity::class.java)
-            startActivity(intent)
-            finish()
+            if (countryValue.isEmpty()){
+                countryField.setError("One field is empty")
+                hasError = true
+            }
+
+            if (addressValue.isEmpty()){
+                addressField.setError("One field is empty")
+                hasError = true
+            }
+
+            if (!hasError) {
+                val intent = Intent(this, FinishOrderActivity::class.java)
+                startActivity(intent)
+                overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
+                if (userId != null) {
+                    sendToSeller(addressValue, cityValue, countryValue, phoneNumberValue, nameValue, userId)
+                }
+            }
+
         }
     }
 
-    private fun sendToSeller(addressValue:String, cityValue:String, countryValue:String, phoneNumberValue:String, productName:String, quantity:String, userName:String, methodPaying:String, userId:String){
+    private fun sendToSeller(
+        addressValue: String,
+        cityValue: String,
+        countryValue: String,
+        phoneNumberValue: String,
+        nameValue: String,
+        currentUserId: String
+    ) {
         val db = FirebaseFirestore.getInstance()
-        val productInput = hashMapOf(
+        val orderInfo = hashMapOf(
             "address" to addressValue,
             "city" to cityValue,
             "country" to countryValue,
             "phone_number" to phoneNumberValue,
-            "product" to productName,
-            "quantity" to quantity,
-            "user_name" to userName,
-            "method_of_paying" to methodPaying,
-            "userId" to userId
+            "userId" to currentUserId,
+            "name" to nameValue
         )
 
-        val userId = FirebaseAuth.getInstance().currentUser?.uid
-        val documentName = "user_${userId}"
-        db.collection("users")
-            .document(documentName).collection("orders").document("order_${productName}")
-            .set(productInput)
-            .addOnSuccessListener {
-                Log.d(Logging.TAG, "Added with success")
-                Toast.makeText(this, "Product added with success", Toast.LENGTH_SHORT).show()
-                val newIntent = Intent(this, HomescreenActivity::class.java)
-                startActivity(newIntent)
-                finish()
-                overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
+        val cartRef = db.collection("users").document("user_${currentUserId}").collection("cart")
+        cartRef.get().addOnSuccessListener { documents ->
+            val batch = db.batch()
+
+            for (doc in documents) {
+                val ownerId = doc.getString("idSeller")
+                val productName = doc.getString("product_name")
+                val productId = doc.id
+
+                if (ownerId != null && productName != null) {
+                    val sellerOrderRef = db.collection("users").document("user_${ownerId}").collection("orders")
+                    val productOrderInfo = orderInfo.toMutableMap()
+                    productOrderInfo["product_name"] = productName
+                    productOrderInfo["product_id"] = productId
+
+                    sellerOrderRef.add(productOrderInfo)
+                        .addOnSuccessListener {
+                            Log.d("Order", "Order successfully sent to seller: $ownerId for product: $productName")
+                        }
+                        .addOnFailureListener { e ->
+                            Log.e("Order", "Error sending order to seller: $ownerId for product: $productName", e)
+                        }
+                } else {
+                    Log.w("Order", "Missing ownerId or productName for a cart item")
+                }
+                batch.delete(cartRef.document(doc.id))
             }
-            .addOnFailureListener { e ->
-                Log.w(Logging.TAG, "Error adding document", e)
-                Toast.makeText(this, "An error occurred while registering the information :(", Toast.LENGTH_SHORT).show()
+
+            batch.commit().addOnSuccessListener {
+                Toast.makeText(this, "Order placed successfully", Toast.LENGTH_SHORT).show()
+            }.addOnFailureListener { e ->
+                Log.e("Order", "Error deleting items from cart", e)
             }
+        }.addOnFailureListener { e ->
+            Log.e("Order", "Error retrieving cart items", e)
+        }
     }
-    }
+
+}

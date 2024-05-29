@@ -16,13 +16,12 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.inappmessaging.internal.Logging
 
 class WishlistActivity : AppCompatActivity() {
-        @SuppressLint("SetTextI18n")
+        var location: String = ""
         override fun onCreate(savedInstanceState: Bundle?) {
                 super.onCreate(savedInstanceState)
                 setContentView(R.layout.wishlist)
 
                 val homeBtn: ImageButton = findViewById(R.id.home)
-                val messagesBtn: ImageButton = findViewById(R.id.message)
                 val productsBtn: ImageButton = findViewById(R.id.products)
                 val wishlistBtn: ImageButton = findViewById(R.id.wishlist)
                 val profileBtn: ImageButton = findViewById(R.id.profile)
@@ -32,6 +31,8 @@ class WishlistActivity : AppCompatActivity() {
                 val mainPage: LinearLayout = findViewById(R.id.mainLayout)
                 val maximumLength = 15
                 val db = FirebaseFirestore.getInstance()
+                val currentUser = FirebaseAuth.getInstance().currentUser
+                val currentUserId = currentUser?.uid
                 db.collection("users").get().addOnSuccessListener { users ->
                         for (user in users) {
                                 val userId = user.id
@@ -39,93 +40,37 @@ class WishlistActivity : AppCompatActivity() {
                                         .collection("wishlist")
                                 userProductsRef.get().addOnSuccessListener { documents ->
                                         for (document in documents) {
-                                                val productName = document.getString("product_name")
-                                                val userIdOwner = document.getString("idSeller")
-                                                val price = document.getString("price")
-                                                var location: String = ""
-                                                /*val quantity = document.getString("quantity")
-                                                val description = document.getString("description")
-                                                val picture = document.getString("imageUrl")*/
+                                                val productName = document.getString("product_name").toString()
+                                                val userIdOwner = document.getString("idSeller").toString()
+                                                val locationCity = document.getString("city").toString()
+                                                val locationCountry = document.getString("country").toString()
+                                                val price = document.getString("price").toString()
+                                                location = "$locationCountry, $locationCity"
+                                                val layoutInflater = LayoutInflater.from(this)
+                                                val productLayout = layoutInflater.inflate(R.layout.product_layout_wishlist, null)
+                                                val productNameButton: LinearLayout = productLayout.findViewById(R.id.product)
+                                                val productNameSpace: TextView = productLayout.findViewById(R.id.numeProdus)
+                                                val priceText: TextView = productLayout.findViewById(R.id.price)
+                                                val locationText: TextView = productLayout.findViewById(R.id.location)
 
-                                                val ownerData = db.collection("users")
-                                                        .document("user_$userIdOwner").get()
-                                                        .addOnSuccessListener { document ->
-                                                                if (document != null && document.exists()) {
-                                                                        val name =
-                                                                                document.getString("name")
-                                                                        val surname =
-                                                                                document.getString("surname")
-                                                                        val username =
-                                                                                document.getString("username")
-                                                                        val city =
-                                                                                document.getString("city")
-                                                                        val country =
-                                                                                document.getString("country")
-                                                                        location = "$country, $city"
-                                                                }
-                                                                val layoutInflater =
-                                                                        LayoutInflater.from(this)
-                                                                val productLayout =
-                                                                        layoutInflater.inflate(
-                                                                                R.layout.product_layout_wishlist,
-                                                                                null
-                                                                        )
-                                                                val productNameButton: LinearLayout =
-                                                                        productLayout.findViewById(R.id.product)
-                                                                val productNameSpace: TextView =
-                                                                        productLayout.findViewById(R.id.numeProdus)
-                                                                val priceText: TextView =
-                                                                        productLayout.findViewById(R.id.price)
-                                                                val locationText: TextView =
-                                                                        productLayout.findViewById(R.id.location)
-                                                                if (productName != null) {
-                                                                        if (productName.length > maximumLength) {
-                                                                                productNameSpace.text =
-                                                                                        productName.substring(
-                                                                                                0,
-                                                                                                maximumLength
-                                                                                        ) + "..."
-                                                                        } else if (location.length > maximumLength) {
-                                                                                locationText.text =
-                                                                                        location.substring(
-                                                                                                0,
-                                                                                                maximumLength
-                                                                                        ) + "..."
-                                                                        } else {
-                                                                                productNameSpace.text =
-                                                                                        productName
-                                                                                locationText.text =
-                                                                                        location
-
-                                                                        }
-                                                                }
-                                                                priceText.text = "$price lei"
-                                                                mainPage.addView(productLayout)
+                                                productNameSpace.text = productName
+                                                priceText.text = "$price lei"
+                                                locationText.text = "$locationCountry, $locationCity"
+                                                mainPage.addView(productLayout)
 
                                                                 //selectBtn.text = name
-                                                                productNameButton.setOnClickListener {
-                                                                        val intent = Intent(
-                                                                                this,
-                                                                                ProductWishlistActivity::class.java
-                                                                        )
-                                                                        intent.putExtra(
-                                                                                "PRODUCT_NAME",
-                                                                                productName
-                                                                        )
-                                                                        intent.putExtra(
-                                                                                "ID_OWNER",
-                                                                                userIdOwner
-                                                                        )
-                                                                        startActivity(intent)
-                                                                        finish()
-                                                                        overridePendingTransition(
-                                                                                R.anim.slide_in,
-                                                                                R.anim.slide_out
-                                                                        )
-                                                                }
-                                                        }
-                                        }
-                                }
+                                                productNameButton.setOnClickListener {
+                                                     val intent = Intent(this, ProductWishlistActivity::class.java)
+                                                     intent.putExtra("PRODUCT_NAME", productName)
+                                                     intent.putExtra("USERID", userIdOwner)
+                                                     startActivity(intent)
+                                                     finish()
+                                                     overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
+                                                }
+                                                }
+                                }.addOnFailureListener { exception ->
+                                Log.e("Firestore", "Error getting products", exception)
+                        }
                                 val backButton: ImageButton = findViewById(R.id.back_button)
                                 backButton.setOnClickListener {
                                         val intent = Intent(this, HomescreenActivity::class.java)
@@ -142,12 +87,6 @@ class WishlistActivity : AppCompatActivity() {
                                         overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
                                 }
 
-                                messagesBtn.setOnClickListener {
-                                        val intent = Intent(this, MessageListActivity::class.java)
-                                        startActivity(intent)
-                                        finish()
-                                        overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
-                                }
 
                                 productsBtn.setOnClickListener {
                                         val intent = Intent(this, ProductsActivity::class.java)

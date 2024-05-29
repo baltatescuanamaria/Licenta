@@ -20,19 +20,12 @@ class FinishOrderActivity : AppCompatActivity() {
         }
 
         val homeBtn: ImageButton = findViewById(R.id.home)
-        val messagesBtn: ImageButton = findViewById(R.id.message)
         val productsBtn: ImageButton = findViewById(R.id.products)
         val wishlistBtn: ImageButton = findViewById(R.id.wishlist)
         val profileBtn: ImageButton = findViewById(R.id.profile)
 
         homeBtn.setOnClickListener{
             val intent = Intent(this, HomescreenActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
-
-        messagesBtn.setOnClickListener {
-            val intent = Intent(this, MessageListActivity::class.java)
             startActivity(intent)
             finish()
         }

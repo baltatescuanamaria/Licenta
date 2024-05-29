@@ -26,6 +26,7 @@ class ProfileActivity : AppCompatActivity() {
 
         val nameField: TextView = findViewById(R.id.name)
         val locationField: TextView = findViewById(R.id.loc)
+        val phoneNumberField: TextView = findViewById(R.id.PhoneNumber)
 
         val db = FirebaseFirestore.getInstance()
         val userId = FirebaseAuth.getInstance().currentUser?.uid
@@ -38,22 +39,26 @@ class ProfileActivity : AppCompatActivity() {
                 val username = document.getString("username")
                 val city = document.getString("city")
                 val country = document.getString("country")
+                val phoneNumber = document.getString("phoneNumber")
                 nameField.text = "${name} ${surname}"
                 locationField.text = "${city}, ${country}"
+                phoneNumberField.text = phoneNumber
+
             } else {
                 Log.d(Logging.TAG, "Document does not exist")
             }
         }
 
         val homeBtn: ImageButton = findViewById(R.id.home)
-        val messagesBtn: ImageButton = findViewById(R.id.message)
         val productsBtn: ImageButton = findViewById(R.id.products)
         val wishlistBtn: ImageButton = findViewById(R.id.wishlist)
         val profileBtn: ImageButton = findViewById(R.id.profile)
-        val settingsBtn: ImageButton = findViewById(R.id.settings)
+        val logoutBtn: Button = findViewById(R.id.logout)
 
-        settingsBtn.setOnClickListener{
-            val intent = Intent(this, SettingsActivity::class.java)
+        logoutBtn.setOnClickListener{
+            FirebaseAuth.getInstance().signOut()
+            val intent = Intent(this, MainActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
             finish()
             overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
@@ -66,12 +71,6 @@ class ProfileActivity : AppCompatActivity() {
             overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
         }
 
-        messagesBtn.setOnClickListener {
-            val intent = Intent(this, MessageListActivity::class.java)
-            startActivity(intent)
-            finish()
-            overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
-        }
 
         productsBtn.setOnClickListener {
             val intent = Intent(this, ProductsActivity::class.java)

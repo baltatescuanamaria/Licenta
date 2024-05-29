@@ -104,5 +104,9 @@
     <string name="settings_button">settings button</string>
     <string name="your_order_was_received_successfully">Your order was received successfully</string>
     <string name="go_back">Go back</string>
+    <string name="Messages">Messages</string>
+    <string name="Username">Username</string>
+    <string name="recently_added_in_this_category">Recently added in this category</string>
+    <string name="your_description">Your description</string>
 
 </resources>

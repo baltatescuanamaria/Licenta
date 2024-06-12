@@ -6,11 +6,11 @@
         android:top="1dp"
         android:bottom="1dp" />
     <gradient
-        android:startColor="@color/accentColour1"
-        android:centerColor="@color/accentColour1"
-        android:endColor="@color/accentColour1"
+        android:startColor="@color/fontColour1"
+        android:centerColor="@color/fontColour1"
+        android:endColor="@color/fontColour1"
         android:angle="10" />
     <stroke
         android:width="1dp"
-        android:color="@color/accentColour1" />
+        android:color="@color/fontColour1" />
 </shape>

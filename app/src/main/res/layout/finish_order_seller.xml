@@ -13,15 +13,16 @@
         android:padding="30dp"
         android:orientation="vertical">
         <ImageView
+            android:contentDescription="@string/finished_order_image"
             android:layout_width="250dp"
             android:layout_height="220dp"
-            android:contentDescription="@string/order_was_successful_image"
             android:src="@drawable/check">
         </ImageView>
         <TextView
+            android:id="@+id/greeting_finish"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/your_order_was_received_successfully"
+            android:text="@string/the_order_was_finished_someone_will_come_to_pick_up_the_goods_tomorrow"
             android:textSize="25sp"
             android:textStyle="bold"
             android:textAlignment="center"

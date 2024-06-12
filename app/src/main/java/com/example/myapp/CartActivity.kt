@@ -15,6 +15,7 @@ import com.google.firebase.inappmessaging.internal.Logging
 
 class CartActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
+    var total: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,7 +60,7 @@ class CartActivity : AppCompatActivity() {
 
         val priceTotal: TextView = findViewById(R.id.price)
 
-        val total = intent.getIntExtra("TOTAL", 0)
+        total = intent.getIntExtra("TOTAL", 0).toString()
         priceTotal.text = "$total lei"
 
         val placeOrder: Button = findViewById(R.id.placeOrder)
@@ -116,7 +117,7 @@ class CartActivity : AppCompatActivity() {
                 startActivity(intent)
                 overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
                 if (userId != null) {
-                    sendToSeller(addressValue, cityValue, countryValue, phoneNumberValue, nameValue, userId)
+                    sendToSeller(addressValue, cityValue, countryValue, phoneNumberValue, nameValue, surnameValue, userId)
                 }
             }
 
@@ -128,6 +129,7 @@ class CartActivity : AppCompatActivity() {
         cityValue: String,
         countryValue: String,
         phoneNumberValue: String,
+        surnameValue: String,
         nameValue: String,
         currentUserId: String
     ) {
@@ -138,7 +140,8 @@ class CartActivity : AppCompatActivity() {
             "country" to countryValue,
             "phone_number" to phoneNumberValue,
             "userId" to currentUserId,
-            "name" to nameValue
+            "name" to nameValue,
+            "surname" to surnameValue
         )
 
         val cartRef = db.collection("users").document("user_${currentUserId}").collection("cart")
@@ -148,15 +151,18 @@ class CartActivity : AppCompatActivity() {
             for (doc in documents) {
                 val ownerId = doc.getString("idSeller")
                 val productName = doc.getString("product_name")
+                val quantity = doc.getString("quantity")
                 val productId = doc.id
 
-                if (ownerId != null && productName != null) {
-                    val sellerOrderRef = db.collection("users").document("user_${ownerId}").collection("orders")
+                if (ownerId != null && productName != null && quantity != null && total != null) {
+                    val sellerOrderRef = db.collection("users").document("user_${ownerId}").collection("orders").document("$productName")
                     val productOrderInfo = orderInfo.toMutableMap()
                     productOrderInfo["product_name"] = productName
                     productOrderInfo["product_id"] = productId
+                    productOrderInfo["quantity"] = quantity
+                    productOrderInfo["priceTotal"] = total
 
-                    sellerOrderRef.add(productOrderInfo)
+                    sellerOrderRef.set(productOrderInfo)
                         .addOnSuccessListener {
                             Log.d("Order", "Order successfully sent to seller: $ownerId for product: $productName")
                         }

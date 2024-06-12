@@ -79,16 +79,16 @@
                 android:id="@+id/addItem"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/accentColour1"
+                android:backgroundTint="@color/fontColour1"
                 android:padding="15dp"
                 android:text="@string/addItem"
-                android:textColor="@color/accentColour2"
+                android:textColor="@color/background"
                 android:textSize="20sp" />
         </LinearLayout>
 
     <LinearLayout
         android:id="@+id/nav"
-        android:layout_width="match_parent"
+        android:layout_width="350dp"
         android:layout_height="70dp"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="25dp"
@@ -105,36 +105,40 @@
             android:id="@+id/home"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/accentColour1"
+            android:backgroundTint="@color/fontColour1"
             android:contentDescription="@string/home"
             android:padding="25dp"
-            android:src="@drawable/home"></ImageButton>
+            android:src="@drawable/home">
+        </ImageButton>
 
         <ImageButton
             android:id="@+id/products"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/accentColour1"
+            android:backgroundTint="@color/fontColour1"
             android:contentDescription="@string/products"
             android:padding="25dp"
-            android:src="@drawable/loading"></ImageButton>
+            android:src="@drawable/loading">
+        </ImageButton>
 
         <ImageButton
             android:id="@+id/wishlist"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/accentColour1"
+            android:backgroundTint="@color/fontColour1"
             android:contentDescription="@string/wishlist"
             android:padding="25dp"
-            android:src="@drawable/heart"></ImageButton>
+            android:src="@drawable/heart">
+        </ImageButton>
 
         <ImageButton
             android:id="@+id/profile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/accentColour1"
+            android:backgroundTint="@color/fontColour1"
             android:contentDescription="@string/your_profile"
             android:padding="25dp"
-            android:src="@drawable/user"></ImageButton>
+            android:src="@drawable/user">
+        </ImageButton>
     </LinearLayout>
 </RelativeLayout>

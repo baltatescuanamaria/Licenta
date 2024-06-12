@@ -3,15 +3,12 @@ package com.example.myapp
 import android.content.Intent
 import android.os.Bundle
 import android.text.method.PasswordTransformationMethod
-import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textfield.TextInputLayout
-import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 
 class LoginActivity : AppCompatActivity() {
@@ -20,7 +17,7 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val backButton:ImageButton = findViewById(R.id.back_button)
+        val backButton:ImageButton = findViewById(R.id.back_btn)
         backButton.setOnClickListener{
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
@@ -55,7 +52,7 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
-        val passwordInputLayout: TextInputLayout = findViewById(R.id.password_text_input_layout)
+        val passwordInputLayout: TextInputLayout = findViewById(R.id.password_input_layout)
 
         passwordInputLayout.setEndIconOnClickListener {
             val passwordEditText = passwordInputLayout.editText

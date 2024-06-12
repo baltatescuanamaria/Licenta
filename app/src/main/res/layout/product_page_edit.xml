@@ -7,35 +7,34 @@
     tools:context=".MainActivity">
 
     <LinearLayout
-        android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingStart="30dp"
+        android:layout_marginTop="10dp"
+        android:paddingStart="10dp"
         android:paddingTop="30dp"
         android:orientation="horizontal"
         tools:ignore="RtlSymmetry">
         <ImageButton
             android:id="@+id/back_button"
-            android:contentDescription="@string/back_button"
-            android:layout_width="40dp"
-            android:layout_height="match_parent"
+            android:contentDescription="@string/go_back"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
             android:src="@drawable/arrow_small_left"
             android:background="@color/background">
         </ImageButton>
         <TextView
-            android:id="@+id/titleMessages"
+            android:id="@+id/beekeeping_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:text="@string/edit_product"
-            android:textColor="@color/fontColour2"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="3dp"
+            android:textColor="@color/fontColour1"
             android:textSize="30sp"
             android:textStyle="bold" />
     </LinearLayout>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/title"
         android:paddingBottom="80dp">
     <LinearLayout
         android:layout_width="match_parent"
@@ -52,6 +51,7 @@
             android:layout_width="300dp"
             android:layout_height="230dp"
             android:background="@color/accentColour2"
+            android:layout_marginTop="80dp"
             android:scaleType="centerCrop" />
 
         <Button
@@ -59,14 +59,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:backgroundTint="@color/redish"
-            android:text="@string/add_pic" />
+            android:backgroundTint="@color/fontColour1"
+            android:text="@string/add_pic"
+            android:textColor="@color/background"/>
 
         <TextView
+            android:id="@+id/details_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/details_about_your_product"
-            android:textColor="@color/accentColour1"
+            android:textColor="@color/fontColour1"
             android:textSize="25sp"
             android:textStyle="bold"
             android:paddingBottom="10dp"
@@ -77,18 +79,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/name"
-            android:textColor="@color/accentColour2"
+            android:textColor="@color/fontColour1"
             android:textSize="15sp" />
         <EditText
             android:id="@+id/changeName"
-            android:layout_width="match_parent"
+            android:layout_width="350dp"
             android:layout_height="60dp"
             android:inputType="text"
-            android:hint="@string/name"
-            android:textColorHint="@color/fontColour1"
+            android:hint="@string/Null"
             android:layout_marginTop="5dp"
             android:padding="10dp"
-            android:autofillHints="name"
+            android:autofillHints=""
+            android:textColorHint="@color/inputFieldColor"
             android:background="@color/inputFieldColor"
             android:textColor="@color/fontColour1">
         </EditText>
@@ -97,7 +99,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/categories"
-            android:textColor="@color/accentColour2"
+            android:textColor="@color/fontColour1"
             android:layout_marginTop="25dp"
             android:textSize="15sp" />
 
@@ -112,12 +114,13 @@
 
             <AutoCompleteTextView
                 android:id="@+id/options"
-                android:layout_width="match_parent"
+                android:layout_width="350dp"
                 android:layout_height="wrap_content"
-                android:inputType="none"
-                android:hint="@string/select"
                 android:background="@color/inputFieldColor"
-                android:textColor="@color/fontColour1"/>
+                android:hint="@string/categories"
+                android:inputType="none"
+                android:textColor="@color/fontColour1"
+                tools:ignore="SpeakableTextPresentCheck" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -125,20 +128,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/descriere"
-            android:textColor="@color/accentColour2"
+            android:textColor="@color/fontColour1"
             android:layout_marginTop="25dp"
             android:textSize="15sp" />
 
-
         <EditText
             android:id="@+id/changeDescription"
-            android:layout_width="match_parent"
+            android:layout_width="350dp"
             android:layout_height="150dp"
-            android:hint="@string/description"
+            android:hint="@string/Null"
             android:inputType="text"
             android:autofillHints=""
-            android:textColorHint="@color/fontColour1"
             android:layout_marginTop="5dp"
+            android:textColorHint="@color/inputFieldColor"
             android:background="@color/inputFieldColor"
             android:textColor="@color/fontColour1"
             android:padding="10dp">
@@ -148,7 +150,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/price"
-            android:textColor="@color/accentColour2"
+            android:textColor="@color/fontColour1"
             android:layout_marginTop="25dp"
             android:textSize="15sp" />
         <LinearLayout
@@ -169,7 +171,7 @@
                 android:autofillHints=""
                 android:background="@color/inputFieldColor"
                 android:textColor="@color/fontColour1"
-                android:textColorHint="@color/fontColour1"/>
+                android:textColorHint="@color/inputFieldColor"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/menuPrice"
@@ -177,12 +179,12 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="25dp"
+                android:layout_marginStart="25dp"
                 android:textColorHint="@color/fontColour1">
 
                 <AutoCompleteTextView
                     android:id="@+id/optionsPrice"
-                    android:layout_width="match_parent"
+                    android:layout_width="350dp"
                     android:layout_height="wrap_content"
                     android:inputType="none"
                     android:hint="@string/type_of_packaging"
@@ -194,18 +196,20 @@
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginBottom="100dp">
             <Button
                 android:id="@+id/save"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="30dp"
-                android:backgroundTint="@color/accentColour1"
+                android:backgroundTint="@color/fontColour1"
                 android:padding="15dp"
                 android:text="@string/save"
-                android:textColor="@color/accentColour2"
-                android:textSize="20sp" />
+                android:textColor="@color/background"
+                android:textSize="20sp"
+                style="?android:attr/buttonBarButtonStyle" />
             <Button
                 android:id="@+id/delete"
                 android:layout_width="150dp"
@@ -214,13 +218,14 @@
                 android:backgroundTint="@color/redish"
                 android:padding="15dp"
                 android:text="@string/delete"
-                android:textColor="@color/accentColour2"
+                style="?android:attr/buttonBarButtonStyle"
+                android:textColor="@color/fontColour1"
                 android:textSize="20sp" />
         </LinearLayout>
     </LinearLayout>
     </ScrollView>
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="350dp"
         android:layout_height="70dp"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="25dp"
@@ -237,36 +242,40 @@
             android:id="@+id/home"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/accentColour1"
+            android:backgroundTint="@color/fontColour1"
             android:contentDescription="@string/home"
             android:padding="25dp"
-            android:src="@drawable/home"></ImageButton>
+            android:src="@drawable/home">
+        </ImageButton>
 
         <ImageButton
             android:id="@+id/products"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/accentColour1"
+            android:backgroundTint="@color/fontColour1"
             android:contentDescription="@string/products"
             android:padding="25dp"
-            android:src="@drawable/loading"></ImageButton>
+            android:src="@drawable/loading">
+        </ImageButton>
 
         <ImageButton
             android:id="@+id/wishlist"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/accentColour1"
+            android:backgroundTint="@color/fontColour1"
             android:contentDescription="@string/wishlist"
             android:padding="25dp"
-            android:src="@drawable/heart"></ImageButton>
+            android:src="@drawable/heart">
+        </ImageButton>
 
         <ImageButton
             android:id="@+id/profile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/accentColour1"
+            android:backgroundTint="@color/fontColour1"
             android:contentDescription="@string/your_profile"
             android:padding="25dp"
-            android:src="@drawable/user"></ImageButton>
+            android:src="@drawable/user">
+        </ImageButton>
     </LinearLayout>
 </RelativeLayout>

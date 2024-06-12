@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -65,18 +64,70 @@
                     android:paddingStart="10dp"
                     tools:ignore="RtlSymmetry">
                 </TextView>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center">
+                    <TextView
+                        android:id="@+id/usernameTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="@string/buyer_s_name"
+                        android:textColor="@color/fontColour1"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="10dp"
+                        android:paddingStart="10dp"
+                        tools:ignore="RtlSymmetry">
+                    </TextView>
+                    <TextView
+                        android:id="@+id/username"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="@string/name"
+                        android:textColor="@color/accentColour1"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="10dp"
+                        android:paddingStart="10dp"
+                        tools:ignore="RtlSymmetry">
+                    </TextView>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center">
 
-                <TextView
-                    android:id="@+id/pret"
-                    android:textColor="@color/redish"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="@string/pret"
-                    android:paddingTop="10dp"
-                    android:paddingStart="10dp"
-                    android:textSize="20sp"
-                    tools:ignore="RtlSymmetry">
-                </TextView>
+                    <TextView
+                        android:id="@+id/phoneNumberBuyerTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="@string/buyer_s_number"
+                        android:textColor="@color/fontColour1"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="10dp"
+                        android:paddingStart="10dp"
+                        tools:ignore="RtlSymmetry">
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/phoneNumberBuyer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="@string/buyer_s_number"
+                        android:textColor="@color/accentColour1"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="10dp"
+                        android:paddingStart="10dp"
+                        tools:ignore="RtlSymmetry">
+                    </TextView>
+                </LinearLayout>
+
+
 
             </LinearLayout>
             <LinearLayout
@@ -86,72 +137,64 @@
                 android:layout_gravity="left"
                 tools:ignore="RtlHardcoded">
 
-                <FrameLayout
-                    android:id="@+id/cardView"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:backgroundTint="@color/background"
-                    android:layout_marginTop="20dp"
-                    app:cardCornerRadius="8dp">
-                    <RelativeLayout
+                    android:layout_height="150dp"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/quantityAvailableTextView"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <Button
-                            android:id="@+id/button_contact"
-                            android:layout_width="150dp"
-                            android:layout_height="match_parent"
-                            android:text="@string/contact"
-                            android:textColor="@color/background"
-                            android:backgroundTint="@color/fontColour1"
-                            android:textSize="20sp"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"/>
-                        <TextView
-                            android:id="@+id/name_seller"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:text="@string/name"
-                            android:textSize="20sp"
-                            android:textStyle="bold"
-                            android:textColor="@color/fontColour1"
-                            android:padding="10dp"
-                            android:layout_centerVertical="true"/>
-                    </RelativeLayout>
-
-                </FrameLayout>
-
-                <View
+                        android:layout_height="wrap_content"
+                        android:text="@string/quantity_wanted"
+                        android:textColor="@color/fontColour1"
+                        android:textSize="20sp"
+                        android:gravity="center"
+                        android:layout_marginTop="30dp"
+                        android:textStyle="bold"/>
+                    <TextView
+                        android:id="@+id/titleAvailableQuantity"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:textColorHint="@color/fontColour2"
+                        android:textSize="20sp"
+                        android:layout_marginTop="5dp"
+                        android:autofillHints="name"
+                        android:layout_gravity="center"
+                        android:background="@color/background"
+                        android:textColor="@color/fontColour1">
+                    </TextView>
+                </LinearLayout>
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:background="@color/accentColour1"
-                    android:layout_marginTop="5dp">
-                </View>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="25sp"
-                    android:text="@string/descriere"
-                    android:textColor="@color/fontColour1"
-                    android:layout_marginTop="10dp"
-                    android:paddingStart="10dp"
-                    android:textStyle="bold"
-                    tools:ignore="RtlSymmetry">
-                </TextView>
+                    android:layout_height="150dp"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/priceTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/total_price"
+                        android:textColor="@color/fontColour1"
+                        android:textSize="20sp"
+                        android:gravity="center"
+                        android:layout_marginTop="30dp"
+                        android:textStyle="bold"/>
+                    <TextView
+                        android:id="@+id/priceValue"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:inputType="number"
+                        android:hint="@string/price"
 
-                <TextView
-                    android:id="@+id/description"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="20sp"
-                    android:textColor="@color/fontColour2"
-                    android:text="@string/descriere"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginBottom="15dp"
-                    android:paddingStart="10dp"
-                    android:textStyle="normal"
-                    tools:ignore="RtlSymmetry">
-                </TextView>
-
+                        android:textColorHint="@color/fontColour2"
+                        android:textSize="20sp"
+                        android:layout_marginTop="5dp"
+                        android:autofillHints="name"
+                        android:layout_gravity="center"
+                        android:background="@color/background"
+                        android:textColor="@color/fontColour1"
+                        tools:ignore="TextViewEdits">
+                    </TextView>
+                </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -159,20 +202,20 @@
                     android:layout_marginTop="10dp"
                     android:padding="10dp">
                     <Button
-                        android:id="@+id/addItem"
+                        android:id="@+id/acceptOrder"
                         android:layout_width="150dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:backgroundTint="@color/fontColour1"
                         android:padding="15dp"
                         android:layout_marginBottom="10dp"
-                        android:text="@string/add_to_cart"
+                        android:text="@string/accept_order"
                         style="?android:attr/buttonBarButtonStyle"
                         android:layout_gravity="center"
                         android:textColor="@color/background"
                         android:textSize="20sp" />
                     <Button
-                        android:id="@+id/removeToWishlist"
+                        android:id="@+id/rejectOrder"
                         android:layout_width="150dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
@@ -180,7 +223,7 @@
                         android:layout_marginBottom="10dp"
                         android:backgroundTint="@color/redish"
                         android:padding="15dp"
-                        android:text="@string/remove"
+                        android:text="@string/reject_order"
                         style="?android:attr/buttonBarButtonStyle"
                         android:layout_gravity="center"
                         android:textColor="@color/background"

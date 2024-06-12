@@ -102,6 +102,18 @@
         <activity android:name=".FinishOrderActivity">
 
         </activity>
+        <activity android:name=".OrdersActivity">
+
+        </activity>
+        <activity android:name=".OrderDetailsActivity">
+
+        </activity>
+        <activity android:name=".FinishOrderSeller">
+
+        </activity>
+        <activity android:name=".ProfileContactActivity">
+
+        </activity>
 
     </application>
 

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="20dp">
+
+    <LinearLayout
+        android:id="@+id/productButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:ignore="MissingConstraints">
+
+        <LinearLayout
+            android:id="@+id/product"
+            android:layout_width="200dp"
+            android:layout_height="270dp"
+            android:orientation="vertical"
+            android:padding="10dp"
+            android:gravity="bottom"
+            android:background="@color/accentColour3"
+            tools:ignore="MissingConstraints,RtlSymmetry">
+
+            <ImageView
+                android:contentDescription="@string/place_for_a_picture"
+                android:id="@+id/picturePlace"
+                android:layout_width="180dp"
+                android:layout_height="150dp"
+                android:background="@color/accentColour3" />
+
+            <TextView
+                android:id="@+id/numeProdus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/nume_produs"
+                android:textStyle="bold"
+                android:textColor="@color/fontColour1"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/location"
+                android:textColor="@color/fontColour1"
+                android:textSize="20sp" />
+            <TextView
+                android:id="@+id/price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:text="@string/price"
+                android:textColor="@color/fontColour1"
+                android:textStyle="bold"
+                android:textSize="20sp" />
+
+
+        </LinearLayout>
+        <View
+            android:layout_width="20dp"
+            android:layout_height="match_parent"
+            android:background="@color/background"
+            app:layout_constraintTop_toTopOf="@id/productButton"
+            app:layout_constraintBottom_toBottomOf="@id/productButton"
+            app:layout_constraintEnd_toEndOf="@id/productButton" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

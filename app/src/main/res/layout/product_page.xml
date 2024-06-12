@@ -46,7 +46,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="@string/nume_produs"
-                android:textColor="@color/accentColour1"
+                android:textColor="@color/fontColour1"
                 android:textSize="35sp"
                 android:paddingStart="10dp"
                 android:textStyle="bold"
@@ -58,7 +58,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="@string/location"
-                android:textColor="@color/accentColour2"
+                android:textColor="@color/fontColour1"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:layout_marginBottom="10dp"
@@ -68,14 +68,14 @@
 
             <TextView
                 android:id="@+id/pret"
-                android:textColor="@color/accentColour1"
+                android:textColor="@color/redish"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="@string/pret"
                 android:paddingTop="10dp"
                 android:paddingStart="10dp"
                 android:textSize="20sp"
-                android:textStyle="italic|bold">
+                tools:ignore="RtlSymmetry">
             </TextView>
 
         </LinearLayout>
@@ -95,18 +95,15 @@
                 app:cardCornerRadius="8dp">
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/inputFieldColor">
+                    android:layout_height="wrap_content">
                     <Button
                         android:id="@+id/button_contact"
                         android:layout_width="150dp"
                         android:layout_height="match_parent"
                         android:text="@string/contact"
-                        android:textColor="@color/fontColour1"
-                        android:background="@drawable/list_element"
+                        android:textColor="@color/background"
                         android:backgroundTint="@color/fontColour1"
                         android:textSize="20sp"
-                        android:textStyle="bold"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"/>
                     <TextView
@@ -116,9 +113,10 @@
                         android:text="@string/name"
                         android:textSize="20sp"
                         android:textStyle="bold"
-                        android:textColor="@color/accentColour1"
+                        android:textColor="@color/fontColour1"
                         android:padding="10dp"
-                        android:layout_centerVertical="true"/>
+                        android:layout_centerVertical="true"
+                        tools:ignore="RelativeOverlap" />
                 </RelativeLayout>
 
             </FrameLayout>
@@ -127,17 +125,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:background="@color/accentColour1"
-                android:layout_marginTop="15dp">
+                android:layout_marginTop="5dp">
             </View>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="25sp"
                 android:text="@string/descriere"
-                android:textColor="@color/accentColour2"
+                android:textColor="@color/fontColour1"
                 android:layout_marginTop="10dp"
                 android:paddingStart="10dp"
-                android:textStyle="bold">
+                android:textStyle="bold"
+                tools:ignore="RtlSymmetry">
             </TextView>
 
             <TextView
@@ -150,7 +149,8 @@
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="15dp"
                 android:paddingStart="10dp"
-                android:textStyle="normal">
+                android:textStyle="normal"
+                tools:ignore="RtlSymmetry">
             </TextView>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -161,22 +161,18 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/available_quantity"
-                    android:textColor="@color/accentColour1"
+                    android:textColor="@color/fontColour1"
                     android:textSize="20sp"
                     android:gravity="center"
                     android:layout_marginTop="30dp"
                     android:textStyle="bold"/>
                 <TextView
                     android:id="@+id/titleAvailableQuantity"
-                    android:layout_width="160dp"
-                    android:layout_height="100dp"
-                    android:inputType="number"
-                    android:hint="@string/quantity"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
                     android:textColorHint="@color/fontColour2"
-                    android:textSize="20dp"
+                    android:textSize="20sp"
                     android:layout_marginTop="5dp"
-                    android:padding="20dp"
-                    android:layout_marginStart="10dp"
                     android:autofillHints="name"
                     android:layout_gravity="center"
                     android:background="@color/background"
@@ -193,7 +189,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/enter_your_desired_quantity"
-                    android:textColor="@color/accentColour1"
+                    android:textColor="@color/fontColour1"
                     android:textSize="20sp"
                     android:gravity="center"
                     android:layout_marginTop="30dp"
@@ -225,12 +221,13 @@
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:backgroundTint="@color/accentColour1"
+                android:backgroundTint="@color/fontColour1"
                 android:padding="15dp"
                 android:layout_marginBottom="10dp"
                 android:text="@string/add_to_cart"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_gravity="center"
-                android:textColor="@color/accentColour2"
+                android:textColor="@color/background"
                 android:textSize="20sp" />
             <Button
                 android:id="@+id/addToWishlist"
@@ -239,18 +236,19 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginBottom="10dp"
-                android:backgroundTint="@color/redish"
+                android:backgroundTint="@color/accentColour2"
                 android:padding="15dp"
                 android:text="@string/Wishlist"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_gravity="center"
-                android:textColor="@color/accentColour1"
+                android:textColor="@color/background"
                 android:textSize="20sp" />
         </LinearLayout>
         </LinearLayout>
     </LinearLayout>
     </ScrollView>
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="350dp"
         android:layout_height="70dp"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="25dp"
@@ -267,37 +265,41 @@
             android:id="@+id/home"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/accentColour1"
+            android:backgroundTint="@color/fontColour1"
             android:contentDescription="@string/home"
             android:padding="25dp"
-            android:src="@drawable/home"></ImageButton>
+            android:src="@drawable/home">
+        </ImageButton>
 
         <ImageButton
             android:id="@+id/products"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/accentColour1"
+            android:backgroundTint="@color/fontColour1"
             android:contentDescription="@string/products"
             android:padding="25dp"
-            android:src="@drawable/loading"></ImageButton>
+            android:src="@drawable/loading">
+        </ImageButton>
 
         <ImageButton
             android:id="@+id/wishlist"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/accentColour1"
+            android:backgroundTint="@color/fontColour1"
             android:contentDescription="@string/wishlist"
             android:padding="25dp"
-            android:src="@drawable/heart"></ImageButton>
+            android:src="@drawable/heart">
+        </ImageButton>
 
         <ImageButton
             android:id="@+id/profile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/accentColour1"
+            android:backgroundTint="@color/fontColour1"
             android:contentDescription="@string/your_profile"
             android:padding="25dp"
-            android:src="@drawable/user"></ImageButton>
+            android:src="@drawable/user">
+        </ImageButton>
     </LinearLayout>
 
 </RelativeLayout>

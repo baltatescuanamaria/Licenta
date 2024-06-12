@@ -5,11 +5,15 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 
 class FruitsListActivity : AppCompatActivity() {
     private lateinit var idSeller:String
@@ -19,6 +23,8 @@ class FruitsListActivity : AppCompatActivity() {
     var quantity:String=""
     var locationCity: String=""
     var locationCountry: String=""
+    private lateinit var storage: FirebaseStorage
+    private lateinit var storageReference: StorageReference
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.fruits_list)
@@ -33,6 +39,9 @@ class FruitsListActivity : AppCompatActivity() {
 
         val db = FirebaseFirestore.getInstance()
         val currentUserId = FirebaseAuth.getInstance().currentUser?.uid
+        storage = FirebaseStorage.getInstance()
+        storageReference = storage.reference
+
         val userDocRef = db.collection("products")
         userDocRef.get().addOnSuccessListener { documents ->
             for (document in documents) {
@@ -43,6 +52,8 @@ class FruitsListActivity : AppCompatActivity() {
                 val locationCountry = document.getString("country").toString()
                 val idSeller = document.getString("userId").toString()
                 val category = document.getString("category")
+                val packageType = document.getString("package")
+                val imageUrl = document.getString("image_url")
 
                 if (idSeller != currentUserId && category == "Fruits") {
                     Log.d("Firestore", "Adding product: $name")
@@ -54,8 +65,23 @@ class FruitsListActivity : AppCompatActivity() {
                     val productNameSpace: TextView =
                         productLayout.findViewById(R.id.numeProdus)
                     val locationText: TextView = productLayout.findViewById(R.id.location)
+                    val priceTextField: TextView = productLayout.findViewById(R.id.price)
+                    val productImageField: ImageView = productLayout.findViewById(R.id.picturePlace)
+
                     productNameSpace.text = name
                     locationText.text = "$locationCountry, $locationCity"
+                    priceTextField.text = "$price lei/$packageType"
+
+                    imageUrl?.let {
+                        val storageRef = storage.reference.child("images/$it")
+                        storageRef.downloadUrl.addOnSuccessListener { uri ->
+                            Glide.with(this)
+                                .load(uri)
+                                .into(productImageField)
+                        }.addOnFailureListener {
+                            Log.e("Firebase Storage", "Error getting image URL", it)
+                        }
+                    }
                     mainPage.addView(productLayout)
 
                     //selectBtn.text = name

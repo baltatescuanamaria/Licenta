@@ -14,40 +14,38 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:paddingStart="30dp"
             android:paddingTop="30dp"
             android:orientation="horizontal"
             tools:ignore="RtlSymmetry">
             <ImageButton
                 android:id="@+id/back_button"
-                android:contentDescription="@string/place_for_a_picture"
+                android:contentDescription="@string/go_back"
                 android:layout_width="70dp"
                 android:layout_height="wrap_content"
                 android:src="@drawable/arrow_small_left"
                 android:background="@color/background">
             </ImageButton>
             <TextView
-                android:id="@+id/cart_title"
+                android:id="@+id/wishlist_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="3dp"
-                android:text="@string/your_cart"
+                android:text="@string/orders"
                 android:textColor="@color/fontColour1"
                 android:textSize="30sp"
                 android:textStyle="bold" />
         </LinearLayout>
         <ScrollView
-            android:contentDescription="@string/scrollbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:contentDescription="@string/scrollbar"
             android:paddingBottom="80dp">
             <LinearLayout
                 android:id="@+id/mainLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingBottom="300dp">
+                android:orientation="vertical">
                 <!-- <Button
                       android:id="@+id/buttonProduct"
                       android:layout_width="match_parent"
@@ -71,59 +69,10 @@
             </LinearLayout>
         </ScrollView>
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_above="@+id/nav"
-        android:background="@color/background"
-        android:layout_marginBottom="10dp">
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="@color/fontColour1"
-            android:layout_marginTop="15dp">
-        </View>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="start">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/total_price"
-                android:textStyle="bold"
-                android:textSize="25sp"
-                android:textColor="@color/fontColour1"
-                android:padding="20dp">
-            </TextView>
-            <TextView
-                android:id="@+id/pretTotal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/_0_lei"
-                android:textStyle="italic|bold"
-                android:textSize="25sp"
-                android:textColor="@color/fontColour1"
-                android:padding="20dp">
-            </TextView>
-        </LinearLayout>
-                <Button
-                    android:id="@+id/checkout"
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/fontColour1"
-                    android:padding="15dp"
-                    android:layout_margin="15dp"
-                    android:text="@string/checkout"
-                    android:textColor="@color/background"
-                    android:textSize="20sp" />
-        </LinearLayout>
 
     <LinearLayout
         android:id="@+id/nav"
-        android:layout_width="match_parent"
+        android:layout_width="350dp"
         android:layout_height="70dp"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="25dp"

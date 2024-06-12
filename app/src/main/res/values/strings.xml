@@ -108,5 +108,31 @@
     <string name="Username">Username</string>
     <string name="recently_added_in_this_category">Recently added in this category</string>
     <string name="your_description">Your description</string>
+    <string name="orders">Orders</string>
+    <string name="your_orders">Your orders</string>
+    <string name="the_order_was_finished_someone_will_come_to_pick_up_the_goods_tomorrow">The order was finished. Someone will come to pick up the goods tomorrow.</string>
+    <string name="seller_s_name">Seller\'s name:</string>
+    <string name="buyer_s_name">Buyer\'s name:</string>
+    <string name="reject_order">Reject Order</string>
+    <string name="accept_order">Accept order</string>
+    <string name="quantity_wanted">Quantity Wanted</string>
+    <string name="buyer_s_number">Buyer\'s number:</string>
+    <string name="contact_info">Contact Info</string>
+    <string name="Products">Products</string>
+    <string name="no_description">No description</string>
+    <string name="email_input">Email input</string>
+    <string name="welcome_image">welcome image</string>
+    <string name="finished_order_image">finished order image</string>
+    <string name="other_details">Other details</string>
+    <string name="pay_using_card">Pay using card</string>
+    <string name="pay_upon_receiving">Pay upon receiving</string>
+    <string name="total">Total:</string>
+    <string name="order_was_successful_image">Order was successful image</string>
+    <string name="scrollbar">scrollbar</string>
+    <string name="image">image</string>
+    <string name="change_picture">Change Picture</string>
+    <string name="Null">NULL</string>
+    <string name="logout">Logout</string>
+    <string name="_0_lei">0 lei</string>
 
 </resources>

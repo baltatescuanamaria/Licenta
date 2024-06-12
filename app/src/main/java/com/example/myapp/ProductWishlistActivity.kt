@@ -4,14 +4,17 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
-import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.inappmessaging.internal.Logging
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 
 class ProductWishlistActivity : AppCompatActivity() {
     private lateinit var idSeller: String
@@ -20,9 +23,13 @@ class ProductWishlistActivity : AppCompatActivity() {
     var quantity: String = ""
     var locationCity: String = ""
     var locationCountry: String = ""
-    var sellerName: String = ""
+    private var sellerName: String = ""
     var description: String = ""
-    var packageType: String = ""
+    private var packageType: String = ""
+    var category: String = ""
+    private var imageUrl: String = ""
+    private lateinit var storage: FirebaseStorage
+    private lateinit var storageReference: StorageReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,19 +39,24 @@ class ProductWishlistActivity : AppCompatActivity() {
         val productsBtn: ImageButton = findViewById(R.id.products)
         val wishlistBtn: ImageButton = findViewById(R.id.wishlist)
         val profileBtn: ImageButton = findViewById(R.id.profile)
-        val backButton: ImageButton = findViewById(R.id.back_button)
+        val backBtn: ImageButton = findViewById(R.id.back_button)
 
         val nameField: TextView = findViewById(R.id.name_produs)
         val priceField: TextView = findViewById(R.id.pret)
         val descriptionField: TextView = findViewById(R.id.description)
         val sellerField: TextView = findViewById(R.id.name_seller)
         val locationField: TextView = findViewById(R.id.location)
+        val productImageField: ImageView = findViewById(R.id.picturePlace)
 
         val nameProduct = intent.getStringExtra("PRODUCT_NAME")
         val userId = intent.getStringExtra("USERID")
         val db = FirebaseFirestore.getInstance()
         val currentUser = FirebaseAuth.getInstance().currentUser
         val currentUserId = currentUser?.uid
+
+        storage = FirebaseStorage.getInstance()
+        storageReference = storage.reference
+
         val productsDocRef = db.collection("users").document("user_$currentUserId").collection("wishlist")
 
         productsDocRef.document(nameProduct ?: "").get().addOnSuccessListener { document ->
@@ -60,24 +72,37 @@ class ProductWishlistActivity : AppCompatActivity() {
                     description = document.getString("description").toString()
                     packageType = document.getString("package").toString()
                     quantity = document.getString("wanted_quantity").toString()
+                    category = document.getString("category").toString()
+                    imageUrl = document.getString("image_url").toString()
 
                     nameField.text = productName
                     locationField.text = "$locationCity, $locationCountry"
-                    priceField.text = "$price/$packageType"
+                    priceField.text = "$price lei/$packageType"
                     sellerField.text = sellerName
                     descriptionField.text = description
+
+                    imageUrl?.let {
+                        val storageRef = storage.reference.child("images/$it")
+                        storageRef.downloadUrl.addOnSuccessListener { uri ->
+                            Glide.with(this)
+                                .load(uri)
+                                .into(productImageField)
+                        }.addOnFailureListener {
+                            Log.e("Firebase Storage", "Error getting image URL", it)
+                        }
+                    }
                 }
             }
         }.addOnFailureListener { exception ->
             Log.e("Firestore", "Error getting product", exception)
         }
 
-        val addItem: Button = findViewById(R.id.addItem)
-        addItem.setOnClickListener {
+        val addItemBtn: Button = findViewById(R.id.addItem)
+        addItemBtn.setOnClickListener {
             val nameValue = nameField.text.toString()
             val sellerValue = sellerField.text.toString()
             val priceValue = priceField.text.toString()
-            addItemToCart(nameValue, sellerValue, price, quantity, idSeller, locationCity, locationCountry)
+            addItemToCart(nameValue, sellerValue, price, quantity, idSeller, locationCity, locationCountry, category)
             val intent = Intent(this, HomescreenActivity::class.java)
             startActivity(intent)
             overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
@@ -98,15 +123,15 @@ class ProductWishlistActivity : AppCompatActivity() {
                 }
         }
 
-        val contact: Button = findViewById(R.id.button_contact)
-        contact.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
+        val contactBtn: Button = findViewById(R.id.button_contact)
+        contactBtn.setOnClickListener {
+            val intent = Intent(this, ProfileContactActivity::class.java)
             intent.putExtra("OWNER_ID", idSeller)
             startActivity(intent)
             finish()
         }
 
-        backButton.setOnClickListener {
+        backBtn.setOnClickListener {
             val intent = Intent(this, HomescreenActivity::class.java)
             startActivity(intent)
             finish()
@@ -142,7 +167,7 @@ class ProductWishlistActivity : AppCompatActivity() {
         }
     }
 
-    private fun addItemToCart(nameValue: String, sellerValue: String, priceValue: String, quantity: String, idSeller: String, locationCity: String, locationCountry: String) {
+    private fun addItemToCart(nameValue: String, sellerValue: String, priceValue: String, quantity: String, idSeller: String, locationCity: String, locationCountry: String, category: String) {
         val db = FirebaseFirestore.getInstance()
         val productInput = hashMapOf(
             "product_name" to nameValue,
@@ -153,7 +178,9 @@ class ProductWishlistActivity : AppCompatActivity() {
             "package" to packageType,
             "city" to locationCity,
             "country" to locationCountry,
-            "price" to price
+            "price" to price,
+            "category" to category,
+            "image_url" to imageUrl
         )
 
         val userId = FirebaseAuth.getInstance().currentUser?.uid

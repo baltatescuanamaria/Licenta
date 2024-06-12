@@ -1,10 +1,10 @@
 package com.example.myapp
 
+import android.app.ProgressDialog
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.util.Log
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -18,13 +18,21 @@ import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
+import java.util.*
 
 class EditProductActivity : AppCompatActivity() {
     private var selectedItem: String? = null
     private var selectedItemPrice: String? = null
+    private lateinit var storage: FirebaseStorage
+    private lateinit var storageReference: StorageReference
+    private var imageUrl: Uri? = null
+    private var nameValue: String = " "
+    private var rndmUUID: String = " "
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.product_page_edit)
@@ -32,25 +40,26 @@ class EditProductActivity : AppCompatActivity() {
         val nameField: EditText = findViewById(R.id.changeName)
         val priceField: EditText = findViewById(R.id.changePrice)
         val descriptionField: EditText = findViewById(R.id.changeDescription)
-        val productImage: ImageView = findViewById(R.id.picturePlace)
+        val productImageField: ImageView = findViewById(R.id.picturePlace)
+
+        storage = FirebaseStorage.getInstance()
+        storageReference = storage.reference
 
         // Dropdown lists
         val listDropdown = listOf("Fruits", "Vegetables", "Animal Product", "Viticulture", "Beekeeping", "Preserved Food")
         val listDropdownPrice = listOf("Bottle", "Piece", "Kilogram", "Jar", "Grams")
-        val autoComplete: AutoCompleteTextView = findViewById(R.id.options)
         val adapter = ArrayAdapter(this, R.layout.dropdown_item, listDropdown)
-        val autoCompletePrice: AutoCompleteTextView = findViewById(R.id.optionsPrice)
         val adapterPrice = ArrayAdapter(this, R.layout.dropdown_item, listDropdownPrice)
 
         val categoryField: AutoCompleteTextView = findViewById(R.id.options)
         val packagingField: AutoCompleteTextView = findViewById(R.id.optionsPrice)
-        autoComplete.setAdapter(adapter)
-        autoComplete.onItemClickListener = AdapterView.OnItemClickListener { adapterView, _, i, _ ->
+        categoryField.setAdapter(adapter)
+        categoryField.onItemClickListener = AdapterView.OnItemClickListener { adapterView, _, i, _ ->
             selectedItem = adapterView.getItemAtPosition(i).toString()
         }
 
-        autoCompletePrice.setAdapter(adapterPrice)
-        autoCompletePrice.onItemClickListener = AdapterView.OnItemClickListener { adapterView, _, i, _ ->
+        packagingField.setAdapter(adapterPrice)
+        packagingField.onItemClickListener = AdapterView.OnItemClickListener { adapterView, _, i, _ ->
             selectedItemPrice = adapterView.getItemAtPosition(i).toString()
         }
 
@@ -58,7 +67,7 @@ class EditProductActivity : AppCompatActivity() {
         val db = FirebaseFirestore.getInstance()
         val userId = FirebaseAuth.getInstance().currentUser?.uid
         val documentName = "user_${userId}"
-        val userDocRef = db.collection("users").document(documentName).collection("products").document("product_${nameProduct}")
+        val userDocRef = db.collection("users").document(documentName).collection("products").document("${nameProduct}")
 
         userDocRef.get().addOnSuccessListener { document ->
             if (document != null && document.exists()) {
@@ -81,9 +90,14 @@ class EditProductActivity : AppCompatActivity() {
                 }
 
                 imageUrl?.let {
-                    Glide.with(this)
-                        .load(it)
-                        .into(productImage)
+                    val storageRef = storage.reference.child("images/$it")
+                    storageRef.downloadUrl.addOnSuccessListener { uri ->
+                        Glide.with(this)
+                            .load(uri)
+                            .into(productImageField)
+                    }.addOnFailureListener {
+                        Log.e("Firebase Storage", "Error getting image URL", it)
+                    }
                 }
             } else {
                 Log.d("Firestore", "Document does not exist")
@@ -95,6 +109,7 @@ class EditProductActivity : AppCompatActivity() {
             val nameValue = nameField.text.toString()
             val priceValue = priceField.text.toString()
             val descriptionValue = descriptionField.text.toString()
+            val imageValue = productImageField.imageAlpha.toString()
 
             val database = Firebase.firestore
             val updateInfo = hashMapOf<String, Any>()
@@ -114,8 +129,14 @@ class EditProductActivity : AppCompatActivity() {
             if (priceValue.isNotEmpty()) {
                 updateInfo["price"] = priceValue
             }
+            if (imageValue.isNotEmpty()) {
+                uploadImage()
+                updateInfo["image_url"] = rndmUUID
+            }
 
-            val doc = database.collection("users").document("user_${userId}").collection("products").document("product_${nameProduct}")
+
+
+            val doc = database.collection("users").document("user_${userId}").collection("products").document("${nameProduct}")
 
             doc.update(updateInfo)
                 .addOnSuccessListener {
@@ -126,6 +147,8 @@ class EditProductActivity : AppCompatActivity() {
                 .addOnFailureListener { e ->
                     Toast.makeText(this, "An error occurred while updating the information :(", Toast.LENGTH_SHORT).show()
                 }
+
+
 
             val productsCollection = database.collection("products")
             productsCollection.get().addOnSuccessListener { documents ->
@@ -188,19 +211,19 @@ class EditProductActivity : AppCompatActivity() {
             }
         }
 
-        val addPicture: Button = findViewById(R.id.selectImageButton)
+        val addPictureBtn: Button = findViewById(R.id.selectImageButton)
         val homeBtn: ImageButton = findViewById(R.id.home)
         val productsBtn: ImageButton = findViewById(R.id.products)
         val wishlistBtn: ImageButton = findViewById(R.id.wishlist)
         val profileBtn: ImageButton = findViewById(R.id.profile)
-        val backButton: ImageButton = findViewById(R.id.back_button)
-        backButton.setOnClickListener {
+        val backBtn: ImageButton = findViewById(R.id.back_button)
+        backBtn.setOnClickListener {
             val intent = Intent(this, ProductsActivity::class.java)
             startActivity(intent)
             finish()
             overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
         }
-        addPicture.setOnClickListener {
+        addPictureBtn.setOnClickListener {
             openGallery()
         }
         homeBtn.setOnClickListener {
@@ -233,40 +256,45 @@ class EditProductActivity : AppCompatActivity() {
     }
 
     private fun openGallery() {
-        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-        startActivityForResult(intent, AddImageActivity.PICK_IMAGE_REQUEST)
+        val intent = Intent()
+        intent.type = "image/*"
+        intent.action = Intent.ACTION_GET_CONTENT
+        startActivityForResult(
+            Intent.createChooser(intent, "Select an image"), AddProductActivity.PICK_IMAGE_REQUEST
+        )
+    }
+
+    private fun uploadImage() {
+        if (imageUrl != null) {
+            val progressDialog = ProgressDialog(this)
+            progressDialog.show()
+
+            rndmUUID = UUID.randomUUID().toString()
+            val ref = storageReference.child("images/$rndmUUID")
+
+            ref.putFile(imageUrl!!)
+                .addOnSuccessListener {
+                    progressDialog.dismiss()
+                    Toast.makeText(this, "Image Uploaded", Toast.LENGTH_SHORT).show()
+                }
+                .addOnFailureListener {
+                    progressDialog.dismiss()
+                    Toast.makeText(this, "Failed " + it.message, Toast.LENGTH_SHORT).show()
+                }
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
         val imagePlace: ImageView = findViewById(R.id.picturePlace)
-        if (requestCode == AddImageActivity.PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null) {
+        if (requestCode == AddProductActivity.PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null) {
             val selectedImage: Uri? = data.data
             selectedImage?.let {
                 val inputStream = contentResolver.openInputStream(selectedImage)
                 val bitmap = BitmapFactory.decodeStream(inputStream)
                 imagePlace.setImageBitmap(bitmap)
-
-                val usersCollection = Firebase.firestore.collection("products")
-                val currentUserId = FirebaseAuth.getInstance().currentUser?.uid
-                val imageName = "profile_pic"
-
-                val imageInfo = hashMapOf(
-                    "url" to selectedImage.toString(),
-                    "name" to imageName
-                )
-
-                currentUserId?.let { userId ->
-                    usersCollection.document("products_$userId")
-                        .set(imageInfo, SetOptions.merge())
-                        .addOnSuccessListener {
-                            Log.d("Firestore", "Imaginea a fost salvată cu succes în subcolecție")
-                        }
-                        .addOnFailureListener { e ->
-                            Log.e("Firestore", "Eroare la salvarea imaginii în subcolecție", e)
-                        }
-                }
+                imageUrl = selectedImage
             }
         }
     }

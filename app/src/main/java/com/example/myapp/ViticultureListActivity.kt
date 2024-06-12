@@ -5,15 +5,19 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 
 class ViticultureListActivity : AppCompatActivity() {
-    private lateinit var idSeller:String
-    val categoriesList = mutableSetOf<String>()
+    private lateinit var storage: FirebaseStorage
+    private lateinit var storageReference: StorageReference
     var name:String = ""
     var price:String = ""
     var quantity:String=""
@@ -27,12 +31,15 @@ class ViticultureListActivity : AppCompatActivity() {
         val productsBtn: ImageButton = findViewById(R.id.products)
         val wishlistBtn: ImageButton = findViewById(R.id.wishlist)
         val profileBtn: ImageButton = findViewById(R.id.profile)
-        val backButton: ImageButton = findViewById(R.id.back_button)
+        val backBtn: ImageButton = findViewById(R.id.back_button)
 
         val mainPage: LinearLayout = findViewById(R.id.arrayProductsRecAdded)
 
         val db = FirebaseFirestore.getInstance()
         val currentUserId = FirebaseAuth.getInstance().currentUser?.uid
+        storage = FirebaseStorage.getInstance()
+        storageReference = storage.reference
+
         val userDocRef = db.collection("products")
         userDocRef.get().addOnSuccessListener { documents ->
             for (document in documents) {
@@ -43,23 +50,41 @@ class ViticultureListActivity : AppCompatActivity() {
                 val locationCountry = document.getString("country").toString()
                 val idSeller = document.getString("userId").toString()
                 val category = document.getString("category")
+                val packageType = document.getString("package")
+                val imageUrl = document.getString("image_url")
 
                 if (idSeller != currentUserId && category == "Viticulture" && productCount < 15) {
                     Log.d("Firestore", "Adding product: $name")
                     val layoutInflater = LayoutInflater.from(this)
                     val productLayout =
                         layoutInflater.inflate(R.layout.homescreen_product_layout, null)
-                    val productButton: LinearLayout =
+                    val productBtn: LinearLayout =
                         productLayout.findViewById(R.id.product)
-                    val productNameSpace: TextView =
+                    val productNameField: TextView =
                         productLayout.findViewById(R.id.numeProdus)
-                    val locationText: TextView = productLayout.findViewById(R.id.location)
-                    productNameSpace.text = name
-                    locationText.text = "$locationCountry, $locationCity"
+                    val locationTextField: TextView = productLayout.findViewById(R.id.location)
+                    val priceTextField: TextView = productLayout.findViewById(R.id.price)
+                    val productImageField: ImageView = productLayout.findViewById(R.id.picturePlace)
+
+                    productNameField.text = name
+                    locationTextField.text = "$locationCountry, $locationCity"
+                    priceTextField.text = "$price lei/$packageType"
+
+                    imageUrl?.let {
+                        val storageRef = storage.reference.child("images/$it")
+                        storageRef.downloadUrl.addOnSuccessListener { uri ->
+                            Glide.with(this)
+                                .load(uri)
+                                .into(productImageField)
+                        }.addOnFailureListener {
+                            Log.e("Firebase Storage", "Error getting image URL", it)
+                        }
+                    }
+
                     mainPage.addView(productLayout)
 
                     //selectBtn.text = name
-                    productButton.setOnClickListener {
+                    productBtn.setOnClickListener {
                         val intent = Intent(this, ProductActivity::class.java)
                         intent.putExtra("PRODUCT_NAME", name)
                         intent.putExtra("USERID", idSeller)
@@ -74,7 +99,7 @@ class ViticultureListActivity : AppCompatActivity() {
             Log.e("Firestore", "Error getting products", exception)
         }
 
-        backButton.setOnClickListener{
+        backBtn.setOnClickListener{
             val intent = Intent(this, HomescreenActivity::class.java)
             startActivity(intent)
             finish()

@@ -2,7 +2,6 @@ package com.example.myapp
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
@@ -10,8 +9,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.inappmessaging.internal.Logging.TAG
-import java.util.UUID
 
 class RegisterActivity4 : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
@@ -27,14 +24,14 @@ class RegisterActivity4 : AppCompatActivity() {
         }
 
         auth = FirebaseAuth.getInstance()
-        val nextButton: Button = findViewById(R.id.register_btn)
+        val nextBtn: Button = findViewById(R.id.register_btn)
         val phoneNumberField: EditText = findViewById(R.id.phone_number_input)
         val cityField: EditText = findViewById(R.id.city_input)
         val countryField: EditText = findViewById(R.id.country_input)
         val streetField: EditText = findViewById(R.id.street_input)
         val numberField: EditText = findViewById(R.id.address_number_input)
 
-        nextButton.setOnClickListener{
+        nextBtn.setOnClickListener{
             val phoneNumberValue = phoneNumberField.text.toString()
             val cityValue = cityField.text.toString()
             val countryValue = countryField.text.toString()
@@ -43,7 +40,7 @@ class RegisterActivity4 : AppCompatActivity() {
 
             var hasError = false
             if (phoneNumberValue.isEmpty()){
-                phoneNumberField.setError("Acest camp este obligatoriu")
+                phoneNumberField.error = "Input required"
                 hasError = true
             }/* else {
                 val regexPhoneNumber = Regex("^07\\d{8}\$\n")
@@ -55,22 +52,22 @@ class RegisterActivity4 : AppCompatActivity() {
             */
 
             if (cityValue.isEmpty()){
-                cityField.setError("Acest camp este obligatoriu")
+                cityField.error = "Input required"
                 hasError = true
             }
 
             if (countryValue.isEmpty()){
-                countryField.setError("Acest acmp este obligatoriu")
+                countryField.error = "Input required"
                 hasError = true
             }
 
             if (streetValue.isEmpty()){
-                streetField.setError("Acest camp este obligatoriu")
+                streetField.error = "Input required"
                 hasError = true
             }
 
             if (numberValue.isEmpty()){
-                numberField.setError("Acest camp este obligatoriu")
+                numberField.error = "Input required"
                 hasError = true
             }
 
@@ -102,7 +99,8 @@ class RegisterActivity4 : AppCompatActivity() {
                             "country" to countryValue,
                             "street" to streetValue,
                             "number" to numberValue,
-                            "userId" to auth.currentUser?.uid
+                            "userId" to auth.currentUser?.uid,
+                            "description" to ""
                         )
 
                         val userId = FirebaseAuth.getInstance().currentUser?.uid
@@ -111,14 +109,12 @@ class RegisterActivity4 : AppCompatActivity() {
                             .document(documentName)
                             .set(userInput)
                             .addOnSuccessListener {
-                                Log.d(TAG, "added with ID: $documentName")
                                 val newIntent = Intent(this, AddImageActivity::class.java)
                                 startActivity(newIntent)
                                 finish()
                                 overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
                             }
-                            .addOnFailureListener { e ->
-                                Log.w(TAG, "Error adding document", e)
+                            .addOnFailureListener {
                                 Toast.makeText(this, "An error occurred while registering the information :(", Toast.LENGTH_SHORT).show()
                             }
                         //TODO: cum sa verific confirmarea inregistrarii contului

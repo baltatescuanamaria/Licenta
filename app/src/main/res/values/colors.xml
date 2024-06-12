@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="background">#FFFFFF</color>
-    <color name="fontColour1">#412234</color>
-    <color name="fontColour2">#B6B5B5</color>
-    <color name="accentColour1">#6D466B</color>
-    <color name="accentColour2">#AF95CD</color>
-    <color name="inputFieldColor">#EDDFDF</color>
-    <color name="redish">#DA4167</color>
+    <color name="fontColour1">#1E1E1E</color>
+    <color name="fontColour2">#939393</color>
+    <color name="accentColour1">#D47500</color>
+    <color name="accentColour2">#00AA55</color>
+    <color name="accentColour3">#5C97BF</color>
+    <color name="accentColour4">#D25299</color>
+    <color name="accentColour5">#D252B2</color>
+    <color name="inputFieldColor">#BEBDBD</color>
+    <color name="redish">#F64747</color>
 </resources>

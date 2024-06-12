@@ -17,7 +17,7 @@ class RegisterActivity : AppCompatActivity() {
         setContentView(R.layout.register_part1)
 
         auth = FirebaseAuth.getInstance()
-        val nextButton: Button = findViewById(R.id.next_btn)
+        val nextBtn: Button = findViewById(R.id.next_btn)
         val nameField: EditText = findViewById(R.id.name_input)
         val surnameField: EditText = findViewById(R.id.surname_input)
         val usernameField: EditText = findViewById(R.id.username_input)
@@ -31,15 +31,15 @@ class RegisterActivity : AppCompatActivity() {
         val passwordError: TextView = findViewById(R.id.passwordError)
         val verifyPasswordError: TextView = findViewById(R.id.verifyPasswordError)
         */
-        val backButton: ImageButton = findViewById(R.id.back_button)
-        backButton.setOnClickListener{
+        val backBtn: ImageButton = findViewById(R.id.back_button)
+        backBtn.setOnClickListener{
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
             finish()
         }
 
-        nextButton.setOnClickListener{
+        nextBtn.setOnClickListener{
             val nameValue = nameField.text.toString()
             val surnameValue = surnameField.text.toString()
             val usernameValue = usernameField.text.toString()
@@ -49,41 +49,30 @@ class RegisterActivity : AppCompatActivity() {
 
             var hasError = false
 
-            val name =  Regex("^[a-zA-Z\\- ']{2,50}$")
-            if (!name.matches(nameValue)){
-                nameField.setError("Numele nu este valid")
-                hasError = true
-            }
-
             if (nameValue.isEmpty()) {
-                nameField.setError("Acest camp este obligatoriu")
-                hasError = true
-            }
-
-            if (!name.matches(surnameValue)){
-                nameField.setError("Prenumele nu este valid")
+                nameField.error = "Input required"
                 hasError = true
             }
 
             if (surnameValue.isEmpty()) {
-                surnameField.setError("Acest camp este obligatoriu")
+                surnameField.error = "Input required"
                 hasError = true
             }
             //TODO: de verificat ca nu username nu este deja in uz (sa vad cum sa salvez datele in Firebase)
             if (usernameValue.isEmpty()) {
-                usernameField.setError("Acest camp este obligatoriu")
+                usernameField.error = "Input required"
                 hasError = true
             }
 
             if (emailValue.isEmpty()){
-                emailField.setError("Acest camp este obligatoriu")
+                emailField.error = "Input required"
                 hasError = true
             } else {
 
                 val email = Regex("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}")
 
                 if (!email.matches(emailValue)) {
-                    emailField.setError("Adresa de mail nu este valida")
+                    emailField.error = "Incorrect email address"
                     hasError = true
                 } else {
 
@@ -92,7 +81,7 @@ class RegisterActivity : AppCompatActivity() {
                             if (task.isSuccessful) {
                                 val result = task.result?.signInMethods
                                 if (!result.isNullOrEmpty()) {
-                                    emailField.setError("Adresa de mail este deja in uz")
+                                    emailField.error = "Email already in use"
                                     hasError = true
                                 }
                             } else {
@@ -103,12 +92,12 @@ class RegisterActivity : AppCompatActivity() {
             }
 
             if (passwordValue.isEmpty()) {
-                passwordField.setError("Acest camp este obligatoriu")
+                passwordField.error = "Input required"
                 hasError = true
             }
 
             if(passwordValue.length < 6) {
-                passwordField.setError("Parola trebuie sa aiba cel putin 6 caractere")
+                passwordField.error = "The password has to have at least 6 characters"
                 hasError = true
             }
 
@@ -117,17 +106,17 @@ class RegisterActivity : AppCompatActivity() {
             val symbols = Regex("[^a-zA-Z0-9]").findAll(passwordValue).count()
 
             if (uppercase == 0 && (digits == 0 || symbols == 0)) {
-                passwordField.setError("Parola trebuie sa contina cel putin o litera uppercase, un simbol sau o cifra")
+                passwordField.error = "Password has to have at lest one uppercase letter, one symbol or one number"
                 hasError = true
             }
 
             if (verifyPasswordValue.isEmpty()) {
-                verifyPasswordField.setError("Acest camp este obligatoriu")
+                verifyPasswordField.error = "Input required"
                 hasError = true
             }
 
             if(verifyPasswordValue != passwordValue){
-                verifyPasswordField.setError("Parolele nu coincid")
+                verifyPasswordField.error = "Different password inputs"
                 hasError = true
             }
 

@@ -14,14 +14,18 @@ import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.inappmessaging.internal.Logging
+import com.google.firebase.inappmessaging.internal.Logging.TAG
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import java.util.UUID
 
 class ProductActivity : AppCompatActivity() {
     //var idSeller: String = ""
     var name: String = ""
+    private var key: String = ""
     var price: String = ""
     var quantity: String = ""
+    var category: String = ""
     var locationCity: String = ""
     var locationCountry: String = ""
     private var surnameOwner: String = ""
@@ -65,6 +69,7 @@ class ProductActivity : AppCompatActivity() {
                 idSeller = doc.getString("userId").toString()
 
                 if (productName == nameProduct && userId == idSeller) {
+
                     locationCity = doc.getString("city").toString()
                     locationCountry = doc.getString("country").toString()
                     price = doc.getString("price").toString()
@@ -74,6 +79,8 @@ class ProductActivity : AppCompatActivity() {
                     packageType = doc.getString("package").toString()
                     quantity = doc.getString("quantity").toString()
                     imageUrl = doc.getString("image_url").toString()
+                    category = doc.getString("category").toString()
+                    key = doc.get("key").toString()
 
                     nameField.text = productName
                     locationField.text = "$locationCity, $locationCountry"
@@ -101,7 +108,7 @@ class ProductActivity : AppCompatActivity() {
         val contactBtn: Button = findViewById(R.id.button_contact)
         contactBtn.setOnClickListener {
             val intent = Intent(this, ProfileContactActivity::class.java)
-            intent.putExtra("OWNER_ID", idSeller)
+            intent.putExtra("OWNER_ID", userId)
             startActivity(intent)
             finish()
         }
@@ -115,7 +122,7 @@ class ProductActivity : AppCompatActivity() {
                 wantedQuantityField.error = "Error"
             } else {
                 if (userId != null) {
-                    addItemToCart(name, sellerField.text.toString(), price, q, userId, locationCity, locationCountry)
+                    addItemToCart(key, name, sellerField.text.toString(), price, q, userId, locationCity, locationCountry, category)
                 }
                 val intent = Intent(this, HomescreenActivity::class.java)
                 startActivity(intent)
@@ -131,7 +138,9 @@ class ProductActivity : AppCompatActivity() {
             if (q.isEmpty() || q.toInt() > quantity.toInt()) {
                 wantedQuantityField.error = "Error"
             } else {
-                addItemToWishlist(idSeller, nameValue, sellerValue, q, description, packageType, locationCity, locationCountry, price)
+                if (userId != null) {
+                    addItemToWishlist(key, userId, nameValue, sellerValue, q, description, packageType, locationCity, locationCountry, price, category)
+                }
                 val intent = Intent(this, HomescreenActivity::class.java)
                 startActivity(intent)
                 finish()
@@ -175,7 +184,7 @@ class ProductActivity : AppCompatActivity() {
         }
     }
 
-    private fun addItemToWishlist(idSeller: String, nameValue: String, sellerValue: String, quantity: String, description: String, packageType: String, locationCity: String, locationCountry: String, price: String) {
+    private fun addItemToWishlist(key: String, idSeller: String, nameValue: String, sellerValue: String, quantity: String, description: String, packageType: String, locationCity: String, locationCountry: String, price: String, category: String) {
         val db = FirebaseFirestore.getInstance()
         val productInput = hashMapOf(
             "product_name" to nameValue,
@@ -187,17 +196,40 @@ class ProductActivity : AppCompatActivity() {
             "city" to locationCity,
             "country" to locationCountry,
             "price" to price,
-            "image_url" to imageUrl
+            "category" to category,
+            "image_url" to imageUrl,
+            "key" to key.toInt()
         )
 
         val userId = FirebaseAuth.getInstance().currentUser?.uid
         val documentName = "user_${userId}"
+
+
         db.collection("users")
-            .document(documentName).collection("wishlist").document(nameValue)
+            .document(documentName).collection("wishlist").document(key)
             .set(productInput)
             .addOnSuccessListener {
                 Log.d(Logging.TAG, "Added with success")
                 Toast.makeText(this, "Product added with success", Toast.LENGTH_SHORT).show()
+
+                db.collection("products").whereEqualTo("userId", idSeller).get()
+                    .addOnSuccessListener { products ->
+                        for (product in products) {
+                            val productData = product.data
+                            val key = product.get("key").toString()
+                            db.collection("users").document(documentName).collection("reccs3").document(key).set(productData)
+                                .addOnSuccessListener {
+                                    Log.d(TAG, "Product added to reccs3 with success")
+                                }
+                                .addOnFailureListener { e ->
+                                    Log.w(TAG, "Error adding product to reccs3", e)
+                                }
+                        }
+                    }
+                    .addOnFailureListener { e ->
+                        Log.w(TAG, "Error getting products from the same seller", e)
+                    }
+
                 val newIntent = Intent(this, HomescreenActivity::class.java)
                 startActivity(newIntent)
                 finish()
@@ -209,7 +241,8 @@ class ProductActivity : AppCompatActivity() {
             }
     }
 
-    private fun addItemToCart(nameValue: String, sellerValue: String, priceValue: String, quantity: String, idSeller: String, locationCity: String, locationCountry: String) {
+
+    private fun addItemToCart(key: String, nameValue: String, sellerValue: String, priceValue: String, quantity: String, idSeller: String, locationCity: String, locationCountry: String, category: String) {
         val db = FirebaseFirestore.getInstance()
         val productInput = hashMapOf(
             "product_name" to nameValue,
@@ -219,15 +252,17 @@ class ProductActivity : AppCompatActivity() {
             "idSeller" to idSeller,
             "city" to locationCity,
             "country" to locationCountry,
+            "category" to category,
             "description" to description,
             "package" to packageType,
-            "image_url" to imageUrl
+            "image_url" to imageUrl,
+            "key" to key
         )
 
         val userId = FirebaseAuth.getInstance().currentUser?.uid
         val documentName = "user_${userId}"
         db.collection("users")
-            .document(documentName).collection("cart").document("${nameValue}")
+            .document(documentName).collection("cart").document(key)
             .set(productInput)
             .addOnSuccessListener {
                 Log.d(Logging.TAG, "Added with success")

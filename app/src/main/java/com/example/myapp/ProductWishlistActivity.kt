@@ -20,6 +20,7 @@ class ProductWishlistActivity : AppCompatActivity() {
     private lateinit var idSeller: String
     var name: String = ""
     var price: String = ""
+    private var key: String = ""
     var quantity: String = ""
     var locationCity: String = ""
     var locationCountry: String = ""
@@ -57,14 +58,17 @@ class ProductWishlistActivity : AppCompatActivity() {
         storage = FirebaseStorage.getInstance()
         storageReference = storage.reference
 
-        val productsDocRef = db.collection("users").document("user_$currentUserId").collection("wishlist")
+        val productsDocRef =
+            db.collection("users").document("user_$currentUserId").collection("wishlist")
 
-        productsDocRef.document(nameProduct ?: "").get().addOnSuccessListener { document ->
-            if (document != null && document.exists()) {
+        productsDocRef.get().addOnSuccessListener { documents ->
+            for (document in documents) {
                 val productName = document.getString("product_name").toString()
                 idSeller = document.getString("idSeller").toString()
+                Log.d(Logging.TAG, "Checking user: ${idSeller}, county: $userId")
 
                 if (productName == nameProduct && userId == idSeller) {
+                    Log.d(Logging.TAG, "Checking user: ${idSeller}, county: $userId")
                     locationCity = document.getString("city").toString()
                     locationCountry = document.getString("country").toString()
                     price = document.getString("price").toString()
@@ -74,6 +78,7 @@ class ProductWishlistActivity : AppCompatActivity() {
                     quantity = document.getString("wanted_quantity").toString()
                     category = document.getString("category").toString()
                     imageUrl = document.getString("image_url").toString()
+                    key = document.get("key").toString()
 
                     nameField.text = productName
                     locationField.text = "$locationCity, $locationCountry"
@@ -102,68 +107,85 @@ class ProductWishlistActivity : AppCompatActivity() {
             val nameValue = nameField.text.toString()
             val sellerValue = sellerField.text.toString()
             val priceValue = priceField.text.toString()
-            addItemToCart(nameValue, sellerValue, price, quantity, idSeller, locationCity, locationCountry, category)
+            addItemToCart(
+                nameValue,
+                sellerValue,
+                price,
+                quantity,
+                idSeller,
+                locationCity,
+                locationCountry,
+                category
+            )
             val intent = Intent(this, HomescreenActivity::class.java)
             startActivity(intent)
-            overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
         }
 
         val deleteBtn: Button = findViewById(R.id.removeToWishlist)
         deleteBtn.setOnClickListener {
-            val userDocRef = db.collection("users").document("user_${currentUserId}").collection("wishlist").document(nameProduct ?: "")
-            userDocRef.delete()
+            db.collection("users").document("user_$currentUserId").collection("wishlist")
+                .document(key)
+                .delete()
                 .addOnSuccessListener {
                     Toast.makeText(this, "Deleted successfully", Toast.LENGTH_SHORT).show()
                     val intent = Intent(this, WishlistActivity::class.java)
                     startActivity(intent)
-                    overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
                 }
                 .addOnFailureListener {
                     Toast.makeText(this, "Error deleting the product", Toast.LENGTH_SHORT).show()
                 }
+
+            db.collection("users").document("user_$currentUserId").collection("reccs3")
+                .document(key)
+                .delete()
+                .addOnSuccessListener {
+                    Toast.makeText(this, "Deleted successfully", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, WishlistActivity::class.java)
+                    startActivity(intent)
+                }
+                .addOnFailureListener {
+                    Toast.makeText(this, "Error deleting the product", Toast.LENGTH_SHORT).show()
+                }
+
         }
+
 
         val contactBtn: Button = findViewById(R.id.button_contact)
         contactBtn.setOnClickListener {
             val intent = Intent(this, ProfileContactActivity::class.java)
-            intent.putExtra("OWNER_ID", idSeller)
+            intent.putExtra("OWNER_ID", userId)
             startActivity(intent)
             finish()
         }
 
         backBtn.setOnClickListener {
-            val intent = Intent(this, HomescreenActivity::class.java)
+            val intent = Intent(this, WishlistActivity::class.java)
             startActivity(intent)
             finish()
-            overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
         }
 
         homeBtn.setOnClickListener {
             val intent = Intent(this, HomescreenActivity::class.java)
             startActivity(intent)
             finish()
-            overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
         }
 
         productsBtn.setOnClickListener {
             val intent = Intent(this, ProductsActivity::class.java)
             startActivity(intent)
             finish()
-            overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
         }
 
         wishlistBtn.setOnClickListener {
             val intent = Intent(this, WishlistActivity::class.java)
             startActivity(intent)
             finish()
-            overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
         }
 
         profileBtn.setOnClickListener {
             val intent = Intent(this, ProfileActivity::class.java)
             startActivity(intent)
             finish()
-            overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
         }
     }
 
@@ -194,7 +216,6 @@ class ProductWishlistActivity : AppCompatActivity() {
                 val newIntent = Intent(this, HomescreenActivity::class.java)
                 startActivity(newIntent)
                 finish()
-                overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
             }
     }
 }

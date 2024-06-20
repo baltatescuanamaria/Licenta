@@ -13,6 +13,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.inappmessaging.internal.Logging.TAG
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import kotlinx.coroutines.processNextEventInCurrentThread
 import java.util.*
 
 class AddProductActivity : AppCompatActivity() {
@@ -22,7 +23,7 @@ class AddProductActivity : AppCompatActivity() {
     private var imageUrl: Uri? = null
     private var nameValue: String = " "
     private var rndmUUID: String = " "
-
+    private var rndmUUID2: String = " "
     companion object {
         const val PICK_IMAGE_REQUEST = 1
     }
@@ -64,7 +65,7 @@ class AddProductActivity : AppCompatActivity() {
         val addItemBtn: Button = findViewById(R.id.addItem)
         val backButton: ImageButton = findViewById(R.id.back_button)
 
-        val nameField: EditText = findViewById(R.id.nameProduct)
+        val nameField: EditText = findViewById(R.id.name_input)
         val priceField: EditText = findViewById(R.id.price)
         val descriptionField: EditText = findViewById(R.id.description_text_input)
         val quantityField: EditText = findViewById(R.id.quantity_text_input)
@@ -191,6 +192,8 @@ class AddProductActivity : AppCompatActivity() {
                 usernameValue = document.getString("username").toString()
             }
 
+            rndmUUID2 = UUID.randomUUID().toString()
+
             val productInput = hashMapOf(
                 "product_name" to nameValue,
                 "price" to priceValue,
@@ -204,20 +207,25 @@ class AddProductActivity : AppCompatActivity() {
                 "name" to nameUserValue,
                 "city" to cityValue,
                 "country" to countryValue,
-                "username" to usernameValue
+                "username" to usernameValue,
+                "key" to rndmUUID2
             )
 
             db.collection("users")
-                .document(documentName).collection("products").document(nameValue)
+                .document(documentName).collection("products").document(rndmUUID2)
                 .set(productInput)
                 .addOnSuccessListener {
                     Log.d(TAG, "Added with success")
                     Toast.makeText(this, "Product added with success", Toast.LENGTH_SHORT).show()
+                    val newIntent = Intent(this, ProductsActivity::class.java)
+                    startActivity(newIntent)
+                    finish()
+                    overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
                 }
                 .addOnFailureListener { e ->
                     Log.w(TAG, "Error adding document", e)
                 }
-            db.collection("products").document(nameValue).set(productInput).addOnSuccessListener {
+            db.collection("products").document(rndmUUID2).set(productInput).addOnSuccessListener {
                 val newIntent = Intent(this, ProductsActivity::class.java)
                 startActivity(newIntent)
                 finish()
@@ -231,6 +239,29 @@ class AddProductActivity : AppCompatActivity() {
                         Toast.LENGTH_SHORT
                     ).show()
                 }
+
+            db.collection("users").get().addOnSuccessListener { users->
+                for(user in users){
+                    val county = user.getString("country")
+                    val cuurentUser = user.getString("userId")
+                    if(countryValue == county && cuurentUser != auth.currentUser?.uid){
+                        db.collection("users").document(user.id).collection("reccs2").document(rndmUUID2).set(productInput).addOnSuccessListener {
+                            val newIntent = Intent(this, ProductsActivity::class.java)
+                            startActivity(newIntent)
+                            finish()
+                            overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
+                        }
+                            .addOnFailureListener { e ->
+                                Log.w(TAG, "Error adding document", e)
+                                Toast.makeText(
+                                    this,
+                                    "An error occurred while registering the information :(",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                    }
+                }
+            }
         }
     }
 

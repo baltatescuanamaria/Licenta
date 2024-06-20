@@ -15,7 +15,7 @@
 
             <EditText
                 android:id="@+id/search"
-                android:layout_width="290dp"
+                android:layout_width="270dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/button"
                 android:hint="@string/search"
@@ -30,7 +30,7 @@
             <ImageButton
                 android:id="@+id/cart"
                 android:contentDescription="@string/your_cart"
-                android:layout_width="70dp"
+                android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:src="@drawable/cart_minus_9784373"
                 android:backgroundTint="@color/background"
@@ -42,7 +42,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/search_part"
-            android:paddingBottom="80dp">
+            android:paddingBottom="90dp">
             <LinearLayout
                 android:id="@+id/mainLayout"
                 android:layout_width="match_parent"
@@ -285,6 +285,7 @@
                 </TextView>
                 <HorizontalScrollView
                     android:id="@+id/horizontalScrollRecAdded"
+                    android:contentDescription="@string/recently_added_near_you"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="1dp"
@@ -295,6 +296,76 @@
 
                     <LinearLayout
                         android:id="@+id/arrayProductsRecAdded"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:foregroundGravity="center"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginBottom="40dp"
+                        android:layout_marginEnd="20dp">
+
+                    </LinearLayout>
+                </HorizontalScrollView>
+                <TextView
+                    android:id="@+id/sameSeller"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/by_the_same_seller"
+                    android:textSize="25sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/fontColour1"
+                    android:padding="15dp"
+                    android:layout_marginStart="15dp">
+                </TextView>
+                <HorizontalScrollView
+                    android:id="@+id/horizontalScrollsameSeller"
+                    android:contentDescription="@string/products_by_a_known_seller"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="1dp"
+                    android:layout_marginTop="1dp"
+                    android:layout_marginEnd="1dp"
+                    android:layout_marginBottom="1dp"
+                    android:foregroundGravity="center_vertical">
+
+                    <LinearLayout
+                        android:id="@+id/arrayProductssameSeller"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:foregroundGravity="center"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginBottom="40dp"
+                        android:layout_marginEnd="20dp">
+
+                    </LinearLayout>
+                </HorizontalScrollView>
+                <TextView
+                    android:id="@+id/yourArea"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/try_something_different_from_your_area"
+                    android:textSize="25sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/fontColour1"
+                    android:padding="15dp"
+                    android:layout_marginStart="15dp">
+                </TextView>
+                <HorizontalScrollView
+                    android:id="@+id/horizontalScrollyourArea"
+                    android:contentDescription="@string/from_your_area_but_different"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="1dp"
+                    android:layout_marginTop="1dp"
+                    android:layout_marginEnd="1dp"
+                    android:layout_marginBottom="1dp"
+                    android:foregroundGravity="center_vertical">
+
+                    <LinearLayout
+                        android:id="@+id/arrayProductsyourArea"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:foregroundGravity="center"

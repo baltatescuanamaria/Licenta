@@ -152,7 +152,23 @@ class CartActivity : AppCompatActivity() {
                 val ownerId = doc.getString("idSeller")
                 val productName = doc.getString("product_name")
                 val quantity = doc.getString("quantity")
+                val key = doc.get("key").toString()
+                val category = doc.getString("category").toString()
                 val productId = doc.id
+
+                val data = hashMapOf(
+                    "category" to category
+                )
+
+                db.collection("users")
+                    .document("user_${currentUserId}").collection("reccs1").document(key)
+                    .set(data)
+                    .addOnSuccessListener {
+
+                    }
+                    .addOnFailureListener {
+
+                    }
 
                 if (ownerId != null && productName != null && quantity != null && total != null) {
                     val sellerOrderRef = db.collection("users").document("user_${ownerId}").collection("orders").document("$productName")
@@ -164,13 +180,12 @@ class CartActivity : AppCompatActivity() {
 
                     sellerOrderRef.set(productOrderInfo)
                         .addOnSuccessListener {
-                            Log.d("Order", "Order successfully sent to seller: $ownerId for product: $productName")
+
                         }
-                        .addOnFailureListener { e ->
-                            Log.e("Order", "Error sending order to seller: $ownerId for product: $productName", e)
+                        .addOnFailureListener {
                         }
                 } else {
-                    Log.w("Order", "Missing ownerId or productName for a cart item")
+
                 }
                 batch.delete(cartRef.document(doc.id))
             }

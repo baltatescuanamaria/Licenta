@@ -28,6 +28,8 @@ class EditProfileActivity : AppCompatActivity() {
     private var imageUrl: Uri? = null
     private var nameValue: String = " "
     private var rndmUUID: String = " "
+    private var oldImageUrl: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.profile_edit)
@@ -56,6 +58,7 @@ class EditProfileActivity : AppCompatActivity() {
                     val country = document.getString("country")
                     val description = document.getString("description")
                     val imageUrl = document.getString("image_url")
+                    oldImageUrl = document.getString("image_url")
 
 
                     nameField.setText(name)
@@ -118,7 +121,7 @@ class EditProfileActivity : AppCompatActivity() {
             if (descriptionValue.isNotEmpty()) {
                 updateInfo["description"] = descriptionValue
             }
-            if (imageValue.isNotEmpty()) {
+            if (imageUrl != null) {
                 uploadImage()
                 updateInfo["image_url"] = rndmUUID
             }
@@ -128,13 +131,54 @@ class EditProfileActivity : AppCompatActivity() {
 
             doc.update(updateInfo)
                 .addOnSuccessListener {
-                    val intent = Intent(this, ProfileActivity::class.java)
-                    startActivity(intent)
-                    overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
+                    val productsCollection = database.collection("products")
+                    productsCollection.whereEqualTo("userId", userId).get()
+                        .addOnSuccessListener { documents ->
+                            for (document in documents) {
+                                val productDocRef = productsCollection.document(document.id)
+                                productDocRef.update(updateInfo)
+                                    .addOnSuccessListener {
+                                        val intent = Intent(this, ProfileActivity::class.java)
+                                        startActivity(intent)
+                                        overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
+                                    }
+                                    .addOnFailureListener {
+                                    }
+                            }
+                        }
+                        .addOnFailureListener { e ->
+                            Toast.makeText(this, "An error occurred while retrieving products :(", Toast.LENGTH_SHORT).show()
+                        }
                 }
                 .addOnFailureListener { e ->
                     Toast.makeText(this, "An error occurred while updating the information :(", Toast.LENGTH_SHORT).show()
                 }
+
+            doc.update(updateInfo)
+                .addOnSuccessListener {
+                    val productsCollection = database.collection("users").document("user_$userId").collection("products")
+                    productsCollection.whereEqualTo("userId", userId).get()
+                        .addOnSuccessListener { documents ->
+                            for (document in documents) {
+                                val productDocRef = productsCollection.document(document.id)
+                                productDocRef.update(updateInfo)
+                                    .addOnSuccessListener {
+                                        val intent = Intent(this, ProfileActivity::class.java)
+                                        startActivity(intent)
+                                        overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
+                                    }
+                                    .addOnFailureListener {
+                                    }
+                            }
+                        }
+                        .addOnFailureListener { e ->
+                            Toast.makeText(this, "An error occurred while retrieving products :(", Toast.LENGTH_SHORT).show()
+                        }
+                }
+                .addOnFailureListener { e ->
+                    Toast.makeText(this, "An error occurred while updating the information :(", Toast.LENGTH_SHORT).show()
+                }
+
 
         }
         val homeBtn: ImageButton = findViewById(R.id.home)
@@ -194,6 +238,15 @@ class EditProfileActivity : AppCompatActivity() {
 
             rndmUUID = UUID.randomUUID().toString()
             val ref = storageReference.child("images/$rndmUUID")
+
+            oldImageUrl?.let { oldImage ->
+                val oldImageRef = storageReference.child("images/$oldImage")
+                oldImageRef.delete().addOnSuccessListener {
+                    Log.d("Firebase Storage", "Old image deleted successfully")
+                }.addOnFailureListener {
+                    Log.e("Firebase Storage", "Failed to delete old image", it)
+                }
+            }
 
             ref.putFile(imageUrl!!)
                 .addOnSuccessListener {

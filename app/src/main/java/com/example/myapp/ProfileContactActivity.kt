@@ -4,13 +4,19 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.inappmessaging.internal.Logging
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 
 class ProfileContactActivity : AppCompatActivity() {
+    private lateinit var storage: FirebaseStorage
+    private lateinit var storageReference: StorageReference
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.profile_contact)
@@ -33,6 +39,7 @@ class ProfileContactActivity : AppCompatActivity() {
                 val country = document.getString("country")
                 val phoneNumber = document.getString("phoneNumber")
                 val description = document.getString("description")
+
                 nameField.text = "${name} ${surname}"
                 locationField.text = "${city}, ${country}"
                 phoneNumberField.text = phoneNumber
@@ -47,7 +54,9 @@ class ProfileContactActivity : AppCompatActivity() {
         val productsBtn: ImageButton = findViewById(R.id.products)
         val wishlistBtn: ImageButton = findViewById(R.id.wishlist)
         val profileBtn: ImageButton = findViewById(R.id.profile)
-        val backBtn: ImageButton = findViewById(R.id.back_button)
+
+        storage = FirebaseStorage.getInstance()
+        storageReference = storage.reference
 
         val mainPage: LinearLayout = findViewById(R.id.arrayProducts)
 
@@ -59,22 +68,37 @@ class ProfileContactActivity : AppCompatActivity() {
                 val locationCountry = document.getString("country").toString()
                 val idSeller = document.getString("userId").toString()
                 val category = document.getString("category")
+                val packageType = document.getString("package").toString()
+                val imageUrl = document.getString("image_url").toString()
                 val layoutInflater = LayoutInflater.from(this)
                 val productLayout = layoutInflater.inflate(R.layout.homescreen_product_layout,null)
                 val productBtn: LinearLayout = productLayout.findViewById(R.id.product)
                 val productNameField: TextView = productLayout.findViewById(R.id.numeProdus)
                 val locationTextField: TextView = productLayout.findViewById(R.id.location)
+                val priceField: TextView = productLayout.findViewById(R.id.price)
+                val productImageField: ImageView = productLayout.findViewById(R.id.picturePlace)
+
                     productNameField.text = name
                     locationTextField.text = "$locationCountry, $locationCity"
+                    priceField.text = "$price lei/$packageType"
+                    imageUrl?.let {
+                        val storageRef = storage.reference.child("images/$it")
+                        storageRef.downloadUrl.addOnSuccessListener { uri ->
+                            Glide.with(this)
+                                .load(uri)
+                                .into(productImageField)
+                        }.addOnFailureListener {
+                            Log.e("Firebase Storage", "Error getting image URL", it)
+                        }
+                    }
+
                     mainPage.addView(productLayout)
-                    //selectBtn.text = name
                     productBtn.setOnClickListener {
                         val intent = Intent(this, ProductActivity::class.java)
                         intent.putExtra("PRODUCT_NAME", name)
                         intent.putExtra("USERID", idSeller)
                         startActivity(intent)
                         finish()
-                        overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
                     }
                 }
             }.addOnFailureListener { exception ->
@@ -82,39 +106,28 @@ class ProfileContactActivity : AppCompatActivity() {
 
         }
 
-        backBtn.setOnClickListener{
-            val intent = Intent(this, HomescreenActivity::class.java)
-            startActivity(intent)
-            finish()
-            overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
-        }
-
         homeBtn.setOnClickListener{
             val intent = Intent(this, HomescreenActivity::class.java)
             startActivity(intent)
             finish()
-            overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
         }
 
         productsBtn.setOnClickListener {
             val intent = Intent(this, ProductsActivity::class.java)
             startActivity(intent)
             finish()
-            overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
         }
 
         wishlistBtn.setOnClickListener {
             val intent = Intent(this, WishlistActivity::class.java)
             startActivity(intent)
             finish()
-            overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
         }
 
         profileBtn.setOnClickListener {
             val intent = Intent(this, ProfileActivity::class.java)
             startActivity(intent)
             finish()
-            overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
         }
     }
 }

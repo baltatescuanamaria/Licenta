@@ -31,7 +31,7 @@
 
     <string name="phone_number">Phone Number</string>
     <string name="city">City</string>
-    <string name="country">Country</string>
+    <string name="country">County</string>
     <string name="address">Address</string>
     <string name="address_number">Address Number</string>
     <string name="street">Address Information</string>
@@ -134,5 +134,10 @@
     <string name="Null">NULL</string>
     <string name="logout">Logout</string>
     <string name="_0_lei">0 lei</string>
+    <string name="by_the_same_seller">By the same seller</string>
+    <string name="try_something_different_from_your_area">Try something different from your area</string>
+    <string name="products_by_a_known_seller">Products by a known seller</string>
+    <string name="from_your_area_but_different">From your area but different</string>
+    <string name="recently_added">Recently added</string>
 
 </resources>

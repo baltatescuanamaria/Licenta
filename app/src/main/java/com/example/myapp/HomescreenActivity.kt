@@ -51,90 +51,76 @@ class HomescreenActivity : AppCompatActivity() {
         storage = FirebaseStorage.getInstance()
         storageReference = storage.reference
 
-        currentUserId?.let {
-            db.collection("users").document("user_$currentUserId")
-                .collection("wishlist").get().addOnSuccessListener { documents ->
-                    for (document in documents) {
-                        val category = document.getString("category")
-                        if (category != null) {
-                            categoriesList.add(category)
-                        }
-                    }
-                    db.collection("products")
-                        .get()
-                        .addOnSuccessListener { documents ->
-                            for (document in documents) {
-                                val name = document.getString("product_name").toString()
-                                val price = document.getString("price").toString()
-                                val locationCity = document.getString("city").toString()
-                                val locationCountry = document.getString("country").toString()
-                                val idSeller = document.getString("userId").toString()
-                                val category = document.getString("category")
-                                val packageType = document.getString("package").toString()
-                                val imageUrl = document.getString("image_url").toString()
-                                Log.d("Firestore", "categories: $categoriesList")
-                                if (idSeller != currentUserId && category != null && categoriesList.contains(
-                                        category
-                                    )
-                                ) {
-                                    Log.d("Firestore", "Adding product layout for: $name")
-                                    val layoutInflater = LayoutInflater.from(this)
-                                    val productLayout = layoutInflater.inflate(R.layout.homescreen_product_layout5, null)
-                                    val productBtn: LinearLayout = productLayout.findViewById(R.id.product)
-                                    val productNameField: TextView = productLayout.findViewById(R.id.numeProdus)
-                                    val locationField: TextView = productLayout.findViewById(R.id.location)
-                                    val priceField: TextView = productLayout.findViewById(R.id.price)
-                                    val productImageField: ImageView = productLayout.findViewById(R.id.picturePlace)
 
-                                    productNameField.text = name
-                                    locationField.text = "$locationCountry, $locationCity"
-                                    priceField.text = "$price lei/$packageType"
-                                    imageUrl?.let {
-                                        val storageRef = storage.reference.child("images/$it")
-                                        storageRef.downloadUrl.addOnSuccessListener { uri ->
-                                            Glide.with(this)
-                                                .load(uri)
-                                                .into(productImageField)
-                                        }.addOnFailureListener {
-                                            Log.e("Firebase Storage", "Error getting image URL", it)
-                                        }
-                                    }
+        /*val userDocRef1 = db.collection("users").document("user_$currentUserId").collection("wishlist")
+        userDocRef1.get().addOnSuccessListener { documents ->
+            for (document in documents) {
+                val name = document.getString("product_name").toString()
+                val price = document.getString("price").toString()
+                val locationCity = document.getString("city").toString()
+                val locationCountry = document.getString("country").toString()
+                val idSeller = document.getString("userId").toString()
+                val category = document.getString("category")
+                val packageType = document.getString("package").toString()
+                val imageUrl = document.getString("image_url").toString()
 
-                                    mainPage.addView(productLayout)
-                                    //selectBtn.text = name
-                                    productBtn.setOnClickListener {
-                                        val intent = Intent(this, ProductActivity::class.java)
-                                        intent.putExtra("PRODUCT_NAME", name)
-                                        intent.putExtra("USERID", idSeller)
-                                        startActivity(intent)
-                                        finish()
-                                        overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
-                                    }
+                val prod1 = db.collection("products")
+                prod1.get().addOnSuccessListener { products ->
+                    for (product in products) {
+                        val categoryProd = product.getString("category").toString()
+                        val countyProd = product.getString("country").toString()
+                        val idProd = product.getString("userId").toString()
+
+                        if (categoryProd == category && countyProd == locationCountry && idProd != currentUserId) {
+                            val layoutInflater = LayoutInflater.from(this)
+                            val productLayout =
+                                layoutInflater.inflate(R.layout.homescreen_product_layout, null)
+                            val productButton: LinearLayout =
+                                productLayout.findViewById(R.id.product)
+                            val productNameSpace: TextView =
+                                productLayout.findViewById(R.id.numeProdus)
+                            val locationText: TextView = productLayout.findViewById(R.id.location)
+                            val priceText: TextView = productLayout.findViewById(R.id.price)
+                            val productImageField: ImageView =
+                                productLayout.findViewById(R.id.picturePlace)
+
+                            productNameSpace.text = name
+                            locationText.text = "$locationCountry, $locationCity"
+                            priceText.text = "$price lei/$packageType"
+                            imageUrl?.let {
+                                val storageRef = storage.reference.child("images/$it")
+                                storageRef.downloadUrl.addOnSuccessListener { uri ->
+                                    Glide.with(this)
+                                        .load(uri)
+                                        .into(productImageField)
+                                }.addOnFailureListener {
+                                    Log.e("Firebase Storage", "Error getting image URL", it)
                                 }
                             }
+                            mainPage.addView(productLayout)
+
+                            productButton.setOnClickListener {
+                                val intent = Intent(this, ProductActivity::class.java)
+                                intent.putExtra("PRODUCT_NAME", name)
+                                intent.putExtra("USERID", idSeller)
+                                startActivity(intent)
+                                finish()
+                                overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
+                            }
                         }
-                        .addOnFailureListener { exception ->
-                            Log.e("Firestore", "Error getting products", exception)
-                        }
-                }
-        }
-
-
-        val secondPage: LinearLayout = findViewById(R.id.arrayProductsRecAdded)
-        var city = ""
-        var country = ""
-
-        currentUserId?.let {
-            db.collection("users").document("user_$currentUserId").get().addOnSuccessListener { data->
-                        country = data.getString("country").toString()
-                        city = data.getString("city").toString()
                     }
                 }
+            }
+        }.addOnFailureListener { exception ->
+            Log.e("Firestore", "Error getting products", exception)
+        }
+        */
+        val secondPage: LinearLayout = findViewById(R.id.arrayProductsRecAdded)
 
-        val userDocRef = db.collection("products")
+
+        val userDocRef = db.collection("users").document("user_$currentUserId").collection("reccs2")
         userDocRef.get().addOnSuccessListener { documents ->
             for (document in documents) {
-
                 val name = document.getString("product_name").toString()
                 val price = document.getString("price").toString()
                 val locationCity = document.getString("city").toString()
@@ -142,115 +128,228 @@ class HomescreenActivity : AppCompatActivity() {
                 val idSeller = document.getString("userId").toString()
                 //val category = document.getString("category")
                 val packageType = document.getString("package").toString()
+                val imageUrl = document.getString("image_url").toString()
 
-                if (idSeller != currentUserId && locationCity == city && productCount < 15) {
-                    Log.d("Firestore", "Adding product: $name")
-                    val layoutInflater = LayoutInflater.from(this)
-                    val productLayout =
-                        layoutInflater.inflate(R.layout.homescreen_product_layout, null)
-                    val productButton: LinearLayout =
-                        productLayout.findViewById(R.id.product)
-                    val productNameSpace: TextView =
-                        productLayout.findViewById(R.id.numeProdus)
-                    val locationText: TextView = productLayout.findViewById(R.id.location)
-                    val priceText: TextView = productLayout.findViewById(R.id.price)
+
+                val layoutInflater = LayoutInflater.from(this)
+                val productLayout = layoutInflater.inflate(R.layout.homescreen_product_layout2, null)
+                val productButton: LinearLayout = productLayout.findViewById(R.id.product)
+                val productNameSpace: TextView = productLayout.findViewById(R.id.numeProdus)
+                val locationText: TextView = productLayout.findViewById(R.id.location)
+                val priceText: TextView = productLayout.findViewById(R.id.price)
+                val productImageField: ImageView = productLayout.findViewById(R.id.picturePlace)
 
                     productNameSpace.text = name
                     locationText.text = "$locationCountry, $locationCity"
                     priceText.text = "$price lei/$packageType"
+                imageUrl?.let {
+                    val storageRef = storage.reference.child("images/$it")
+                    storageRef.downloadUrl.addOnSuccessListener { uri ->
+                        Glide.with(this)
+                            .load(uri)
+                            .into(productImageField)
+                    }.addOnFailureListener {
+                        Log.e("Firebase Storage", "Error getting image URL", it)
+                    }
+                }
                     secondPage.addView(productLayout)
 
-                    //selectBtn.text = name
                     productButton.setOnClickListener {
                         val intent = Intent(this, ProductActivity::class.java)
                         intent.putExtra("PRODUCT_NAME", name)
                         intent.putExtra("USERID", idSeller)
                         startActivity(intent)
                         finish()
-                        overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
                     }
-                    productCount++
-                }
+
+
             }
         }.addOnFailureListener { exception ->
             Log.e("Firestore", "Error getting products", exception)
         }
 
+        val thirdPage: LinearLayout = findViewById(R.id.arrayProductssameSeller)
+
+
+        val userDocRef2 = db.collection("users").document("user_$currentUserId").collection("reccs3")
+        userDocRef2.get().addOnSuccessListener { documents ->
+            for (document in documents) {
+                val name = document.getString("product_name").toString()
+                val price = document.getString("price").toString()
+                val locationCity = document.getString("city").toString()
+                val locationCountry = document.getString("country").toString()
+                val idSeller = document.getString("userId").toString()
+                //val category = document.getString("category")
+                val packageType = document.getString("package").toString()
+                val imageUrl = document.getString("image_url").toString()
+
+
+                val layoutInflater = LayoutInflater.from(this)
+                val productLayout = layoutInflater.inflate(R.layout.homescreen_product_layout3, null)
+                val productButton: LinearLayout = productLayout.findViewById(R.id.product)
+                val productNameSpace: TextView = productLayout.findViewById(R.id.numeProdus)
+                val locationText: TextView = productLayout.findViewById(R.id.location)
+                val priceText: TextView = productLayout.findViewById(R.id.price)
+                val productImageField: ImageView = productLayout.findViewById(R.id.picturePlace)
+
+                productNameSpace.text = name
+                locationText.text = "$locationCountry, $locationCity"
+                priceText.text = "$price lei/$packageType"
+                imageUrl?.let {
+                    val storageRef = storage.reference.child("images/$it")
+                    storageRef.downloadUrl.addOnSuccessListener { uri ->
+                        Glide.with(this)
+                            .load(uri)
+                            .into(productImageField)
+                    }.addOnFailureListener {
+                        Log.e("Firebase Storage", "Error getting image URL", it)
+                    }
+                }
+                thirdPage.addView(productLayout)
+
+                productButton.setOnClickListener {
+                    val intent = Intent(this, ProductActivity::class.java)
+                    intent.putExtra("PRODUCT_NAME", name)
+                    intent.putExtra("USERID", idSeller)
+                    startActivity(intent)
+                    finish()
+                }
+
+
+            }
+        }.addOnFailureListener { exception ->
+            Log.e("Firestore", "Error getting products", exception)
+        }
+
+        val forthPage: LinearLayout = findViewById(R.id.arrayProductsyourArea)
+
+
+        /*val userDocRef4 = db.collection("users").document("user_$currentUserId").collection("wishlist")
+        userDocRef4.get().addOnSuccessListener { documents ->
+            for (document in documents) {
+                val name = document.getString("product_name").toString()
+                val price = document.getString("price").toString()
+                val locationCity = document.getString("city").toString()
+                val locationCountry = document.getString("country").toString()
+                val idSeller = document.getString("userId").toString()
+                val category = document.getString("category")
+                val packageType = document.getString("package").toString()
+                val imageUrl = document.getString("image_url").toString()
+
+                val prod1 = db.collection("products")
+                prod1.get().addOnSuccessListener { products ->
+                    for (product in products) {
+                        val categoryProd = product.getString("category").toString()
+                        val countyProd = product.getString("country").toString()
+                        val idProd = product.getString("userId").toString()
+
+                        if (categoryProd != category && countyProd == locationCountry && idProd != currentUserId) {
+                            val layoutInflater = LayoutInflater.from(this)
+                            val productLayout =
+                                layoutInflater.inflate(R.layout.homescreen_product_layout, null)
+                            val productButton: LinearLayout =
+                                productLayout.findViewById(R.id.product)
+                            val productNameSpace: TextView =
+                                productLayout.findViewById(R.id.numeProdus)
+                            val locationText: TextView = productLayout.findViewById(R.id.location)
+                            val priceText: TextView = productLayout.findViewById(R.id.price)
+                            val productImageField: ImageView =
+                                productLayout.findViewById(R.id.picturePlace)
+
+                            productNameSpace.text = name
+                            locationText.text = "$locationCountry, $locationCity"
+                            priceText.text = "$price lei/$packageType"
+                            imageUrl?.let {
+                                val storageRef = storage.reference.child("images/$it")
+                                storageRef.downloadUrl.addOnSuccessListener { uri ->
+                                    Glide.with(this)
+                                        .load(uri)
+                                        .into(productImageField)
+                                }.addOnFailureListener {
+                                    Log.e("Firebase Storage", "Error getting image URL", it)
+                                }
+                            }
+                            forthPage.addView(productLayout)
+
+                            productButton.setOnClickListener {
+                                val intent = Intent(this, ProductActivity::class.java)
+                                intent.putExtra("PRODUCT_NAME", name)
+                                intent.putExtra("USERID", idSeller)
+                                startActivity(intent)
+                                finish()
+                                overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
+                            }
+                        }
+                    }
+                }
+            }
+        }.addOnFailureListener { exception ->
+            Log.e("Firestore", "Error getting products", exception)
+        }*/
 
         fruitsBtn.setOnClickListener{
             val intent = Intent(this, FruitsListActivity::class.java)
             startActivity(intent)
             finish()
-            overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
         }
 
         veggiesBtn.setOnClickListener{
             val intent = Intent(this, VeggieListActivity::class.java)
             startActivity(intent)
             finish()
-            overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
         }
 
         animalBtn.setOnClickListener{
             val intent = Intent(this, AnimalListActivity::class.java)
             startActivity(intent)
             finish()
-            overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
         }
 
         beekeepingBtn.setOnClickListener{
             val intent = Intent(this, BeekeepingListActivity::class.java)
             startActivity(intent)
             finish()
-            overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
         }
 
         viticultureBtn.setOnClickListener{
             val intent = Intent(this, ViticultureListActivity::class.java)
             startActivity(intent)
             finish()
-            overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
         }
 
         preservedBtn.setOnClickListener{
             val intent = Intent(this, PreservedListActivity::class.java)
             startActivity(intent)
             finish()
-            overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
         }
 
         homeBtn.setOnClickListener{
             val intent = Intent(this, HomescreenActivity::class.java)
             startActivity(intent)
             finish()
-            overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
         }
 
         productsBtn.setOnClickListener {
             val intent = Intent(this, ProductsActivity::class.java)
             startActivity(intent)
             finish()
-            overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
         }
 
         wishlistBtn.setOnClickListener {
             val intent = Intent(this, WishlistActivity::class.java)
             startActivity(intent)
             finish()
-            overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
         }
 
         profileBtn.setOnClickListener {
             val intent = Intent(this, ProfileActivity::class.java)
             startActivity(intent)
             finish()
-            overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
         }
         cartBtn.setOnClickListener {
             val intent = Intent(this, CheckoutActivity::class.java)
             startActivity(intent)
             finish()
-            overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
         }
     }
 }

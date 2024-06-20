@@ -112,7 +112,6 @@ class RegisterActivity4 : AppCompatActivity() {
                                 val newIntent = Intent(this, AddImageActivity::class.java)
                                 startActivity(newIntent)
                                 finish()
-                                overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
                             }
                             .addOnFailureListener {
                                 Toast.makeText(this, "An error occurred while registering the information :(", Toast.LENGTH_SHORT).show()
@@ -142,7 +141,6 @@ class RegisterActivity4 : AppCompatActivity() {
                         //TODO: de adaugat un mod in care sa validez adresa de email
                         startActivity(newIntent)
                         finish()
-                        overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
                     } else {
                         Toast.makeText(this, ":(", Toast.LENGTH_SHORT).show()
                     }

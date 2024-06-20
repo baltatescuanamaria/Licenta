@@ -23,6 +23,7 @@ class ProductCartActivity : AppCompatActivity() {
     var quantity: String = ""
     var locationCity: String = ""
     var locationCountry: String = ""
+    var key: String = ""
     private var sellerName: String = ""
     var description: String = ""
     private var packageType: String = ""
@@ -49,17 +50,19 @@ class ProductCartActivity : AppCompatActivity() {
 
         val nameProduct = intent.getStringExtra("PRODUCT_NAME")
         val userId = intent.getStringExtra("USERID")
+        val priceTotal = intent.getStringExtra("PRICE")
+
         val db = FirebaseFirestore.getInstance()
         val currentUser = FirebaseAuth.getInstance().currentUser
         val currentUserId = currentUser?.uid
         storage = FirebaseStorage.getInstance()
         storageReference = storage.reference
-        val productsDocRef = db.collection("users").document("user_$currentUserId").collection("cart")
+        val productsDocRef = db.collection("products")
 
-        productsDocRef.document(nameProduct ?: "").get().addOnSuccessListener { document ->
-            if (document != null && document.exists()) {
+        productsDocRef.get().addOnSuccessListener { documents ->
+            for (document in documents) {
                 val productName = document.getString("product_name").toString()
-                idSeller = document.getString("idSeller").toString()
+                idSeller = document.getString("userId").toString()
 
                 if (productName == nameProduct && userId == idSeller) {
                     locationCity = document.getString("city").toString()
@@ -70,6 +73,7 @@ class ProductCartActivity : AppCompatActivity() {
                     packageType = document.getString("package").toString()
                     quantity = document.getString("quantity").toString()
                     imageUrl = document.getString("image_url").toString()
+                    key = document.get("key").toString()
 
                     nameField.text = productName
                     locationField.text = "$locationCity, $locationCountry"
@@ -121,7 +125,7 @@ class ProductCartActivity : AppCompatActivity() {
 
         val removeBtn: Button = findViewById(R.id.removeToCart)
         removeBtn.setOnClickListener {
-            val userDocRef = db.collection("users").document("user_${currentUserId}").collection("cart").document(nameProduct ?: "")
+            val userDocRef = db.collection("users").document("user_${currentUserId}").collection("cart").document(key)
             userDocRef.delete()
                 .addOnSuccessListener {
                     Toast.makeText(this, "Deleted successfully", Toast.LENGTH_SHORT).show()
@@ -138,7 +142,7 @@ class ProductCartActivity : AppCompatActivity() {
         val contactBtn: Button = findViewById(R.id.button_contact)
         contactBtn.setOnClickListener {
             val intent = Intent(this, ProfileContactActivity::class.java)
-            intent.putExtra("OWNER_ID", idSeller)
+            intent.putExtra("OWNER_ID", userId)
             startActivity(intent)
             finish()
         }

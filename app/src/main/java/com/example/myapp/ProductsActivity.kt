@@ -48,6 +48,7 @@ class ProductsActivity : AppCompatActivity() {
                                 val productName = document.getString("product_name")
                                 val price = document.getString("price")
                                 val imageUrl = document.getString("image_url")
+                                val url = document.getString("key")
 
                                 val layoutInflater = LayoutInflater.from(this)
                                 val productLayout = layoutInflater.inflate(R.layout.product_layout, null)
@@ -68,9 +69,9 @@ class ProductsActivity : AppCompatActivity() {
                                         productNameBtn.setOnClickListener {
                                                 val intent = Intent(this, EditProductActivity::class.java)
                                                 intent.putExtra("PRODUCT_NAME", productName)
+                                                intent.putExtra("URL", url)
                                                 startActivity(intent)
                                                 finish()
-                                                overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
                                         }
                                 }
 
@@ -94,47 +95,41 @@ class ProductsActivity : AppCompatActivity() {
                         val intent = Intent(this, HomescreenActivity::class.java)
                         startActivity(intent)
                         finish()
-                        overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
                 }
 
                 addItemBtn.setOnClickListener {
                         val intent = Intent(this, AddProductActivity::class.java)
                         startActivity(intent)
                         finish()
-                        overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
                 }
 
                 homeBtn.setOnClickListener {
                         val intent = Intent(this, HomescreenActivity::class.java)
                         startActivity(intent)
                         finish()
-                        overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
                 }
 
                 productsBtn.setOnClickListener {
                         val intent = Intent(this, ProductsActivity::class.java)
                         startActivity(intent)
                         finish()
-                        overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
                 }
 
                 wishlistBtn.setOnClickListener {
                         val intent = Intent(this, WishlistActivity::class.java)
                         startActivity(intent)
                         finish()
-                        overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
                 }
 
                 profileBtn.setOnClickListener {
                         val intent = Intent(this, ProfileActivity::class.java)
                         startActivity(intent)
                         finish()
-                        overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
                 }
         }
 
         override fun onDestroy() {
                 super.onDestroy()
-                isActivityActive = false  // Set the activity as inactive
+                isActivityActive = false
         }
 }

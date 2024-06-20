@@ -19,6 +19,7 @@ import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.inappmessaging.internal.Logging.TAG
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
@@ -32,6 +33,7 @@ class EditProductActivity : AppCompatActivity() {
     private var imageUrl: Uri? = null
     private var nameValue: String = " "
     private var rndmUUID: String = " "
+    private var oldImageUrl: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,44 +66,48 @@ class EditProductActivity : AppCompatActivity() {
         }
 
         val nameProduct = intent.getStringExtra("PRODUCT_NAME")
+        val nameDocument = intent.getStringExtra("URL")
         val db = FirebaseFirestore.getInstance()
         val userId = FirebaseAuth.getInstance().currentUser?.uid
         val documentName = "user_${userId}"
-        val userDocRef = db.collection("users").document(documentName).collection("products").document("${nameProduct}")
+        val userDocRef = db.collection("users").document(documentName).collection("products").document("$nameDocument")
 
         userDocRef.get().addOnSuccessListener { document ->
-            if (document != null && document.exists()) {
-                val name = document.getString("product_name")
-                val price = document.getString("price")
-                val description = document.getString("description")
-                val imageUrl = document.getString("image_url")
-                val category = document.getString("category")
-                val packaging = document.getString("package")
+                val url = document.getString("key")
+                if (document != null && url == nameDocument) {
+                    val name = document.getString("product_name")
+                    val price = document.getString("price")
+                    val description = document.getString("description")
+                    val imageUrl = document.getString("image_url")
+                    oldImageUrl = document.getString("image_url")
+                    val category = document.getString("category")
+                    val packaging = document.getString("package")
 
-                nameField.setText(name)
-                priceField.setText(price)
-                descriptionField.setText(description)
+                    nameField.setText(name)
+                    priceField.setText(price)
+                    descriptionField.setText(description)
 
-                if (category != null) {
-                    categoryField.setText(category, false)
-                }
-                if (packaging != null) {
-                    packagingField.setText(packaging, false)
-                }
-
-                imageUrl?.let {
-                    val storageRef = storage.reference.child("images/$it")
-                    storageRef.downloadUrl.addOnSuccessListener { uri ->
-                        Glide.with(this)
-                            .load(uri)
-                            .into(productImageField)
-                    }.addOnFailureListener {
-                        Log.e("Firebase Storage", "Error getting image URL", it)
+                    if (category != null) {
+                        categoryField.setText(category, false)
                     }
+                    if (packaging != null) {
+                        packagingField.setText(packaging, false)
+                    }
+
+                    imageUrl?.let {
+                        val storageRef = storage.reference.child("images/$it")
+                        storageRef.downloadUrl.addOnSuccessListener { uri ->
+                            Glide.with(this)
+                                .load(uri)
+                                .into(productImageField)
+                        }.addOnFailureListener {
+                            Log.e("Firebase Storage", "Error getting image URL", it)
+                        }
+                    }
+
+                } else {
+                    Log.d("Firestore", "Document does not exist")
                 }
-            } else {
-                Log.d("Firestore", "Document does not exist")
-            }
         }
 
         val saveBtn: Button = findViewById(R.id.save)
@@ -129,20 +135,19 @@ class EditProductActivity : AppCompatActivity() {
             if (priceValue.isNotEmpty()) {
                 updateInfo["price"] = priceValue
             }
-            if (imageValue.isNotEmpty()) {
+            if (imageUrl != null) {
                 uploadImage()
                 updateInfo["image_url"] = rndmUUID
             }
 
 
-
-            val doc = database.collection("users").document("user_${userId}").collection("products").document("${nameProduct}")
+            val doc = database.collection("users").document(documentName).collection("products").document("$nameDocument")
 
             doc.update(updateInfo)
                 .addOnSuccessListener {
-                    val intent = Intent(this, ProductsActivity::class.java)
-                    startActivity(intent)
-                    overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
+                    //val intent = Intent(this, ProductsActivity::class.java)
+                    //startActivity(intent)
+                    //overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
                 }
                 .addOnFailureListener { e ->
                     Toast.makeText(this, "An error occurred while updating the information :(", Toast.LENGTH_SHORT).show()
@@ -172,6 +177,102 @@ class EditProductActivity : AppCompatActivity() {
             }.addOnFailureListener { e ->
                 Toast.makeText(this, "An error occurred while retrieving products :(", Toast.LENGTH_SHORT).show()
             }
+
+            database.collection("users").get().addOnSuccessListener { documents ->
+                for (document in documents) {
+                    Log.d(TAG, "Country value matches for user: ${document.id}")
+                    val currentUser = document.id
+                    database.collection("users").document(currentUser).collection("reccs2").get()
+                        .addOnSuccessListener { products ->
+                            for (product in products) {
+                                val productName = product.getString("product_name")
+                                val idOwner = product.getString("userId")
+                                Log.d(TAG, "Country value matches for user: ${product.id}")
+                                if (nameProduct == productName && userId == idOwner) {
+                                    val productDocRef =  database.collection("users").document(currentUser).collection("reccs2").document(product.id)
+                                    productDocRef.update(updateInfo)
+                                        .addOnSuccessListener {
+                                            val intent = Intent(this, ProductsActivity::class.java)
+                                            startActivity(intent)
+                                            overridePendingTransition(
+                                                R.anim.slide_in,
+                                                R.anim.slide_out
+                                            )
+                                        }
+                                        .addOnFailureListener { e ->
+                                            Toast.makeText(
+                                                this,
+                                                "An error occurred while updating the product in the main collection :(",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                        }
+                                }
+                            }
+                        }
+                        .addOnFailureListener { e ->
+                            Toast.makeText(
+                                this,
+                                "An error occurred while retrieving products :(",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                }
+            }.addOnFailureListener { e ->
+                Toast.makeText(
+                    this,
+                    "An error occurred while retrieving users :(",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+
+            database.collection("users").get().addOnSuccessListener { documents ->
+                for (document in documents) {
+                    Log.d(TAG, "Country value matches for user: ${document.id}")
+                    val currentUser = document.id
+                    database.collection("users").document(currentUser).collection("reccs3").get()
+                        .addOnSuccessListener { products ->
+                            for (product in products) {
+                                val productName = product.getString("product_name")
+                                val idOwner = product.getString("userId")
+                                Log.d(TAG, "Country value matches for user: ${product.id}")
+                                if (nameProduct == productName && userId == idOwner) {
+                                    val productDocRef =  database.collection("users").document(currentUser).collection("reccs2").document(product.id)
+                                    productDocRef.update(updateInfo)
+                                        .addOnSuccessListener {
+                                            val intent = Intent(this, ProductsActivity::class.java)
+                                            startActivity(intent)
+                                            overridePendingTransition(
+                                                R.anim.slide_in,
+                                                R.anim.slide_out
+                                            )
+                                        }
+                                        .addOnFailureListener { e ->
+                                            Toast.makeText(
+                                                this,
+                                                "An error occurred while updating the product in the main collection :(",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                        }
+                                }
+                            }
+                        }
+                        .addOnFailureListener { e ->
+                            Toast.makeText(
+                                this,
+                                "An error occurred while retrieving products :(",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                }
+            }.addOnFailureListener { e ->
+                Toast.makeText(
+                    this,
+                    "An error occurred while retrieving users :(",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+
+
         }
 
         val deleteBtn: Button = findViewById(R.id.delete)
@@ -197,9 +298,9 @@ class EditProductActivity : AppCompatActivity() {
                         productDocRef.delete()
                             .addOnSuccessListener {
                                 Toast.makeText(this, "Deleted successfully", Toast.LENGTH_SHORT).show()
-                                val intent = Intent(this, ProductsActivity::class.java)
-                                startActivity(intent)
-                                overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
+                                //val intent = Intent(this, ProductsActivity::class.java)
+                                //startActivity(intent)
+                                //overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
                             }
                             .addOnFailureListener { e ->
                                 Toast.makeText(this, "An error occurred while deleting the product from the main collection :(", Toast.LENGTH_SHORT).show()
@@ -208,6 +309,88 @@ class EditProductActivity : AppCompatActivity() {
                 }
             }.addOnFailureListener { e ->
                 Toast.makeText(this, "An error occurred while retrieving products :(", Toast.LENGTH_SHORT).show()
+            }
+
+            db.collection("users").get().addOnSuccessListener { documents ->
+                for (document in documents) {
+                    Log.d(TAG, "Country value matches for user: ${document.id}")
+                    val currentUser = document.id
+                    db.collection("users").document(currentUser).collection("reccs2").get()
+                        .addOnSuccessListener { products ->
+                            for (product in products) {
+                                val productName = product.getString("product_name")
+                                val idOwner = product.getString("userId")
+                                Log.d(TAG, "Country value matches for user: ${product.id}")
+                                if (nameProduct == productName && userId == idOwner) {
+                                    val productDocRef =  db.collection("users").document(currentUser).collection("reccs2").document(product.id)
+                                    productDocRef.delete()
+                                        .addOnSuccessListener {
+                                            Toast.makeText(this, "Deleted successfully", Toast.LENGTH_SHORT).show()
+                                            //val intent = Intent(this, ProductsActivity::class.java)
+                                            //startActivity(intent)
+                                            //overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
+                                        }
+                                        .addOnFailureListener { e ->
+                                            Toast.makeText(this, "An error occurred while deleting the product from the main collection :(", Toast.LENGTH_SHORT).show()
+                                        }
+                                }
+                            }
+                        }
+                        .addOnFailureListener { e ->
+                            Toast.makeText(
+                                this,
+                                "An error occurred while retrieving products :(",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                }
+            }.addOnFailureListener { e ->
+                Toast.makeText(
+                    this,
+                    "An error occurred while retrieving users :(",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+
+            db.collection("users").get().addOnSuccessListener { documents ->
+                for (document in documents) {
+                    Log.d(TAG, "Country value matches for user: ${document.id}")
+                    val currentUser = document.id
+                    db.collection("users").document(currentUser).collection("reccs2").get()
+                        .addOnSuccessListener { products ->
+                            for (product in products) {
+                                val productName = product.getString("product_name")
+                                val idOwner = product.getString("userId")
+                                Log.d(TAG, "Country value matches for user: ${product.id}")
+                                if (nameProduct == productName && userId == idOwner) {
+                                    val productDocRef =  db.collection("users").document(currentUser).collection("reccs3").document(product.id)
+                                    productDocRef.delete()
+                                        .addOnSuccessListener {
+                                            Toast.makeText(this, "Deleted successfully", Toast.LENGTH_SHORT).show()
+                                            //val intent = Intent(this, ProductsActivity::class.java)
+                                            //startActivity(intent)
+                                            //overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
+                                        }
+                                        .addOnFailureListener { e ->
+                                            Toast.makeText(this, "An error occurred while deleting the product from the main collection :(", Toast.LENGTH_SHORT).show()
+                                        }
+                                }
+                            }
+                        }
+                        .addOnFailureListener { e ->
+                            Toast.makeText(
+                                this,
+                                "An error occurred while retrieving products :(",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                }
+            }.addOnFailureListener { e ->
+                Toast.makeText(
+                    this,
+                    "An error occurred while retrieving users :(",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
 
@@ -271,6 +454,15 @@ class EditProductActivity : AppCompatActivity() {
 
             rndmUUID = UUID.randomUUID().toString()
             val ref = storageReference.child("images/$rndmUUID")
+
+            oldImageUrl?.let { oldImage ->
+                val oldImageRef = storageReference.child("images/$oldImage")
+                oldImageRef.delete().addOnSuccessListener {
+                    Log.d("Firebase Storage", "Old image deleted successfully")
+                }.addOnFailureListener {
+                    Log.e("Firebase Storage", "Failed to delete old image", it)
+                }
+            }
 
             ref.putFile(imageUrl!!)
                 .addOnSuccessListener {

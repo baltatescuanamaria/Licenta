@@ -3,6 +3,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -25,6 +26,7 @@ class ProfileContactActivity : AppCompatActivity() {
         val locationField: TextView = findViewById(R.id.loc)
         val phoneNumberField: TextView = findViewById(R.id.PhoneNumber)
         val descriptionField: TextView = findViewById(R.id.description)
+        val backBtn: ImageButton = findViewById(R.id.back_button)
 
         val db = FirebaseFirestore.getInstance()
         val userId = intent.getStringExtra("OWNER_ID")
@@ -98,13 +100,18 @@ class ProfileContactActivity : AppCompatActivity() {
                         intent.putExtra("PRODUCT_NAME", name)
                         intent.putExtra("USERID", idSeller)
                         startActivity(intent)
-                        finish()
+                        //finish()
                     }
                 }
             }.addOnFailureListener { exception ->
                 Log.e("Firestore", "Error getting products", exception)
 
         }
+
+        backBtn.setOnClickListener{
+            finish()
+        }
+
 
         homeBtn.setOnClickListener{
             val intent = Intent(this, HomescreenActivity::class.java)

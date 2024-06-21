@@ -114,6 +114,9 @@
         <activity android:name=".ProfileContactActivity">
 
         </activity>
+        <activity android:name=".SearchResultActivity">
+
+        </activity>
 
     </application>
 

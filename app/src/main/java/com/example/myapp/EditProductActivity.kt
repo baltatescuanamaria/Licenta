@@ -167,7 +167,6 @@ class EditProductActivity : AppCompatActivity() {
                             .addOnSuccessListener {
                                 val intent = Intent(this, ProductsActivity::class.java)
                                 startActivity(intent)
-                                overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
                             }
                             .addOnFailureListener { e ->
                                 Toast.makeText(this, "An error occurred while updating the product in the main collection :(", Toast.LENGTH_SHORT).show()
@@ -194,10 +193,7 @@ class EditProductActivity : AppCompatActivity() {
                                         .addOnSuccessListener {
                                             val intent = Intent(this, ProductsActivity::class.java)
                                             startActivity(intent)
-                                            overridePendingTransition(
-                                                R.anim.slide_in,
-                                                R.anim.slide_out
-                                            )
+
                                         }
                                         .addOnFailureListener { e ->
                                             Toast.makeText(
@@ -241,10 +237,7 @@ class EditProductActivity : AppCompatActivity() {
                                         .addOnSuccessListener {
                                             val intent = Intent(this, ProductsActivity::class.java)
                                             startActivity(intent)
-                                            overridePendingTransition(
-                                                R.anim.slide_in,
-                                                R.anim.slide_out
-                                            )
+
                                         }
                                         .addOnFailureListener { e ->
                                             Toast.makeText(
@@ -282,7 +275,6 @@ class EditProductActivity : AppCompatActivity() {
                     Toast.makeText(this, "Deleted successfully", Toast.LENGTH_SHORT).show()
                     val intent = Intent(this, ProductsActivity::class.java)
                     startActivity(intent)
-                    overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
                 }
                 .addOnFailureListener {
                     Toast.makeText(this, "Error in deleting the product", Toast.LENGTH_SHORT).show()
@@ -404,7 +396,6 @@ class EditProductActivity : AppCompatActivity() {
             val intent = Intent(this, ProductsActivity::class.java)
             startActivity(intent)
             finish()
-            overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
         }
         addPictureBtn.setOnClickListener {
             openGallery()
@@ -413,28 +404,24 @@ class EditProductActivity : AppCompatActivity() {
             val intent = Intent(this, HomescreenActivity::class.java)
             startActivity(intent)
             finish()
-            overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
         }
 
         productsBtn.setOnClickListener {
             val intent = Intent(this, ProductsActivity::class.java)
             startActivity(intent)
             finish()
-            overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
         }
 
         wishlistBtn.setOnClickListener {
             val intent = Intent(this, WishlistActivity::class.java)
             startActivity(intent)
             finish()
-            overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
         }
 
         profileBtn.setOnClickListener {
             val intent = Intent(this, ProfileActivity::class.java)
             startActivity(intent)
             finish()
-            overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
         }
     }
 

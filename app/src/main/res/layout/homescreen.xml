@@ -25,7 +25,9 @@
                 android:textColorHint="@color/fontColour2"
                 android:textSize="17sp"
                 android:textStyle="bold"
-                android:autofillHints="" />
+                android:autofillHints=""
+                android:imeOptions="actionDone"
+                android:singleLine="true"/>
 
             <ImageButton
                 android:id="@+id/cart"

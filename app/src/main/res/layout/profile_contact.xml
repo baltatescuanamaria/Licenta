@@ -6,9 +6,19 @@
     android:background="@color/background"
     tools:context=".MainActivity">
 
+    <ImageButton
+        android:id="@+id/back_button"
+        android:contentDescription="@string/back"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/arrow_small_left"
+        android:background="@null"
+        android:layout_marginTop="25dp">
+    </ImageButton>
     <ScrollView
         android:id="@+id/scrollview"
         android:contentDescription="@string/scrollbar"
+        android:layout_below="@id/back_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="90dp">
@@ -16,7 +26,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:paddingTop="30dp"
         android:orientation="vertical">
         <ImageView
             android:contentDescription="@string/place_for_a_picture"

@@ -94,7 +94,7 @@ class VeggieListActivity : AppCompatActivity() {
                         intent.putExtra("PRODUCT_NAME", productName)
                         intent.putExtra("USERID", userIdOwner)
                         startActivity(intent)
-                        finish()
+                        //finish()
                     }
                 }
             }
@@ -149,7 +149,7 @@ class VeggieListActivity : AppCompatActivity() {
                         intent.putExtra("PRODUCT_NAME", name)
                         intent.putExtra("USERID", idSeller)
                         startActivity(intent)
-                        finish()
+                        //finish()
                     }
                 }
 
@@ -162,32 +162,32 @@ class VeggieListActivity : AppCompatActivity() {
         backBtn.setOnClickListener{
             val intent = Intent(this, HomescreenActivity::class.java)
             startActivity(intent)
-            finish()
+            //finish()
         }
 
         homeBtn.setOnClickListener{
             val intent = Intent(this, HomescreenActivity::class.java)
             startActivity(intent)
-            finish()
+            //finish()
         }
 
 
         productsBtn.setOnClickListener {
             val intent = Intent(this, ProductsActivity::class.java)
             startActivity(intent)
-            finish()
+            //finish()
         }
 
         wishlistBtn.setOnClickListener {
             val intent = Intent(this, WishlistActivity::class.java)
             startActivity(intent)
-            finish()
+            //finish()
         }
 
         profileBtn.setOnClickListener {
             val intent = Intent(this, ProfileActivity::class.java)
             startActivity(intent)
-            finish()
+            //finish()
         }
     }
 }

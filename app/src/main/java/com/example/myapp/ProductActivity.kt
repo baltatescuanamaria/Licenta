@@ -110,7 +110,6 @@ class ProductActivity : AppCompatActivity() {
             val intent = Intent(this, ProfileContactActivity::class.java)
             intent.putExtra("OWNER_ID", userId)
             startActivity(intent)
-            finish()
         }
 
         val wantedQuantityField: EditText = findViewById(R.id.wantedQuantity)
@@ -149,38 +148,33 @@ class ProductActivity : AppCompatActivity() {
 
 
         backBtn.setOnClickListener {
-            val intent = Intent(this, HomescreenActivity::class.java)
-            startActivity(intent)
+            //val intent = Intent(this, HomescreenActivity::class.java)
+            //startActivity(intent)
             finish()
-            overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
         }
 
         homeBtn.setOnClickListener {
             val intent = Intent(this, HomescreenActivity::class.java)
             startActivity(intent)
             finish()
-            overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
         }
 
         productsBtn.setOnClickListener {
             val intent = Intent(this, ProductsActivity::class.java)
             startActivity(intent)
             finish()
-            overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
         }
 
         wishlistBtn.setOnClickListener {
             val intent = Intent(this, WishlistActivity::class.java)
             startActivity(intent)
             finish()
-            overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
         }
 
         profileBtn.setOnClickListener {
             val intent = Intent(this, ProfileActivity::class.java)
             startActivity(intent)
             finish()
-            overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
         }
     }
 
@@ -233,7 +227,6 @@ class ProductActivity : AppCompatActivity() {
                 val newIntent = Intent(this, HomescreenActivity::class.java)
                 startActivity(newIntent)
                 finish()
-                overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
             }
             .addOnFailureListener { e ->
                 Log.w(Logging.TAG, "Error adding document", e)
@@ -270,7 +263,6 @@ class ProductActivity : AppCompatActivity() {
                 val newIntent = Intent(this, HomescreenActivity::class.java)
                 startActivity(newIntent)
                 finish()
-                overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
             }
     }
 }

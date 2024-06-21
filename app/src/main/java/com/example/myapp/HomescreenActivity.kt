@@ -4,16 +4,20 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.inputmethod.EditorInfo
+import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.ui.text.toUpperCase
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import java.util.Locale
 
 class HomescreenActivity : AppCompatActivity() {
     private val categoriesList = mutableSetOf<String>()
@@ -51,8 +55,22 @@ class HomescreenActivity : AppCompatActivity() {
         storage = FirebaseStorage.getInstance()
         storageReference = storage.reference
 
+        val editText = findViewById<EditText>(R.id.search)
 
-        /*val userDocRef1 = db.collection("users").document("user_$currentUserId").collection("wishlist")
+        editText.setOnEditorActionListener { v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                val inputText = editText.text.toString().uppercase()
+                val intent = Intent(this, SearchResultActivity::class.java)
+                intent.putExtra("SEARCH", inputText)
+
+                startActivity(intent)
+                return@setOnEditorActionListener true
+            }
+            false
+        }
+
+
+        val userDocRef1 = db.collection("users").document("user_$currentUserId").collection("wishlist")
         userDocRef1.get().addOnSuccessListener { documents ->
             for (document in documents) {
                 val name = document.getString("product_name").toString()
@@ -102,10 +120,8 @@ class HomescreenActivity : AppCompatActivity() {
                             productButton.setOnClickListener {
                                 val intent = Intent(this, ProductActivity::class.java)
                                 intent.putExtra("PRODUCT_NAME", name)
-                                intent.putExtra("USERID", idSeller)
+                                intent.putExtra("USERID", idProd)
                                 startActivity(intent)
-                                finish()
-                                overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
                             }
                         }
                     }
@@ -114,7 +130,7 @@ class HomescreenActivity : AppCompatActivity() {
         }.addOnFailureListener { exception ->
             Log.e("Firestore", "Error getting products", exception)
         }
-        */
+
         val secondPage: LinearLayout = findViewById(R.id.arrayProductsRecAdded)
 
 
@@ -159,7 +175,7 @@ class HomescreenActivity : AppCompatActivity() {
                         intent.putExtra("PRODUCT_NAME", name)
                         intent.putExtra("USERID", idSeller)
                         startActivity(intent)
-                        finish()
+                        //finish()
                     }
 
 
@@ -212,7 +228,7 @@ class HomescreenActivity : AppCompatActivity() {
                     intent.putExtra("PRODUCT_NAME", name)
                     intent.putExtra("USERID", idSeller)
                     startActivity(intent)
-                    finish()
+                    //finish()
                 }
 
 
@@ -224,7 +240,7 @@ class HomescreenActivity : AppCompatActivity() {
         val forthPage: LinearLayout = findViewById(R.id.arrayProductsyourArea)
 
 
-        /*val userDocRef4 = db.collection("users").document("user_$currentUserId").collection("wishlist")
+        val userDocRef4 = db.collection("users").document("user_$currentUserId").collection("wishlist")
         userDocRef4.get().addOnSuccessListener { documents ->
             for (document in documents) {
                 val name = document.getString("product_name").toString()
@@ -274,10 +290,9 @@ class HomescreenActivity : AppCompatActivity() {
                             productButton.setOnClickListener {
                                 val intent = Intent(this, ProductActivity::class.java)
                                 intent.putExtra("PRODUCT_NAME", name)
-                                intent.putExtra("USERID", idSeller)
+                                intent.putExtra("USERID", idProd)
                                 startActivity(intent)
-                                finish()
-                                overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
+
                             }
                         }
                     }
@@ -285,71 +300,71 @@ class HomescreenActivity : AppCompatActivity() {
             }
         }.addOnFailureListener { exception ->
             Log.e("Firestore", "Error getting products", exception)
-        }*/
+        }
 
         fruitsBtn.setOnClickListener{
             val intent = Intent(this, FruitsListActivity::class.java)
             startActivity(intent)
-            finish()
+            //finish()
         }
 
         veggiesBtn.setOnClickListener{
             val intent = Intent(this, VeggieListActivity::class.java)
             startActivity(intent)
-            finish()
+            //finish()
         }
 
         animalBtn.setOnClickListener{
             val intent = Intent(this, AnimalListActivity::class.java)
             startActivity(intent)
-            finish()
+            //finish()
         }
 
         beekeepingBtn.setOnClickListener{
             val intent = Intent(this, BeekeepingListActivity::class.java)
             startActivity(intent)
-            finish()
+            //finish()
         }
 
         viticultureBtn.setOnClickListener{
             val intent = Intent(this, ViticultureListActivity::class.java)
             startActivity(intent)
-            finish()
+            //finish()
         }
 
         preservedBtn.setOnClickListener{
             val intent = Intent(this, PreservedListActivity::class.java)
             startActivity(intent)
-            finish()
+            //finish()
         }
 
         homeBtn.setOnClickListener{
             val intent = Intent(this, HomescreenActivity::class.java)
             startActivity(intent)
-            finish()
+            //finish()
         }
 
         productsBtn.setOnClickListener {
             val intent = Intent(this, ProductsActivity::class.java)
             startActivity(intent)
-            finish()
+            //finish()
         }
 
         wishlistBtn.setOnClickListener {
             val intent = Intent(this, WishlistActivity::class.java)
             startActivity(intent)
-            finish()
+            //finish()
         }
 
         profileBtn.setOnClickListener {
             val intent = Intent(this, ProfileActivity::class.java)
             startActivity(intent)
-            finish()
+            //finish()
         }
         cartBtn.setOnClickListener {
             val intent = Intent(this, CheckoutActivity::class.java)
             startActivity(intent)
-            finish()
+            //finish()
         }
     }
 }
